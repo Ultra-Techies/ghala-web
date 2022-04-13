@@ -4,7 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Install NodeJs from [NodeJs Official Page](https://nodejs.org/en).
+2. Open Terminal
+3. Go to your file project
+4. Run in terminal: `npm install -g @angular/cli`
+5. Then: `npm install` if you experience issues with this try `npm install --force`
+6. And: `ng serve`
+7. Navigate to `http://localhost:4200/`
 
 ## Code scaffolding
 
