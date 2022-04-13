@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="container-example">
+    <div class="logo">
+      <img src="{{ imageSrc }}" alt="{{ imageAlt }}" />
+    </div>
+    <div class="number">
+      <h1>OTP SMS</h1>
+    </div>
+    <div class="otp">
+      <p>Please enter the OTP code sent to your number</p>
+    </div>
+  </div>
+  <br />
+  <div class="example-container">
+    <form class="example-form">
+      <ng-otp-input [config]="{ length: 4 }"></ng-otp-input>
+    </form>
+    <br />
+    <button mat-stroked-button color="accent" class="btn-block">Verify</button>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="container-example">
+    <div class="logo">
+      <img src="{{ imageSrc }}" alt="{{ imageAlt }}" />
+    </div>
+    <div class="number">
+      <h1>Mobile Number</h1>
+    </div>
+    <div class="otp">
+      <p>We need to send an OTP to authenticate your number</p>
+    </div>
+  </div>
+  <br />
+  <div class="example-container">
+    <form class="example-form">
+      <mat-form-field>
+        <mat-select>
+          <mat-option value="primary">KENYA(+254)</mat-option>
+          <mat-option value="accent">US(+1)</mat-option>
+          <mat-option value="warn">NIGERIA(+60)</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field class="example-full-width">
+        <input
+          type="tel"
+          pattern="[0-9]{1}-[0-9]{3}-[0-9]{3}"
+          matInput
+          placeholder="7-12-345-567"
+        />
+      </mat-form-field>
+      <button mat-stroked-button color="accent" class="btn-block">
+        Register
+      </button>
+    </form>
+  </div>
+</div>
