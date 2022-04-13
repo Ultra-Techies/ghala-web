@@ -13,7 +13,7 @@
   <br />
   <div class="example-container">
     <form class="example-form">
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-select>
           <mat-option value="primary">KENYA(+254)</mat-option>
           <mat-option value="accent">US(+1)</mat-option>
@@ -28,10 +28,20 @@
           matInput
           placeholder="7-12-345-567"
         />
+      </mat-form-field> -->
+      <mat-form-field class="countrycode">
+        <mat-label>Country Code</mat-label>
+        <mat-select>
+          <mat-option value="primary">KENYA(+254)</mat-option>
+          <mat-option value="accent">US(+1)</mat-option>
+          <mat-option value="warn">NIGERIA(+60)</mat-option>
+        </mat-select>
       </mat-form-field>
-      <button mat-stroked-button color="accent" class="btn-block">
-        Register
-      </button>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input matInput />
+      </mat-form-field>
+      <button mat-stroked-button class="btn-block">Register</button>
     </form>
   </div>
 </div>

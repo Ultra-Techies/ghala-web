@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 img {
   width: 150px;
@@ -38,6 +38,7 @@ img {
   align-items: center;
   margin: auto;
   height: 50%;
+  padding-top: 30px;
 }
 .example-form {
   align-items: center;
@@ -48,13 +49,14 @@ img {
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 400px !important;
+  width: 350px !important;
   display: block;
 }
 button {
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 350px;
   display: flex;
   margin: auto;
+  background-color: #ffd470;
 }

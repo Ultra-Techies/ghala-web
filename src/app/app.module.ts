@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { AccountSetupComponent } from './account-setup/account-setup.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     SplashComponent,
     PhoneVerificationComponent,
     OtpVerificationComponent,
+    AccountSetupComponent,
   ],
   imports: [
     BrowserModule,
