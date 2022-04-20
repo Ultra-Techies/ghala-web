@@ -12,10 +12,12 @@
   </div>
   <br />
   <div class="example-container">
-    <form class="example-form">
+    <form class="example-form" [formGroup]="otpForm" (ngSubmit)="verify()">
       <ng-otp-input [config]="{ length: 4 }"></ng-otp-input>
     </form>
     <br />
-    <button mat-stroked-button color="accent" class="btn-block">Verify</button>
+    <button mat-stroked-button (click)="verify()" class="btn-block">
+      Verify
+    </button>
   </div>
 </div>

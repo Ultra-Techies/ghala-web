@@ -12,36 +12,52 @@
   </div>
   <br />
   <div class="example-container">
-    <form class="example-form">
-      <!-- <mat-form-field>
-        <mat-select>
-          <mat-option value="primary">KENYA(+254)</mat-option>
-          <mat-option value="accent">US(+1)</mat-option>
-          <mat-option value="warn">NIGERIA(+60)</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <mat-form-field class="example-full-width">
-        <input
-          type="tel"
-          pattern="[0-9]{1}-[0-9]{3}-[0-9]{3}"
-          matInput
-          placeholder="7-12-345-567"
-        />
-      </mat-form-field> -->
+    <form
+      class="example-form"
+      [formGroup]="registerForm"
+      (ngSubmit)="register()"
+    >
       <mat-form-field class="countrycode">
         <mat-label>Country Code</mat-label>
-        <mat-select>
-          <mat-option value="primary">KENYA(+254)</mat-option>
-          <mat-option value="accent">US(+1)</mat-option>
-          <mat-option value="warn">NIGERIA(+60)</mat-option>
+        <mat-select formControlName="countryCode" class="form-control" required>
+          <mat-option *ngFor="let country of countries" [value]="country.id">
+            {{ country.code }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
+      <!-- <mat-form-field>
+        <select formControlName="country">
+          <option [ngValue]="null" disabled>Select Country</option>
+          <option *ngFor="let country of countries" [ngValue]="country.id">
+            {{ country.code }}
+          </option>
+        </select>
+      </mat-form-field> -->
       <mat-form-field>
         <mat-label>Phone Number</mat-label>
-        <input matInput />
+        <input
+          formControlName="phoneNumber"
+          class="form-contol"
+          id="
+        phoneNumber"
+          matInput
+        />
+        <span
+          class="text-danger"
+          *ngIf="
+            registerForm.controls['phoneNumber'].dirty &&
+            registerForm.hasError('phoneNumber', 'phoneNumber')
+          "
+          >Email is required</span
+        >
       </mat-form-field>
-      <button mat-stroked-button class="btn-block">Register</button>
+      <button
+        mat-stroked-button
+        class="btn-block"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
     </form>
   </div>
 </div>

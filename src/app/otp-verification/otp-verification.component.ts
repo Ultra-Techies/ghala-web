@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-otp-verification',
@@ -8,7 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class OtpVerificationComponent implements OnInit {
   imageSrc = '../../assets/launcher_logo.png';
   imageAlt = 'Logo';
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  otpForm!: FormGroup;
+  ngOnInit(): void {
+    this.otpForm = this.formBuilder.group({
+      otp: ['', Validators.required],
+    });
+  }
+  verify() {
+    alert('Verification SuccessFull');
+    this.otpForm.reset();
+    this.router.navigate(['account']);
+  }
 }

@@ -1,48 +1,59 @@
 <div class="container">
-  <h1>Setup Your Account</h1>
+  <h1 style="color: white">Setup Your Account</h1>
   <mat-card class="example-card">
-    <mat-card-subtitle
-      >Welcome to Ghala. Please setup your account to start using the
-      app</mat-card-subtitle
-    >
-    <form class="example-form">
-      <mat-form-field appearance="fill">
+    <h2>Welcome to Ghala. Please setup your account to start using the app</h2>
+    <form class="example-form" [formGroup]="accountForm" (ngSubmit)="submit()">
+      <mat-form-field>
         <mat-label>First Name</mat-label>
-        <input matInput />
+        <input formControlName="firstName" matInput />
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Last Name</mat-label>
-        <input matInput />
+        <input formControlName="lastName" matInput />
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Email Address</mat-label>
-        <input matInput />
+        <input formControlName="emailAddress" matInput />
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Warehouse</mat-label>
-
-        <mat-select>
-          <mat-option value="one">Ruiru</mat-option>
-          <mat-option value="two">Rongai</mat-option>
+        <mat-select formControlName="warehouse" class="form-control" required>
+          <mat-option
+            *ngFor="let warehouse of warehouses"
+            [value]="warehouse.id"
+          >
+            {{ warehouse.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Department</mat-label>
 
-        <mat-select>
-          <mat-option value="one">Operations</mat-option>
-          <mat-option value="two">Dispatch</mat-option>
+        <mat-select formControlName="department" class="form-control" required>
+          <mat-option
+            *ngFor="let department of departments"
+            [value]="department.id"
+          >
+            {{ department.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Role</mat-label>
 
-        <mat-select>
-          <mat-option value="one">Warehouse Supervisor</mat-option>
-          <mat-option value="two">Dispatch Associate</mat-option>
+        <mat-select formControlName="role" class="form-control" required>
+          <mat-option *ngFor="let role of roles" [value]="role.id">
+            {{ role.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </form>
-    <button mat-raised-button>SUBMIT</button>
+    <button
+      mat-raised-button
+      (click)="submit()"
+      [disabled]="accountForm.invalid"
+    >
+      SUBMIT
+    </button>
   </mat-card>
 </div>

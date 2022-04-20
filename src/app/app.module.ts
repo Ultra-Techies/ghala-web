@@ -15,7 +15,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
 import { NgOtpInputModule } from 'ng-otp-input';
-import { AccountSetupComponent } from './account-setup/account-setup.component';
+import {
+  AccountSetupComponent,
+  DialogComponent,
+} from './account-setup/account-setup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +29,7 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
     PhoneVerificationComponent,
     OtpVerificationComponent,
     AccountSetupComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,12 +37,14 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
+    FormsModule,
     MatCardModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
     NgOtpInputModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

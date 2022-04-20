@@ -31,7 +31,9 @@ img {
   justify-content: center;
   align-items: center;
   margin: auto;
-  color: black;
   /* width: 80px; */
   /* height: 80px; */
+}
+.mat-spinner {
+  color: black !important;
 }

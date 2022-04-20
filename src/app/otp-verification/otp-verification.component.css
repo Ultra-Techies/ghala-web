@@ -61,6 +61,7 @@ button {
   width: 15%;
   display: flex;
   margin: auto;
+  background-color: #ffd470;
 }
 .mat-card {
   border-style: none;
