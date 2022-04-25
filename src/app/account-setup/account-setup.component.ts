@@ -39,16 +39,14 @@ export class AccountSetupComponent implements OnInit {
     this.accountForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      emailAddress: ['', [Validators.required, Validators.email]],
-      warehouse: ['', Validators.required],
-      department: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      assignedWarehouse: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       role: ['', Validators.required],
     });
   }
   submit() {
-    // alert('Details Updated SuccessFull');
-    // this.accountForm.reset();
-    // this.router.navigate(['']);
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '350px',
       data: {
@@ -61,7 +59,6 @@ export class AccountSetupComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
-      // this.animal = result;
     });
   }
 }

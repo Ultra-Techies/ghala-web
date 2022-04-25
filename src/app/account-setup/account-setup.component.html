@@ -13,11 +13,23 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Email Address</mat-label>
-        <input formControlName="emailAddress" matInput />
+        <input formControlName="email" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" formControlName="password" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input formControlName="phoneNumber" matInput />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Warehouse</mat-label>
-        <mat-select formControlName="warehouse" class="form-control" required>
+        <mat-select
+          formControlName="assignedWarehouse"
+          class="form-control"
+          required
+        >
           <mat-option
             *ngFor="let warehouse of warehouses"
             [value]="warehouse.id"
@@ -26,7 +38,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>Department</mat-label>
 
         <mat-select formControlName="department" class="form-control" required>
@@ -37,7 +49,7 @@
             {{ department.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field>
         <mat-label>Role</mat-label>
 
