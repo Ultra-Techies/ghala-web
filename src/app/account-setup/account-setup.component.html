@@ -1,0 +1,70 @@
+<div class="container">
+  <h1 style="color: white">Setup Your Account</h1>
+  <mat-card class="example-card">
+    <h2>Welcome to Ghala. Please setup your account to start using the app</h2>
+    <form class="example-form" [formGroup]="accountForm" (ngSubmit)="submit()">
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input formControlName="firstName" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input formControlName="lastName" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email Address</mat-label>
+        <input formControlName="email" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" formControlName="password" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input formControlName="phoneNumber" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Warehouse</mat-label>
+        <mat-select
+          formControlName="assignedWarehouse"
+          class="form-control"
+          required
+        >
+          <mat-option
+            *ngFor="let warehouse of warehouses"
+            [value]="warehouse.id"
+          >
+            {{ warehouse.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field>
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="department" class="form-control" required>
+          <mat-option
+            *ngFor="let department of departments"
+            [value]="department.id"
+          >
+            {{ department.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+
+        <mat-select formControlName="role" class="form-control" required>
+          <mat-option *ngFor="let role of roles" [value]="role.id">
+            {{ role.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <button
+      mat-raised-button
+      (click)="submit()"
+      [disabled]="accountForm.invalid"
+    >
+      SUBMIT
+    </button>
+  </mat-card>
+</div>
