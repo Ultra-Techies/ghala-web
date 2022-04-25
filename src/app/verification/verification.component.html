@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="container-example">
+    <div class="logo">
+      <img src="/assets/img/logo.png" />
+    </div>
+    <div class="number">
+      <h1>Mobile Number</h1>
+    </div>
+    <div class="otp">
+      <p>We need to send an OTP to authenticate your number</p>
+    </div>
+  </div>
+  <br />
+  <div class="example-container">
+    <form
+      class="example-form"
+      [formGroup]="registerForm"
+      (ngSubmit)="register()"
+    >
+      <mat-form-field class="countrycode">
+        <mat-label>Country Code</mat-label>
+        <mat-select formControlName="countryCode" class="form-control" required>
+          <mat-option *ngFor="let country of countries" [value]="country.id">
+            {{ country.code }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field>
+        <select formControlName="country">
+          <option [ngValue]="null" disabled>Select Country</option>
+          <option *ngFor="let country of countries" [ngValue]="country.id">
+            {{ country.code }}
+          </option>
+        </select>
+      </mat-form-field> -->
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input
+          formControlName="phoneNumber"
+          class="form-contol"
+          id="
+        phoneNumber"
+          matInput
+        />
+        <span
+          class="text-danger"
+          *ngIf="
+            registerForm.controls['phoneNumber'].dirty &&
+            registerForm.hasError('phoneNumber', 'phoneNumber')
+          "
+          >Email is required</span
+        >
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        class="btn-block"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+  </div>
+</div>

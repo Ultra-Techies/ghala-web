@@ -12,6 +12,18 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { VerificationComponent } from './verification/verification.component';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { OtpComponent } from './otp/otp.component';
+import { AccountSetupComponent } from './account-setup/account-setup.component';
 
 @NgModule({
   imports: [
@@ -19,16 +31,21 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     FormsModule,
     RouterModule,
     HttpClientModule,
+    MatFormFieldModule,
     NavbarModule,
     FooterModule,
     SidebarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    NgOtpInputModule,
+    MatDialogModule,
   ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent
-  ],
+  declarations: [AppComponent, AdminLayoutComponent, VerificationComponent, OtpComponent, AccountSetupComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
