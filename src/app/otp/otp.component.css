@@ -8,11 +8,7 @@
 
   /* margin: auto; */
 }
-.container-example {
-  width: 100%;
-  padding-top: 50px;
-  height: 50%;
-}
+
 .logo {
   display: flex;
   justify-content: center;
@@ -58,9 +54,10 @@ img {
 button {
   justify-content: center;
   align-items: center;
-  width: 15%;
+  width: 350px;
   display: flex;
   margin: auto;
+  margin-top: 40px;
   background-color: #ffd470;
 }
 .mat-card {

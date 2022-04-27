@@ -13,9 +13,11 @@
   <br />
   <div class="example-container">
     <form class="example-form" [formGroup]="otpForm" (ngSubmit)="verify()">
-      <ng-otp-input [config]="{ length: 4 }"></ng-otp-input>
+      <ng-otp-input
+        [config]="{ length: 4 }"
+        style="height: 50px"
+      ></ng-otp-input>
     </form>
-    <br />
     <button mat-stroked-button (click)="verify()" class="btn-block">
       Verify
     </button>
