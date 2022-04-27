@@ -6,14 +6,18 @@
   height: 100%;
   background: linear-gradient(#ffd470 50%, #ffffff 50%);
   margin: auto;
+  overflow: auto;
 }
 
 h1 {
   text-align: center;
   margin-top: 100px;
+  color: #ffffff;
+  font-size: 40px;
 }
 h2 {
   text-align: center;
+  color: #ffffff;
 }
 .example-card {
   width: 400px;
@@ -23,10 +27,19 @@ h2 {
   text-align: center;
 }
 .example-form {
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+.logo {
+  display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   margin-top: 20px;
+}
+img {
+  width: 150px;
 }
 .mat-form-field {
   justify-content: center;
@@ -42,15 +55,17 @@ button {
   display: flex;
   margin: auto;
   margin-top: 40px;
-  background-color: #ffd470;
+  color: white;
+  background-color: #212f3c;
 }
-h1 {
-  color: #ffffff;
-  font-size: 40px;
-}
-.dialog {
-  margin: auto;
+
+.example-container {
+  width: 100%;
+  border-radius: 50px 0px 0px 0px;
+  background-color: #ffffff;
   justify-content: center;
-  align-content: center;
-  text-align: center;
+  align-items: center;
+  margin: auto;
+  height: 100%;
+  padding-top: 30px;
 }
