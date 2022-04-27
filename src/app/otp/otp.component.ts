@@ -18,6 +18,6 @@ export class OtpComponent implements OnInit {
   verify() {
     alert('Verification SuccessFull');
     this.otpForm.reset();
-    this.router.navigate(['account']);
+    this.router.navigate(['account-setup']);
   }
 }
