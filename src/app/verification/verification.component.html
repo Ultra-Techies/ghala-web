@@ -17,40 +17,39 @@
       [formGroup]="registerForm"
       (ngSubmit)="register()"
     >
-      <mat-form-field class="countrycode">
-        <mat-label>Country Code</mat-label>
-        <mat-select formControlName="countryCode" class="form-control" required>
-          <mat-option *ngFor="let country of countries" [value]="country.id">
-            {{ country.code }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <!-- <mat-form-field>
-        <select formControlName="country">
-          <option [ngValue]="null" disabled>Select Country</option>
-          <option *ngFor="let country of countries" [ngValue]="country.id">
+      <div class="mat-form-field">
+        <label>Country Code</label>
+        <select
+          id="countrycode"
+          formControlName="countryCode"
+          class="form-control"
+          required
+        >
+          <option *ngFor="let country of countries" [value]="country.id">
             {{ country.code }}
           </option>
         </select>
-      </mat-form-field> -->
-      <mat-form-field>
-        <mat-label>Phone Number</mat-label>
+      </div>
+
+      <br />
+      <div class="mat-form-field">
+        <label>Phone Number</label>
         <input
+          id="phoneNumber"
+          type="email"
+          class="form-control"
+          placeholder="Phone"
+          value="7123445678"
           formControlName="phoneNumber"
-          class="form-contol"
-          id="
-        phoneNumber"
-          matInput
-        />
-        <span
+        /><span
           class="text-danger"
           *ngIf="
             registerForm.controls['phoneNumber'].dirty &&
             registerForm.hasError('phoneNumber', 'phoneNumber')
           "
-          >Email is required</span
+          >Phone is required</span
         >
-      </mat-form-field>
+      </div>
       <button
         mat-stroked-button
         class="btn-block"
