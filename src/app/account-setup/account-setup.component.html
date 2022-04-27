@@ -1,79 +1,95 @@
 <div class="container">
-  <h1 style="color: white">Setup Your Account</h1>
-  <form class="example-form" [formGroup]="accountForm" (ngSubmit)="submit()">
-    <h2>Welcome to Ghala. Please setup your account to start using the app</h2>
+  <div class="container-example">
+    <div class="logo">
+      <img src="/assets/img/logo.png" />
+    </div>
+    <div>
+      <h2>Setup your account</h2>
+      <p style="text-align: center; color: white">
+        Welcome to Ghala. Please setup your account to start using the app
+      </p>
+    </div>
+  </div>
+  <br />
+  <div class="example-container">
     <form class="example-form" [formGroup]="accountForm" (ngSubmit)="submit()">
-      <div class="mat-form-field">
-        <label>First Name</label>
-        <input
-          id="firstName"
-          type="text"
-          class="form-control"
-          placeholder="First Name"
-          formControlName="firstName"
-        /><span
-          class="text-danger"
-          *ngIf="
-            accountForm.controls['firstName'].dirty &&
-            accountForm.hasError('firstName', 'firstName')
-          "
-          >Phone is required</span
-        >
-      </div>
-      <div class="mat-form-field">
-        <label>Last Name</label>
-        <input
-          id="lastName"
-          type="text"
-          class="form-control"
-          placeholder="Last Name"
-          formControlName="lastName"
-        /><span
-          class="text-danger"
-          *ngIf="
-            accountForm.controls['lastName'].dirty &&
-            accountForm.hasError('lastName', 'lastName')
-          "
-          >Last Name is required</span
-        >
-      </div>
-      <div class="mat-form-field">
-        <label>Email Address</label>
-        <input
-          id="email"
-          type="text"
-          class="form-control"
-          placeholder="Last Name"
-          formControlName="email"
-        /><span
-          class="text-danger"
-          *ngIf="
-            accountForm.controls['email'].dirty &&
-            accountForm.hasError('email', 'email')
-          "
-          >Email is required</span
-        >
-      </div>
-      <div class="mat-form-field">
-        <label>Warehouse</label>
-        <select
-          id="assignedWarehouse"
-          formControlName="assignedWarehouse"
-          class="form-control"
-          required
-        >
-          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
-            {{ warehouse.name }}
-          </option>
-        </select>
-      </div>
-      <button
-        mat-raised-button
-        (click)="submit()"
-        [disabled]="accountForm.invalid"
+      <form
+        class="example-form"
+        [formGroup]="accountForm"
+        (ngSubmit)="submit()"
       >
-        SUBMIT
-      </button>
+        <div class="mat-form-field">
+          <label>First Name</label>
+          <input
+            id="firstName"
+            type="text"
+            class="form-control"
+            placeholder="First Name"
+            formControlName="firstName"
+          /><span
+            class="text-danger"
+            *ngIf="
+              accountForm.controls['firstName'].dirty &&
+              accountForm.hasError('firstName', 'firstName')
+            "
+            >Phone is required</span
+          >
+        </div>
+        <div class="mat-form-field">
+          <label>Last Name</label>
+          <input
+            id="lastName"
+            type="text"
+            class="form-control"
+            placeholder="Last Name"
+            formControlName="lastName"
+          /><span
+            class="text-danger"
+            *ngIf="
+              accountForm.controls['lastName'].dirty &&
+              accountForm.hasError('lastName', 'lastName')
+            "
+            >Last Name is required</span
+          >
+        </div>
+        <div class="mat-form-field">
+          <label>Email Address</label>
+          <input
+            id="email"
+            type="text"
+            class="form-control"
+            placeholder="Last Name"
+            formControlName="email"
+          /><span
+            class="text-danger"
+            *ngIf="
+              accountForm.controls['email'].dirty &&
+              accountForm.hasError('email', 'email')
+            "
+            >Email is required</span
+          >
+        </div>
+        <div class="mat-form-field">
+          <label>Warehouse</label>
+          <select
+            id="assignedWarehouse"
+            formControlName="assignedWarehouse"
+            class="form-control"
+            required
+          >
+            <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+              {{ warehouse.name }}
+            </option>
+          </select>
+        </div>
+        <button
+          mat-raised-button
+          (click)="submit()"
+          [disabled]="accountForm.invalid"
+        >
+          SUBMIT
+        </button>
+      </form>
     </form>
-  </form>
+  </div>
 </div>
