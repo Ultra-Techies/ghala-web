@@ -27,8 +27,8 @@ export class AddWarehouseModalComponent implements OnInit {
     });
   }
 
-  close() {
-    this.modalRef.close();
+  close(message?: string) {
+    this.modalRef.close(message);
   }
 
   addWarehouse() {

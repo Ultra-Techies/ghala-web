@@ -27,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { OtpComponent } from './otp/otp.component';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
 import { AddWarehouseModalComponent } from './add-warehouse-modal/add-warehouse-modal.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { AddWarehouseModalComponent } from './add-warehouse-modal/add-warehouse-
     AccountSetupComponent,
     AdminLayoutComponent,
     AddWarehouseModalComponent,
+    DeleteModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
