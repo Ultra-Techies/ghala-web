@@ -1,0 +1,90 @@
+<div class="modal-header">
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="close()"
+  >
+    <span aria-hidden="true">×</span>
+  </button>
+  <h5 class="modal-title" id="ModalLabel">
+    {{ payload ? "Update Warehouse" : "Add Warehouse" }}
+  </h5>
+</div>
+<div
+  class="modal-body"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form>
+          <form [formGroup]="addWarehouseForm" (Submit)="close()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Warehouse Name:</label>
+                  <input
+                    formControlName="warehouseName"
+                    type="text"
+                    class="form-control"
+                    id="warehouseName"
+                    placeholder="Warehouse Name"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="warehouseName"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      addWarehouseForm.controls['warehouseName'].dirty &&
+                      addWarehouseForm.hasError('required', 'warehouseName')
+                    "
+                    >Warehouse name is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Warehouse Location:</label>
+                  <input
+                    formControlName="warehouseLocation"
+                    type="text"
+                    class="form-control"
+                    id="warehouseLocation"
+                    placeholder="Warehouse Location"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="warehouseLocation"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      addWarehouseForm.controls['warehouseLocation'].dirty &&
+                      addWarehouseForm.hasError('required', 'warehouseLocation')
+                    "
+                    >Warehouse location is required</span
+                  >
+                </div>
+              </div>
+              <div><br /></div>
+            </div>
+          </form>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-primary btn-fill pull-right"
+    (click)="payload ? updateWarehouse() : addWarehouse()"
+    [disabled]="addWarehouseForm.invalid"
+  >
+    {{ payload ? "Update" : "Add" }}
+  </button>
+</div>

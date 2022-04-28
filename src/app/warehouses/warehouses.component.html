@@ -5,6 +5,12 @@
         <div class="card">
           <div class="header">
             <h4 class="title">Warehouses</h4>
+            <button
+              class="btn btn-primary btn-fill pull-right"
+              (click)="openModal('add')"
+            >
+              Add Warehouse
+            </button>
             <p class="category">A list of all warehouses</p>
           </div>
           <div class="content table-responsive table-full-width">
@@ -16,7 +22,17 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
-                  <td *ngFor="let cell of row">{{ cell }}</td>
+                  <td
+                    *ngFor="let cell of row"
+                    (click)="updateWarehouseInitiate(row)"
+                  >
+                    {{ cell }}
+                  </td>
+                  <td>
+                    <a (click)="deleteInitiate(row)">
+                      <i class="pe-7s-trash"></i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>

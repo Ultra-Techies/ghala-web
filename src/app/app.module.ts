@@ -22,8 +22,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { ToastrModule } from 'ngx-toastr';
 import { OtpComponent } from './otp/otp.component';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
+import { AddUpdateWarehouseModalComponent } from './addupdate-warehouse-modal/addupdate-warehouse-modal.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   imports: [
@@ -38,6 +42,8 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
     MatSelectModule,
     NgOtpInputModule,
     MatDialogModule,
+    MdbModalModule,
+    ToastrModule.forRoot(),
     RouterModule,
     HttpClientModule,
     NavbarModule,
@@ -50,6 +56,8 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
     OtpComponent,
     AccountSetupComponent,
     AdminLayoutComponent,
+    AddUpdateWarehouseModalComponent,
+    DeleteModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
