@@ -17,7 +17,7 @@
   aria-hidden="true"
 >
   <div class="container">
-    <div class="row">Are you sure you want to delete the warehouse?</div>
+    <div class="row">Are you sure you want to delete {{ warehouseName }}?</div>
   </div>
 </div>
 <div class="modal-footer">
@@ -25,7 +25,7 @@
     type="button"
     class="btn btn-secondary btn-fill"
     aria-label="Close"
-    (click)="close('close')"
+    (click)="close()"
     mdbWavesEffect
   >
     Close
@@ -34,7 +34,7 @@
     type="button"
     class="btn btn-danger btn-fill"
     aria-label="Delete"
-    (click)="close('delete')"
+    (click)="deleteWarehouse()"
     mdbWavesEffect
   >
     Delete
