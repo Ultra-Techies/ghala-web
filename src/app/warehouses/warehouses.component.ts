@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import Utils from 'app/Utils';
+import Utils from 'app/helpers/Utils';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { AddWarehouseModalComponent } from 'app/add-warehouse-modal/add-warehouse-modal.component';
 
 declare interface TableData {
   headerRow: string[];
@@ -16,12 +18,16 @@ export class Warehouses implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
 
-  constructor(private http: HttpClient) {}
+  modalRef: MdbModalRef<AddWarehouseModalComponent> | null = null;
+  constructor(
+    private http: HttpClient,
+    private modalService: MdbModalService
+  ) {}
 
   ngOnInit() {
     this.tableData1 = {
       headerRow: ['ID', 'Name', 'Location'],
-      dataRows: [],
+      dataRows: [['', '', '']],
     };
 
     this.getWarehouses();
@@ -63,5 +69,15 @@ export class Warehouses implements OnInit {
           console.log('Error: ', err);
         }
       );
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.open(AddWarehouseModalComponent, {
+      modalClass: 'modal-dialog-centered',
+    });
+
+    this.modalRef.onClose.subscribe((message: any) => {
+      this.ngOnInit();
+    });
   }
 }
