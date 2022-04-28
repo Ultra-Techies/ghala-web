@@ -43,4 +43,25 @@ export class Warehouses implements OnInit {
           };
       });
   }
+
+  addWarehouse() {
+    this.http
+      .post(
+        Utils.BASE_URL + 'warehouses',
+        {
+          name: 'Warehouse 1',
+          location: 'Location 1',
+        },
+        { headers: Utils.getHeaders() }
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.getWarehouses();
+        },
+        (err: any) => {
+          console.log('Error: ', err);
+        }
+      );
+  }
 }
