@@ -7,7 +7,7 @@
             <h4 class="title">Warehouses</h4>
             <button
               class="btn btn-primary btn-fill pull-right"
-              (click)="openModal()"
+              (click)="openModal('add')"
             >
               Add Warehouse
             </button>
@@ -22,7 +22,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
-                  <td *ngFor="let cell of row">{{ cell }}</td>
+                  <td *ngFor="let cell of row">
+                    {{ cell }}
+                  </td>
+                  <td>
+                    <a (click)="deleteInitiate(row[0])">
+                      <i class="pe-7s-trash"></i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
