@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Utils from 'app/Utils';
 
 declare interface TableData {
   headerRow: string[];
@@ -14,17 +16,35 @@ export class Warehouses implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.tableData1 = {
-      headerRow: ['ID', 'Name', 'Country', 'City', 'Inventory'],
-      dataRows: [
-        ['1', 'Ruiru', 'Kenya', 'Nairobi', 'Ksh 30,600,738'],
-        ['2', 'Alsoaps', 'Kenya', 'Nairobi', 'Ksh 21,301,789'],
-        ['3', 'Ngong Rd', 'Kenya', 'Nairobi', 'Ksh 55,654,142'],
-        ['4', 'Ongata Rongai', 'Kenya', ' Nairobi', 'Ksh 36,708,735'],
-      ],
+      headerRow: ['ID', 'Name', 'Location'],
+      dataRows: [],
     };
+
+    this.getWarehouses();
+  }
+
+  getWarehouses() {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+
+    this.http
+      .get(Utils.BASE_URL + 'warehouses', { headers: headers })
+      .subscribe((data: any) => {
+        console.log(data);
+        (this.tableData1 = {
+          headerRow: ['ID', 'Name', 'Location'],
+          dataRows: data.map((warehouse) => {
+            return [warehouse.id, warehouse.name, warehouse.location];
+          }),
+        }),
+          (err: any) => {
+            console.log('Error: ', err);
+          };
+      });
   }
 }
