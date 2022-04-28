@@ -3,11 +3,13 @@
     type="button"
     class="close pull-right"
     aria-label="Close"
-    (click)="close('close')"
+    (click)="close()"
   >
     <span aria-hidden="true">×</span>
   </button>
-  <h5 class="modal-title" id="ModalLabel">Add Warehouse</h5>
+  <h5 class="modal-title" id="ModalLabel">
+    {{ payload ? "Update Warehouse" : "Add Warehouse" }}
+  </h5>
 </div>
 <div
   class="modal-body"
@@ -20,7 +22,7 @@
     <div class="row">
       <div class="col-md-12">
         <form>
-          <form [formGroup]="addWarehouseForm" (Submit)="close('submit')">
+          <form [formGroup]="addWarehouseForm" (Submit)="close()">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -34,6 +36,7 @@
                     required
                     height="auto"
                     maxRows="4"
+                    [(ngModel)]="warehouseName"
                   />
                   <span
                     class="text-danger"
@@ -55,6 +58,7 @@
                     required
                     height="auto"
                     maxRows="4"
+                    [(ngModel)]="warehouseLocation"
                   />
                   <span
                     class="text-danger"
@@ -78,9 +82,9 @@
   <button
     type="button"
     class="btn btn-primary btn-fill pull-right"
-    (click)="addWarehouse()"
+    (click)="payload ? updateWarehouse() : addWarehouse()"
     [disabled]="addWarehouseForm.invalid"
   >
-    Add
+    {{ payload ? "Update" : "Add" }}
   </button>
 </div>

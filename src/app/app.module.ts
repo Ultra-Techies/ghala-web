@@ -26,7 +26,7 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { OtpComponent } from './otp/otp.component';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
-import { AddWarehouseModalComponent } from './add-warehouse-modal/add-warehouse-modal.component';
+import { AddUpdateWarehouseModalComponent } from './addupdate-warehouse-modal/addupdate-warehouse-modal.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
@@ -56,7 +56,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
     OtpComponent,
     AccountSetupComponent,
     AdminLayoutComponent,
-    AddWarehouseModalComponent,
+    AddUpdateWarehouseModalComponent,
     DeleteModalComponent,
   ],
   providers: [],
