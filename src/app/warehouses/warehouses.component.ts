@@ -28,12 +28,8 @@ export class Warehouses implements OnInit {
   }
 
   getWarehouses() {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-
     this.http
-      .get(Utils.BASE_URL + 'warehouses', { headers: headers })
+      .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
         console.log(data);
         (this.tableData1 = {
