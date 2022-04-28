@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Utils from 'app/helpers/Utils';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-warehouse-modal',
@@ -15,6 +16,7 @@ export class AddWarehouseModalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
+    private toastr: ToastrService,
     public modalRef: MdbModalRef<AddWarehouseModalComponent>
   ) {}
 
@@ -32,7 +34,7 @@ export class AddWarehouseModalComponent implements OnInit {
   addWarehouse() {
     this.http
       .post(
-        Utils.BASE_URL + 'warehouses',
+        Utils.BASE_URL + 'warehouse',
         {
           name: this.addWarehouseForm.value.warehouseName,
           location: this.addWarehouseForm.value.warehouseLocation,
@@ -43,9 +45,11 @@ export class AddWarehouseModalComponent implements OnInit {
         (data: any) => {
           console.log(data);
           this.close();
+          this.toastr.success('Added Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
+          this.toastr.error('Something went wrong!');
         }
       );
   }

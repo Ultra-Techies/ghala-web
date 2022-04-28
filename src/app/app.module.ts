@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { ToastrModule } from 'ngx-toastr';
 import { OtpComponent } from './otp/otp.component';
 import { AccountSetupComponent } from './account-setup/account-setup.component';
 import { AddWarehouseModalComponent } from './add-warehouse-modal/add-warehouse-modal.component';
@@ -41,7 +42,7 @@ import { AddWarehouseModalComponent } from './add-warehouse-modal/add-warehouse-
     NgOtpInputModule,
     MatDialogModule,
     MdbModalModule,
-
+    ToastrModule.forRoot(),
     RouterModule,
     HttpClientModule,
     NavbarModule,
