@@ -61,3 +61,12 @@
 .table-upgrade td:nth-child(3) {
   text-align: center;
 }
+
+.fade {
+  opacity: 1;
+}
+
+/* this targets the modal popup */
+.modal-content {
+  margin-top: 100px;
+}

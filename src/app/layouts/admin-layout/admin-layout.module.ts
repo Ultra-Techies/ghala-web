@@ -13,6 +13,7 @@ import { Warehouses } from '../../warehouses/warehouses.component';
 import { OrdersComponent } from 'app/orders/orders.component';
 import { Inventory } from 'app/inventory/inventory.component';
 import { DispatchComponent } from 'app/dispatch/dispatch.component';
+import { AddWarehouseModalComponent } from 'app/add-warehouse-modal/add-warehouse-modal.component';
 
 @NgModule({
   imports: [
