@@ -1,4 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AddupdateInventoryModalComponent } from 'app/addupdate-inventory-modal/addupdate-inventory-modal.component';
+import { DeleteInventorymodalComponent } from 'app/delete-inventorymodal/delete-inventorymodal.component';
+import Utils from 'app/helpers/Utils';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { ToastrService } from 'ngx-toastr';
 
 declare interface TableData {
   headerRow: string[];
@@ -13,58 +20,147 @@ declare interface TableData {
 export class Inventory implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
-
-  constructor() {}
-
+  loading = false;
+  modalRefAddUpdate: MdbModalRef<AddupdateInventoryModalComponent> | null =
+    null;
+  modalRefDelete: MdbModalRef<DeleteInventorymodalComponent> | null = null;
+  sku: any;
+  constructor(
+    private http: HttpClient,
+    private modalServiceAddUpdate: MdbModalService,
+    private modalServiceDelete: MdbModalService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
   ngOnInit() {
     this.tableData1 = {
       headerRow: [
         'ID',
         'Product Name',
         'Category',
-        'SKU',
+        'PPU',
         'Quantity',
-        'Price',
+        'Warehouse ID',
         'Status',
+        'Product Image',
       ],
-      dataRows: [
-        [
-          '1',
-          'Minute Maid',
-          'Drinks',
-          'GH032',
-          '230',
-          'Ksh 2,000',
-          'Available',
-        ],
-        [
-          '2',
-          'Unga Maize Meal',
-          'Food',
-          'GH098',
-          '560',
-          'Ksh 2,500',
-          'Available',
-        ],
-        [
-          '3',
-          'Pampers',
-          'Baby Producs',
-          'GH102',
-          '120',
-          'Ksh 1,500',
-          'Available',
-        ],
-        [
-          '4',
-          'Mumias Sugar',
-          'Sugar',
-          ' GH304',
-          '800',
-          'Ksh 1,000',
-          'Out of Stock',
-        ],
-      ],
+      dataRows: [['', '', '']],
     };
+    this.getInventory();
   }
+  getInventory() {
+    this.http
+      .get(Utils.BASE_URL + 'allinventory', { headers: Utils.getHeaders() })
+      .subscribe((data: any) => {
+        console.log(data);
+        (this.tableData1 = {
+          headerRow: [
+            'ID',
+            'Product Name',
+            'Category',
+            'PPU',
+            'Quantity',
+            'Warehouse Id',
+            'Status',
+            'Product Image',
+          ],
+          dataRows: data.map((inventory) => {
+            return [
+              inventory.sku,
+              inventory.name,
+              inventory.category,
+              inventory.ppu,
+              inventory.quantity,
+              inventory.warehouseId,
+              inventory.status,
+              inventory.image,
+            ];
+          }),
+        }),
+          (err: any) => {
+            console.log('Error: ', err);
+          };
+      });
+  }
+  deleteInventory(sku: any) {
+    this.loading = true;
+    this.http.delete(Utils.BASE_URL + 'inventory/' + sku).subscribe(
+      (res) => {
+        this.loading = false;
+        this.toastr.success('Product deleted Successfully!', 'Success');
+        this.ngOnInit();
+        // this.router.navigate(['todo']);
+      },
+      (err: any) => {
+        this.loading = false;
+        console.log('Error: ', err);
+        this.toastr.error(
+          'Product Delete Failed, ' + err.error.message,
+          'Error'
+        );
+      }
+    );
+  }
+  deleteInitiate(rowData: any) {
+    this.openModal('delete', rowData);
+  }
+
+  updateInventoryInitiate(rowData: any) {
+    this.openModal('update', rowData);
+  }
+
+  openModal(message: string = 'none', payLoad: any = null) {
+    //if message is add it will open the add modal if delete it will open the delete modal
+    if (message === 'add') {
+      this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
+        AddupdateInventoryModalComponent,
+        {
+          modalClass: 'modal-dialog-centered',
+        }
+      );
+      this.modalRefAddUpdate.onClose.subscribe(() => {
+        this.getInventory();
+      });
+    } else if (message === 'delete') {
+      this.modalRefDelete = this.modalServiceDelete.open(
+        DeleteInventorymodalComponent,
+        {
+          modalClass: 'modal-dialog-centered',
+          data: { payload: payLoad },
+        }
+      );
+      this.modalRefDelete.onClose.subscribe(() => {
+        this.getInventory;
+      });
+    } else if (message === 'update') {
+      this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
+        AddupdateInventoryModalComponent,
+        {
+          modalClass: 'modal-dialog-centered',
+          data: { payload: payLoad },
+        }
+      );
+      this.modalRefAddUpdate.onClose.subscribe((message: any = '') => {
+        this.getInventory();
+      });
+    } else {
+      console.log('Something went wrong');
+    }
+  }
+  // deleteInventory(sku: any) {
+  //   this.http
+  //     .delete(Utils.BASE_URL + 'inventory/' + sku, {
+  //       headers: Utils.getHeaders(),
+  //     })
+  //     .subscribe(
+  //       (data: any) => {
+  //         console.log(data);
+  //         alert('Warehouse deleted successfully');
+  //       },
+  //       (err: any) => {
+  //         alert('Error: ' + err);
+  //         // this.close('Error: ' + err);
+  //       }
+  //     );
+  // }
 }
