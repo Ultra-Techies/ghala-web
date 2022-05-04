@@ -14,4 +14,8 @@ export default class Utils {
     );
     return headers;
   }
+
+  static capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
 }
