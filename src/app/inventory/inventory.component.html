@@ -6,6 +6,12 @@
           <div class="header">
             <h4 class="title">Inventory</h4>
             <p class="category">A list of all products in stock</p>
+            <button
+              class="btn btn-primary btn-fill pull-right"
+              (click)="openModal('add')"
+            >
+              Add Inventory
+            </button>
           </div>
           <div class="content table-responsive table-full-width">
             <table class="table table-hover table-striped">
@@ -16,7 +22,17 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
-                  <td *ngFor="let cell of row">{{ cell }}</td>
+                  <td
+                    *ngFor="let cell of row"
+                    (click)="updateInventoryInitiate(row)"
+                  >
+                    {{ cell }}
+                  </td>
+                  <td>
+                    <a (click)="deleteInitiate(row)">
+                      <i class="pe-7s-trash"></i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
