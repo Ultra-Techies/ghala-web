@@ -21,6 +21,11 @@
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
                   <td *ngFor="let cell of row">{{ cell }}</td>
+                  <td>
+                    <a (click)="deleteInitiate(row)">
+                      <i class="pe-7s-trash"></i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
