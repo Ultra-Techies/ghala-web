@@ -47,50 +47,6 @@
                     >Product name is required</span
                   >
                 </div>
-                <!-- <div class="form-group">
-                  <label for="">SKU:</label>
-                  <input
-                    formControlName="sku"
-                    type="text"
-                    class="form-control"
-                    id="sku"
-                    placeholder="SKU"
-                    required
-                    height="auto"
-                    maxRows="4"
-                    [(ngModel)]="sku"
-                  />
-                  <span
-                    class="text-danger"
-                    *ngIf="
-                      addInventoryForm.controls['sku'].dirty &&
-                      addInventoryForm.hasError('required', 'sku')
-                    "
-                    >Product sku is required</span
-                  >
-                </div>
-                <div class="form-group">
-                  <label for="">Status:</label>
-                  <input
-                    formControlName="status"
-                    type="text"
-                    class="form-control"
-                    id="status"
-                    placeholder="Available"
-                    required
-                    height="auto"
-                    maxRows="4"
-                    [(ngModel)]="status"
-                  />
-                  <span
-                    class="text-danger"
-                    *ngIf="
-                      addInventoryForm.controls['status'].dirty &&
-                      addInventoryForm.hasError('required', 'status')
-                    "
-                    >Product status is required</span
-                  >
-                </div> -->
                 <div class="form-group">
                   <label for="">Product Category:</label>
                   <input
@@ -114,7 +70,7 @@
                   >
                 </div>
                 <div class="form-group">
-                  <label for="">PPU:</label>
+                  <label for="">Price Per Unit:</label>
                   <input
                     formControlName="ppu"
                     type="text"
@@ -157,7 +113,7 @@
                     >product Quantity is required</span
                   >
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="">Warehouse ID:</label>
                   <input
                     formControlName="warehouseId"
@@ -178,7 +134,7 @@
                     "
                     >Warehouse ID is required</span
                   >
-                </div>
+                </div> -->
               </div>
               <div><br /></div>
             </div>
@@ -196,12 +152,5 @@
     [disabled]="addInventoryForm.invalid"
   >
     {{ payload ? "Update" : "Add" }}
-  </button>
-  <button
-    type="button"
-    class="btn btn-primary btn-fill pull-left"
-    (click)="close()"
-  >
-    Close
   </button>
 </div>

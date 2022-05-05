@@ -44,8 +44,8 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
       .post(
         Utils.BASE_URL + 'warehouse',
         {
-          name: this.addWarehouseForm.value.warehouseName,
-          location: this.addWarehouseForm.value.warehouseLocation,
+          name: this.addWarehouseForm.value.warehouseName.trim(),
+          location: this.addWarehouseForm.value.warehouseLocation.trim(),
         },
         { headers: Utils.getHeaders() }
       )
@@ -68,8 +68,8 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
         Utils.BASE_URL + 'warehouse',
         {
           id: this.warehouseId,
-          name: this.addWarehouseForm.value.warehouseName,
-          location: this.addWarehouseForm.value.warehouseLocation,
+          name: this.addWarehouseForm.value.warehouseName.trim(),
+          location: this.addWarehouseForm.value.warehouseLocation.trim(),
         },
         { headers: Utils.getHeaders() }
       )

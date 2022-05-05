@@ -72,42 +72,12 @@ export class OrdersComponent implements OnInit {
       });
   }
   deleteInitiate(rowData: any) {
-    this.openModal('delete', rowData);
-  }
-  openModal(message: string = 'none', payLoad: any = null) {
-    //if message is add it will open the add modal if delete it will open the delete modal
-    // if (message === 'add') {
-    //   this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
-    //     AddupdateInventoryModalComponent,
-    //     {
-    //       modalClass: 'modal-dialog-centered',
-    //     }
-    //   );
-    //   this.modalRefAddUpdate.onClose.subscribe(() => {
-    //     this.getInventory();
-    //   });
-    // } else if (message === 'delete') {
     this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
       modalClass: 'modal-dialog-centered',
-      data: { payload: payLoad },
+      data: { payload: rowData, typeofPayload: 'order' },
     });
     this.modalRefDelete.onClose.subscribe(() => {
-      this.getOrders;
+      this.getOrders();
     });
-    //   } else if (message === 'update') {
-    //     this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
-    //       AddupdateInventoryModalComponent,
-    //       {
-    //         modalClass: 'modal-dialog-centered',
-    //         data: { payload: payLoad },
-    //       }
-    //     );
-    //     this.modalRefAddUpdate.onClose.subscribe((message: any = '') => {
-    //       this.getOrders();
-    //     });
-    //   } else {
-    //     console.log('Something went wrong');
-    //   }
-    // }
   }
 }
