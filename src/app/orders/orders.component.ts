@@ -19,7 +19,6 @@ export class OrdersComponent implements OnInit {
   public tableData2: TableData;
   modalRefDelete: MdbModalRef<DeleteOrdersmodalComponent> | null = null;
 
-  items: ['sku', 'quantity', 'name', 'ppu', 'totalPrice'];
   constructor(
     private http: HttpClient,
     private modalServiceAddUpdate: MdbModalService,
@@ -59,8 +58,8 @@ export class OrdersComponent implements OnInit {
             return [
               orders.id,
               orders.due,
-              orders.customerId,
-              orders.deliveryWindow,
+              orders.customerName,
+              Utils.capitalizeFirstLetter(orders.deliveryWindow),
               orders.items,
               orders.value,
 

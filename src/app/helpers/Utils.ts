@@ -14,4 +14,9 @@ export default class Utils {
     );
     return headers;
   }
+
+  //a function that takes an all caps string and returns a string with first letter capitalized and the rest of the letters lowercase
+  static capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 }
