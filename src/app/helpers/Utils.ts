@@ -15,8 +15,27 @@ export default class Utils {
     return headers;
   }
 
-  //a function that takes an all caps string and returns a string with first letter capitalized and the rest of the letters lowercase
   static capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  static formatAmount(amount) {
+    return amount.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'KES',
+    });
+  }
+
+  //a function that formats a date to the format dd/mm/yyyy
+  static formatDate(date) {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day, month, year].join('/');
   }
 }

@@ -78,7 +78,7 @@ export class Warehouses implements OnInit {
     } else if (message === 'delete') {
       this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
         modalClass: 'modal-dialog-centered',
-        data: { payload: payLoad },
+        data: { payload: payLoad, typeofPayload: 'warehouse' },
       });
       this.modalRefDelete.onClose.subscribe(() => {
         this.getWarehouses();
