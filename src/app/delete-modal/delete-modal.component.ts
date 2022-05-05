@@ -11,6 +11,7 @@ import Utils from 'app/helpers/Utils';
 export class DeleteModalComponent implements OnInit {
   payload: string | null = null;
   typeofPayload: string | null = null;
+  modalTitle: string | null = null;
 
   //warehouse payload
   warehouseId: any | null = null;
@@ -31,6 +32,7 @@ export class DeleteModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.modalTitle = Utils.capitalizeFirstLetter(this.typeofPayload);
     if (this.typeofPayload === 'warehouse') {
       this.warehouseId = this.payload ? this.payload[0] : null;
       this.warehouseName = this.payload ? this.payload[1] : null;
