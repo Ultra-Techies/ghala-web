@@ -10,9 +10,14 @@ import Utils from 'app/helpers/Utils';
 })
 export class DeleteModalComponent implements OnInit {
   payload: string | null = null;
+  typeofPayload: string | null = null;
+
+  //warehouse payload
   warehouseId: any | null = null;
   warehouseName: string | null = null;
   warehouseLocation: string | null = null;
+
+  //inventory payload
 
   constructor(
     private http: HttpClient,
@@ -20,6 +25,7 @@ export class DeleteModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('Delete modal payload: ' + this.typeofPayload);
     this.warehouseId = this.payload ? this.payload[0] : null;
     this.warehouseName = this.payload ? this.payload[1] : null;
     this.warehouseLocation = this.payload ? this.payload[2] : null;
@@ -27,6 +33,14 @@ export class DeleteModalComponent implements OnInit {
 
   close(message?: string) {
     this.modalRef.close(message);
+  }
+
+  deleteRecord() {
+    if (this.typeofPayload === 'warehouse') {
+      this.deleteWarehouse();
+    } else if (this.typeofPayload === 'inventory') {
+      this.deleteInventory();
+    }
   }
 
   deleteWarehouse() {
@@ -44,5 +58,23 @@ export class DeleteModalComponent implements OnInit {
           this.close('Error: ' + err);
         }
       );
+  }
+
+  deleteInventory() {
+    console.log('Delete inventory: ' + this.payload);
+    // this.http
+    //   .delete(Utils.BASE_URL + 'inventory/' + this.warehouseId, {
+    //     headers: Utils.getHeaders(),
+    //   })
+    //   .subscribe(
+    //     (data: any) => {
+    //       console.log(data);
+    //       this.close('Inventory deleted successfully');
+    //     },
+    //     (err: any) => {
+    //       alert('Error: ' + err);
+    //       this.close('Error: ' + err);
+    //     }
+    //   );
   }
 }

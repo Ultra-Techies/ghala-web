@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { DeleteOrdersmodalComponent } from 'app/delete-ordersmodal/delete-ordersmodal.component';
+import { DeleteModalComponent } from 'app/delete-modal/delete-modal.component';
 import Utils from 'app/helpers/Utils';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
@@ -17,7 +17,7 @@ declare interface TableData {
 export class OrdersComponent implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
-  modalRefDelete: MdbModalRef<DeleteOrdersmodalComponent> | null = null;
+  modalRefDelete: MdbModalRef<DeleteModalComponent> | null = null;
 
   constructor(
     private http: HttpClient,
@@ -57,13 +57,12 @@ export class OrdersComponent implements OnInit {
           dataRows: data.map((orders) => {
             return [
               orders.id,
-              orders.due,
+              Utils.formatDate(orders.due),
               orders.customerName,
               Utils.capitalizeFirstLetter(orders.deliveryWindow),
-              orders.items,
-              orders.value,
-
-              orders.status,
+              orders.items.length,
+              Utils.formatAmount(orders.value),
+              Utils.capitalizeFirstLetter(orders.status),
             ];
           }),
         }),
@@ -88,13 +87,10 @@ export class OrdersComponent implements OnInit {
     //     this.getInventory();
     //   });
     // } else if (message === 'delete') {
-    this.modalRefDelete = this.modalServiceDelete.open(
-      DeleteOrdersmodalComponent,
-      {
-        modalClass: 'modal-dialog-centered',
-        data: { payload: payLoad },
-      }
-    );
+    this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
+      modalClass: 'modal-dialog-centered',
+      data: { payload: payLoad },
+    });
     this.modalRefDelete.onClose.subscribe(() => {
       this.getOrders;
     });

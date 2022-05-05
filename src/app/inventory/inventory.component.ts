@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddupdateInventoryModalComponent } from 'app/addupdate-inventory-modal/addupdate-inventory-modal.component';
-import { DeleteInventorymodalComponent } from 'app/delete-inventorymodal/delete-inventorymodal.component';
+import { DeleteModalComponent } from 'app/delete-modal/delete-modal.component';
 import Utils from 'app/helpers/Utils';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -23,7 +23,7 @@ export class Inventory implements OnInit {
   loading = false;
   modalRefAddUpdate: MdbModalRef<AddupdateInventoryModalComponent> | null =
     null;
-  modalRefDelete: MdbModalRef<DeleteInventorymodalComponent> | null = null;
+  modalRefDelete: MdbModalRef<DeleteModalComponent> | null = null;
   sku: any;
   constructor(
     private http: HttpClient,
@@ -82,25 +82,7 @@ export class Inventory implements OnInit {
           };
       });
   }
-  deleteInventory(sku: any) {
-    this.loading = true;
-    this.http.delete(Utils.BASE_URL + 'inventory/' + sku).subscribe(
-      (res) => {
-        this.loading = false;
-        this.toastr.success('Product deleted Successfully!', 'Success');
-        this.ngOnInit();
-        // this.router.navigate(['todo']);
-      },
-      (err: any) => {
-        this.loading = false;
-        console.log('Error: ', err);
-        this.toastr.error(
-          'Product Delete Failed, ' + err.error.message,
-          'Error'
-        );
-      }
-    );
-  }
+
   deleteInitiate(rowData: any) {
     this.openModal('delete', rowData);
   }
@@ -122,13 +104,10 @@ export class Inventory implements OnInit {
         this.getInventory();
       });
     } else if (message === 'delete') {
-      this.modalRefDelete = this.modalServiceDelete.open(
-        DeleteInventorymodalComponent,
-        {
-          modalClass: 'modal-dialog-centered',
-          data: { payload: payLoad },
-        }
-      );
+      this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
+        modalClass: 'modal-dialog-centered',
+        data: { payload: payLoad, typeofPayload: 'inventory' },
+      });
       this.modalRefDelete.onClose.subscribe(() => {
         this.getInventory;
       });
@@ -147,20 +126,4 @@ export class Inventory implements OnInit {
       console.log('Something went wrong');
     }
   }
-  // deleteInventory(sku: any) {
-  //   this.http
-  //     .delete(Utils.BASE_URL + 'inventory/' + sku, {
-  //       headers: Utils.getHeaders(),
-  //     })
-  //     .subscribe(
-  //       (data: any) => {
-  //         console.log(data);
-  //         alert('Warehouse deleted successfully');
-  //       },
-  //       (err: any) => {
-  //         alert('Error: ' + err);
-  //         // this.close('Error: ' + err);
-  //       }
-  //     );
-  // }
 }

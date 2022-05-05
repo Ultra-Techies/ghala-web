@@ -29,8 +29,6 @@ import { AccountSetupComponent } from './account-setup/account-setup.component';
 import { AddUpdateWarehouseModalComponent } from './addupdate-warehouse-modal/addupdate-warehouse-modal.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { AddupdateInventoryModalComponent } from './addupdate-inventory-modal/addupdate-inventory-modal.component';
-import { DeleteInventorymodalComponent } from './delete-inventorymodal/delete-inventorymodal.component';
-import { DeleteOrdersmodalComponent } from './delete-ordersmodal/delete-ordersmodal.component';
 
 @NgModule({
   imports: [
@@ -62,8 +60,6 @@ import { DeleteOrdersmodalComponent } from './delete-ordersmodal/delete-ordersmo
     AddUpdateWarehouseModalComponent,
     DeleteModalComponent,
     AddupdateInventoryModalComponent,
-    DeleteInventorymodalComponent,
-    DeleteOrdersmodalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
