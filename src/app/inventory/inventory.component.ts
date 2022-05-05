@@ -38,11 +38,10 @@ export class Inventory implements OnInit {
         'ID',
         'Product Name',
         'Category',
-        'PPU',
+        'SKU',
         'Quantity',
-        'Warehouse ID',
+        'Price',
         'Status',
-        'Product Image',
       ],
       dataRows: [['', '', '']],
     };
@@ -58,22 +57,20 @@ export class Inventory implements OnInit {
             'ID',
             'Product Name',
             'Category',
-            'PPU',
+            'SKU',
             'Quantity',
-            'Warehouse Id',
+            'Price',
             'Status',
-            'Product Image',
           ],
           dataRows: data.map((inventory) => {
             return [
               inventory.sku,
               inventory.name,
               inventory.category,
-              inventory.ppu,
+              inventory.skuCode,
               inventory.quantity,
-              inventory.warehouseId,
-              inventory.status,
-              inventory.image,
+              inventory.ppu,
+              Utils.capitalizeFirstLetter(inventory.status),
             ];
           }),
         }),
@@ -109,7 +106,7 @@ export class Inventory implements OnInit {
         data: { payload: payLoad, typeofPayload: 'inventory' },
       });
       this.modalRefDelete.onClose.subscribe(() => {
-        this.getInventory;
+        this.getInventory();
       });
     } else if (message === 'update') {
       this.modalRefAddUpdate = this.modalServiceAddUpdate.open(

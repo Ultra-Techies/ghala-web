@@ -33,7 +33,7 @@ export class AddupdateInventoryModalComponent implements OnInit {
     this.warehouseId = this.payload ? this.payload[0] : null;
     this.name = this.payload ? this.payload[1] : null;
     this.category = this.payload ? this.payload[2] : null;
-    this.ppu = this.payload ? this.payload[3] : null;
+    this.ppu = this.payload ? this.payload[5] : null;
     this.quantity = this.payload ? this.payload[4] : null;
     // this.status = this.payload ? this.payload[5] : null;
 
@@ -42,7 +42,6 @@ export class AddupdateInventoryModalComponent implements OnInit {
       category: ['', Validators.required],
       ppu: ['', Validators.required],
       quantity: ['', Validators.required],
-      warehouseId: ['', Validators.required],
     });
   }
   close() {
@@ -54,10 +53,10 @@ export class AddupdateInventoryModalComponent implements OnInit {
         Utils.BASE_URL + 'inventory',
         {
           warehouseId: this.warehouseId,
-          name: this.addInventoryForm.value.name,
-          ppu: this.addInventoryForm.value.ppu,
-          quantity: this.addInventoryForm.value.quantity,
-          category: this.addInventoryForm.value.category,
+          name: this.addInventoryForm.value.name.trim(),
+          ppu: this.addInventoryForm.value.ppu.trim(),
+          quantity: this.addInventoryForm.value.quantity.trim(),
+          category: this.addInventoryForm.value.category.trim(),
         },
         { headers: Utils.getHeaders() }
       )
@@ -79,8 +78,8 @@ export class AddupdateInventoryModalComponent implements OnInit {
         Utils.BASE_URL + 'inventory',
         {
           sku: this.sku,
-          name: this.addInventoryForm.value.name,
-          category: this.addInventoryForm.value.category,
+          name: this.addInventoryForm.value.name.trim(),
+          category: this.addInventoryForm.value.category.trim(),
           quantity: this.addInventoryForm.value.quantity,
           ppu: this.addInventoryForm.value.ppu,
           warehouseId: this.addInventoryForm.value.warehouseId,

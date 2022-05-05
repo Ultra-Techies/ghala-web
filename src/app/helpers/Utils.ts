@@ -26,7 +26,6 @@ export default class Utils {
     });
   }
 
-  //a function that formats a date to the format dd/mm/yyyy
   static formatDate(date) {
     let d = new Date(date),
       month = '' + (d.getMonth() + 1),
