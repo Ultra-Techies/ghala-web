@@ -27,6 +27,9 @@ export class VerificationComponent implements OnInit {
   ) {}
   registerForm!: FormGroup;
   ngOnInit(): void {
+    if (Utils.userLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
     this.registerForm = this.formBuilder.group({
       countryCode: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.minLength(9)]],

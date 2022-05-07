@@ -45,7 +45,10 @@ export class OtpComponent implements OnInit {
       history.state.data.otp === this.otp
     ) {
       this.isValid = true;
-      this.router.navigate(['/dashboard']);
+      Utils.saveUserData(history.state.phoneNumber);
+      this.router.navigate(['/dashboard'], {
+        state: { phoneNumber: history.state.phoneNumber },
+      });
     } else {
       //set error message
       this.otpForm.controls.otp.setErrors({
@@ -66,7 +69,10 @@ export class OtpComponent implements OnInit {
           console.log(data);
           //if data contains verified, do nothing else redirect to dashboard
           if (data['id'] !== undefined) {
-            this.router.navigate(['/dashboard']);
+            Utils.saveUserData(phoneNumber);
+            this.router.navigate(['/dashboard'], {
+              state: { phoneNumber: phoneNumber },
+            });
           } else {
             //set error message
             this.otpForm.controls.otp.setErrors({

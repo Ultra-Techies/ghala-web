@@ -41,4 +41,26 @@ export default class Utils {
   static formatPhoneNumber(phoneNumber) {
     return phoneNumber.replace(/^0/, '');
   }
+
+  static saveUserData(phoneNumber) {
+    localStorage.clear();
+    localStorage.setItem('phoneNumber', phoneNumber);
+  }
+
+  static checkUserData(phoneNumber) {
+    if (localStorage.getItem('phoneNumber') === phoneNumber) {
+      return true;
+    } else {
+      localStorage.clear();
+      return false;
+    }
+  }
+
+  static userLoggedIn() {
+    if (localStorage.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
