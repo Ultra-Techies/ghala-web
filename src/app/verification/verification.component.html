@@ -49,13 +49,16 @@
           "
           >Phone is required</span
         >
+        <!-- <span class="text-danger" *ngIf="!userExists && submitted">
+          User does not exist!</span
+        > -->
       </div>
       <button
         mat-stroked-button
-        class="btn-block"
         [disabled]="registerForm.invalid"
+        *ngIf="!registerForm.invalid"
       >
-        Register
+        Login
       </button>
     </form>
   </div>
