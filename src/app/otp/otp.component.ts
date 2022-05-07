@@ -21,7 +21,9 @@ export class OtpComponent implements OnInit {
   otp: string;
 
   ngOnInit(): void {
-    console.log('State: ' + history.state.phoneNumber);
+    if (Utils.userLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
     if (history.state.phoneNumber === undefined) {
       this.router.navigate(['/']);
     }
@@ -45,8 +47,7 @@ export class OtpComponent implements OnInit {
       history.state.data.otp === this.otp
     ) {
       this.isValid = true;
-      Utils.saveUserData(history.state.phoneNumber);
-      this.router.navigate(['/dashboard'], {
+      this.router.navigate(['/account-setup'], {
         state: { phoneNumber: history.state.phoneNumber },
       });
     } else {
@@ -67,14 +68,14 @@ export class OtpComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log(data);
-          //if data contains verified, do nothing else redirect to dashboard
           if (data['id'] !== undefined) {
-            Utils.saveUserData(phoneNumber);
+            Utils.saveUserData('phoneNumber', phoneNumber);
+            Utils.saveUserData('userId', data['id']);
             this.router.navigate(['/dashboard'], {
               state: { phoneNumber: phoneNumber },
             });
+            Utils.saveUserData('data', data);
           } else {
-            //set error message
             this.otpForm.controls.otp.setErrors({
               incorrect: true,
             });
