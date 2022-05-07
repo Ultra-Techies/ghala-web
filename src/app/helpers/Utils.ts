@@ -42,9 +42,9 @@ export default class Utils {
     return phoneNumber.replace(/^0/, '');
   }
 
-  static saveUserData(phoneNumber) {
+  static saveUserData(key, data) {
     localStorage.clear();
-    localStorage.setItem('phoneNumber', phoneNumber);
+    localStorage.setItem(key, data);
   }
 
   static checkUserData(phoneNumber) {
