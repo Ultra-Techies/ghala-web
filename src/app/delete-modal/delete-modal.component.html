@@ -19,7 +19,13 @@
   <div class="container">
     <div class="row">
       Are you sure you want to delete
-      {{ typeofPayload === "inventory" ? inventoryName : warehouseName }}?
+      {{
+        typeofPayload === "inventory"
+          ? inventoryName
+          : typeofPayload === "order"
+          ? orderName + "'s order"
+          : warehouseName
+      }}?
     </div>
   </div>
 </div>

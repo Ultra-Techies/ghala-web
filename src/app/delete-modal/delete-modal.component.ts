@@ -42,7 +42,7 @@ export class DeleteModalComponent implements OnInit {
       this.inventoryName = this.payload ? this.payload[1] : null;
     } else if (this.typeofPayload === 'order') {
       this.orderId = this.payload ? this.payload[0] : null;
-      this.orderName = this.payload ? this.payload[1] : null;
+      this.orderName = this.payload ? this.payload[2] : null;
     }
   }
 
