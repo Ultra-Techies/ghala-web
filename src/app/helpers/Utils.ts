@@ -37,4 +37,8 @@ export default class Utils {
 
     return [day, month, year].join('/');
   }
+
+  static formatPhoneNumber(phoneNumber) {
+    return phoneNumber.replace(/^0/, '');
+  }
 }
