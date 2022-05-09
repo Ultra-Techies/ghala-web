@@ -82,4 +82,9 @@ export default class Utils {
     }
     return result;
   }
+
+  //get assignedWarehouse from local storage
+  static getAssignedWarehouse() {
+    return localStorage.getItem('assignedWarehouse');
+  }
 }
