@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
+import Utils from 'app/helpers/Utils';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -24,8 +26,13 @@ export class HomeComponent implements OnInit {
   public activityChartOptions: any;
   public activityChartResponsive: any[];
   public activityChartLegendItems: LegendItem[];
-  constructor() {}
 
+  addTask = false;
+  tasks = [];
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  addTaskForm!: FormGroup;
   ngOnInit() {
     this.emailChartType = ChartType.Pie;
     this.emailChartData = {
@@ -131,7 +138,47 @@ export class HomeComponent implements OnInit {
     ];
     this.activityChartLegendItems = [
       { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
-      { title: 'Sales', imageClass: 'fa fa-circle text-danger' },
+      { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
+
+    this.addTaskForm = this.formBuilder.group({
+      task: ['', [Validators.minLength(9)]],
+    });
+
+    this.tasks = this.getTasks();
+  }
+
+  toggleAddTasks() {
+    this.addTask = !this.addTask;
+
+    if (!this.addTask) {
+      const randomString = Utils.getRandomString(5);
+      const task = {
+        id: 'task-' + randomString,
+        task: this.addTaskForm.value.task,
+        completed: false,
+      };
+      Utils.saveTask(task.id, task);
+      this.addTaskForm.reset();
+    }
+  }
+
+  //loop through local storage and get all tasks with task.id starting with 'task-' and return them
+  getTasks() {
+    const tasks = [];
+    const keys = Object.keys(localStorage);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key.startsWith('task-')) {
+        tasks.push(JSON.parse(localStorage.getItem(key)));
+      }
+    }
+    return tasks;
+  }
+
+  updateTask(task) {
+    console.log(task);
+    task.completed = !task.completed;
+    Utils.saveTask(task.id, task);
   }
 }
