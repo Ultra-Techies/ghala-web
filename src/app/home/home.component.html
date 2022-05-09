@@ -20,16 +20,78 @@
       <div class="col-md-6">
         <div class="card">
           <div class="header">
-            <button class="btn btn-success btn-fill pull-right">
+            <button
+              class="btn btn-success btn-fill pull-right"
+              (click)="toggleAddTasks()"
+            >
               <i class="fa fa-plus"></i> Add Task
             </button>
             <h4 class="title">Tasks</h4>
             <p class="category">Warehouse</p>
           </div>
+          <br />
+          <form
+            class="example-form"
+            [formGroup]="addTaskForm"
+            (ngSubmit)="toggleAddTasks()"
+          >
+            <div class="row" *ngIf="addTask">
+              <div
+                class="col-md-12"
+                style="padding-right: 30px; padding-left: 30px"
+              >
+                <div class="form-group">
+                  <input
+                    id="task"
+                    class="form-control"
+                    formControlName="task"
+                    type="text"
+                    class="form-control"
+                    placeholder="Detailed task"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+
           <div class="content">
             <div class="table-full-width">
               <table class="table">
                 <tbody>
+                  <!-- show tasks in each row -->
+                  <tr *ngFor="let task of tasks">
+                    <td>
+                      <div class="checkbox">
+                        <input
+                          id="task.id"
+                          type="checkbox"
+                          (change)="updateTask(task)"
+                          name="task.id"
+                        />
+                        <label [for]="task.id"> </label>
+                      </div>
+                    </td>
+                    <td>{{ task.task }}</td>
+                    <td class="td-actions text-right">
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        title="Edit Task"
+                        class="btn btn-info btn-simple btn-xs"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        title="Remove"
+                        class="btn btn-danger btn-simple btn-xs"
+                      >
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </td>
+                  </tr>
+
                   <tr>
                     <td>
                       <div class="checkbox">

@@ -47,6 +47,14 @@ export default class Utils {
     localStorage.setItem(key, data);
   }
 
+  static saveTask(keyVal, task) {
+    var randomString = Utils.getRandomString(5);
+    if (keyVal !== null) {
+      randomString = keyVal;
+    }
+    localStorage.setItem('task-' + randomString, JSON.stringify(task));
+  }
+
   static checkUserData(phoneNumber) {
     if (localStorage.getItem('phoneNumber') === phoneNumber) {
       return true;
@@ -62,5 +70,16 @@ export default class Utils {
     } else {
       return true;
     }
+  }
+
+  static getRandomString(length) {
+    let result = '';
+    let characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LbdModule } from '../../lbd/lbd.module';
 
@@ -20,6 +20,7 @@ import { DispatchComponent } from 'app/dispatch/dispatch.component';
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     LbdModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     HomeComponent,
