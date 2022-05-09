@@ -71,6 +71,7 @@ export class OtpComponent implements OnInit {
           if (data['id'] !== undefined) {
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
+            this.getUserData();
             this.router.navigate(['/dashboard'], {
               state: { phoneNumber: phoneNumber },
             });
@@ -84,6 +85,19 @@ export class OtpComponent implements OnInit {
         (error) => {
           console.log(error);
           alert('Something went wrong!');
+        }
+      );
+  }
+
+  getUserData() {
+    this.http
+      .get(Utils.BASE_URL + 'user/' + localStorage.getItem('userId'))
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+        },
+        (error) => {
+          console.log(error);
         }
       );
   }

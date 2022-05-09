@@ -41,7 +41,12 @@ export class OrdersComponent implements OnInit {
   }
   getOrders() {
     this.http
-      .get(Utils.BASE_URL + 'orders', { headers: Utils.getHeaders() })
+      .get(
+        Utils.BASE_URL +
+          'warehouseorders/' +
+          localStorage.getItem('assignedWarehouse'),
+        { headers: Utils.getHeaders() }
+      )
       .subscribe((data: any) => {
         console.log(data);
         (this.tableData1 = {
