@@ -22,7 +22,7 @@ export class AccountSetupComponent implements OnInit {
   public warehouses: any;
 
   ngOnInit(): void {
-    console.log('Passed Data: ' + history.state.phoneNumber);
+    //console.log('Passed Data: ' + history.state.phoneNumber);
     this.getWarehouses();
     if (history.state.phoneNumber === undefined) {
       this.router.navigate(['/']);
