@@ -4,10 +4,16 @@
       <img src="/assets/img/logo.png" />
     </div>
     <div class="number">
-      <h1>OTP SMS</h1>
+      <h1>{{ newUser ? "OTP SMS" : "Account PIN" }}</h1>
     </div>
     <div class="otp">
-      <p>Please enter the OTP code sent to your number</p>
+      <p>
+        {{
+          newUser
+            ? "Please enter the OTP code sent to your number"
+            : "Please enter your account pin to login"
+        }}
+      </p>
     </div>
   </div>
   <br />

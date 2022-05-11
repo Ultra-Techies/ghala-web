@@ -43,7 +43,6 @@ export default class Utils {
   }
 
   static saveUserData(key, data) {
-    localStorage.clear();
     localStorage.setItem(key, data);
   }
 
@@ -83,8 +82,12 @@ export default class Utils {
     return result;
   }
 
-  //get assignedWarehouse from local storage
   static getAssignedWarehouse() {
     return localStorage.getItem('assignedWarehouse');
+  }
+
+  //convert currency string back to number e.g. KES 8,100.00 to 8100.00
+  static convertCurrencyToNumber(currency) {
+    return parseInt(currency.replace(/,/g, '').replace('KES', ''));
   }
 }

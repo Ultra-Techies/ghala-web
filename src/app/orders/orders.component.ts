@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DeleteModalComponent } from 'app/delete-modal/delete-modal.component';
+import { DeliveryNoteComponent } from 'app/delivery-note/delivery-note.component';
 import Utils from 'app/helpers/Utils';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
@@ -17,11 +18,13 @@ declare interface TableData {
 export class OrdersComponent implements OnInit {
   public tableData1: TableData;
   public tableData2: TableData;
-  modalRefDelete: MdbModalRef<DeleteModalComponent> | null = null;
+  public selectedORders: any = [];
+
+  modalRefCreateDN: MdbModalRef<DeliveryNoteComponent> | null = null;
 
   constructor(
     private http: HttpClient,
-    private modalServiceAddUpdate: MdbModalService,
+    private modalServiceCreateDN: MdbModalService,
     private modalServiceDelete: MdbModalService
   ) {}
 
@@ -35,7 +38,7 @@ export class OrdersComponent implements OnInit {
         'Price',
         'Status',
       ],
-      dataRows: [['', '', '', '', '', '']],
+      dataRows: [['', '', '', '', '', '', '']],
     };
     this.getOrders();
   }
@@ -51,6 +54,7 @@ export class OrdersComponent implements OnInit {
         console.log(data);
         (this.tableData1 = {
           headerRow: [
+            '',
             'ID',
             'Delivery Date',
             'Customer',
@@ -77,12 +81,33 @@ export class OrdersComponent implements OnInit {
       });
   }
   deleteInitiate(rowData: any) {
-    this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
+    this.modalRefCreateDN = this.modalServiceDelete.open(DeleteModalComponent, {
       modalClass: 'modal-dialog-centered',
       data: { payload: rowData, typeofPayload: 'order' },
     });
-    this.modalRefDelete.onClose.subscribe(() => {
+    this.modalRefCreateDN.onClose.subscribe(() => {
       this.getOrders();
     });
+  }
+
+  selected(row: any) {
+    if (this.selectedORders.includes(row)) {
+      this.selectedORders = this.selectedORders.filter(
+        (order) => order.id !== row.id
+      );
+    } else {
+      this.selectedORders.push(row);
+    }
+    console.log('Selected Order: ' + this.selectedORders);
+  }
+
+  openModal() {
+    this.modalRefCreateDN = this.modalServiceCreateDN.open(
+      DeliveryNoteComponent,
+      {
+        modalClass: 'modal-dialog-centered',
+        data: { payload: this.selectedORders },
+      }
+    );
   }
 }

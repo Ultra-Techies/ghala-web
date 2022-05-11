@@ -5,11 +5,14 @@
         <div class="card">
           <div class="header">
             <h4 class="title">Orders</h4>
+            <button
+              class="btn btn-primary btn-fill pull-right"
+              [disabled]="selectedORders.length === 0"
+              (click)="openModal()"
+            >
+              Create Delivery Note
+            </button>
             <p class="category">A list of all orders</p>
-            <!-- <a href="#">
-              <i class="fa fa-search"></i>
-              <p class="hidden-lg hidden-md">Search</p>
-            </a> -->
           </div>
           <div class="content table-responsive table-full-width">
             <table class="table table-hover table-striped">
@@ -20,6 +23,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
+                  <td>
+                    <input
+                      type="checkbox"
+                      (click)="selected(row)"
+                      [checked]="row.selected"
+                      [disabled]="row[6] === 'Pending'"
+                    />
+                  </td>
                   <td *ngFor="let cell of row">{{ cell }}</td>
                   <td>
                     <a (click)="deleteInitiate(row)">
