@@ -95,6 +95,7 @@ export class OtpComponent implements OnInit {
       .subscribe(
         (data) => {
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+          Utils.saveUserData('userId', data['id']);
         },
         (error) => {
           console.log(error);
