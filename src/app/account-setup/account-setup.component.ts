@@ -18,14 +18,12 @@ export class AccountSetupComponent implements OnInit {
     public formBuilder: FormBuilder,
     private http: HttpClient
   ) {}
-  warehouses = [
-    { id: 1, name: 'Ruiru' },
-    { id: 2, name: 'Rongai' },
-    { id: 3, name: 'Kiambu' },
-  ];
+
+  public warehouses: any;
 
   ngOnInit(): void {
     console.log('Passed Data: ' + history.state.phoneNumber);
+    this.getWarehouses();
     if (history.state.phoneNumber === undefined) {
       this.router.navigate(['/']);
     }
@@ -63,6 +61,21 @@ export class AccountSetupComponent implements OnInit {
             Utils.saveUserData('userId', data['id']);
             this.router.navigate(['/dashboard']);
           }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
+  //get all warehouses from api/warehouses
+  getWarehouses() {
+    this.http
+      .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.warehouses = data;
         },
         (err) => {
           console.log(err);
