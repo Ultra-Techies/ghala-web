@@ -29,7 +29,11 @@ export class DeliveryNoteComponent implements OnInit {
         .post(
           Utils.BASE_URL + 'deliveryNote',
           {
-            route: localStorage.getItem('assignedWarehouse') + '-route',
+            route:
+              'route-' +
+              localStorage.getItem('assignedWarehouse') +
+              '-' +
+              Utils.getRandomString(4),
             orderIds: this.payload.map((order) => order[0]),
             deliveryWindow: this.payload[0][3],
             warehouseId: localStorage.getItem('assignedWarehouse'),
@@ -38,7 +42,7 @@ export class DeliveryNoteComponent implements OnInit {
         )
         .subscribe(
           (data: any) => {
-            console.log(data);
+            //console.log(data);
             this.close();
             this.payload = [];
           },

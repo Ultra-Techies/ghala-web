@@ -17,7 +17,6 @@ declare interface TableData {
 })
 export class Warehouses implements OnInit {
   public tableData1: TableData;
-  public tableData2: TableData;
 
   modalRefAddUpdate: MdbModalRef<AddUpdateWarehouseModalComponent> | null =
     null;
@@ -42,7 +41,7 @@ export class Warehouses implements OnInit {
     this.http
       .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
-        console.log(data);
+        //console.log(data);
         (this.tableData1 = {
           headerRow: ['ID', 'Name', 'Location'],
           dataRows: data.map((warehouse) => {

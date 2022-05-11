@@ -17,7 +17,6 @@ declare interface TableData {
 })
 export class OrdersComponent implements OnInit {
   public tableData1: TableData;
-  public tableData2: TableData;
   public selectedORders: any = [];
 
   modalRefCreateDN: MdbModalRef<DeliveryNoteComponent> | null = null;
@@ -41,8 +40,10 @@ export class OrdersComponent implements OnInit {
       dataRows: [['', '', '', '', '', '', '']],
     };
     this.getOrders();
+    //.log('Selected Order: ' + this.selectedORders);
   }
   getOrders() {
+    this.selectedORders = [];
     this.http
       .get(
         Utils.BASE_URL +
@@ -98,7 +99,6 @@ export class OrdersComponent implements OnInit {
     } else {
       this.selectedORders.push(row);
     }
-    console.log('Selected Order: ' + this.selectedORders);
   }
 
   openModal() {
@@ -109,5 +109,10 @@ export class OrdersComponent implements OnInit {
         data: { payload: this.selectedORders },
       }
     );
+
+    this.modalRefCreateDN.onClose.subscribe(() => {
+      this.getOrders();
+      this.selectedORders = [];
+    });
   }
 }

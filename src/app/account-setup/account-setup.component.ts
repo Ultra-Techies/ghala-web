@@ -36,7 +36,7 @@ export class AccountSetupComponent implements OnInit {
     });
   }
   submit() {
-    console.log(this.accountForm.value);
+    //console.log(this.accountForm.value);
     this.createUser();
   }
 
@@ -56,7 +56,7 @@ export class AccountSetupComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
+          //console.log(data);
           if (data['id']) {
             Utils.saveUserData('userId', data['id']);
             this.router.navigate(['/dashboard']);
@@ -74,7 +74,7 @@ export class AccountSetupComponent implements OnInit {
       .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
       .subscribe(
         (data) => {
-          console.log(data);
+          //console.log(data);
           this.warehouses = data;
         },
         (err) => {

@@ -51,7 +51,7 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
           this.close();
           this.toastr.success('Added Successfully!');
         },
@@ -75,7 +75,7 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
           this.close();
           this.toastr.success('Updated Successfully!');
         },

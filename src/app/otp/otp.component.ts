@@ -69,7 +69,7 @@ export class OtpComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
+          //console.log(data);
           if (data['id'] !== undefined) {
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);

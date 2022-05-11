@@ -76,7 +76,7 @@ export class VerificationComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
+          //console.log(data);
           this.router.navigate(['/otp'], {
             state: { phoneNumber: phoneNumber, data: data, newUser: true },
           });

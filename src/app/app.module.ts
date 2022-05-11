@@ -30,6 +30,7 @@ import { AddUpdateWarehouseModalComponent } from './addupdate-warehouse-modal/ad
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { AddupdateInventoryModalComponent } from './addupdate-inventory-modal/addupdate-inventory-modal.component';
 import { DeliveryNoteComponent } from './delivery-note/delivery-note.component';
+import { DispatchOrderComponent } from './dispatch-order/dispatch-order.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { DeliveryNoteComponent } from './delivery-note/delivery-note.component';
     DeleteModalComponent,
     AddupdateInventoryModalComponent,
     DeliveryNoteComponent,
+    DispatchOrderComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -5,6 +5,13 @@
         <div class="card">
           <div class="header">
             <h4 class="title">Dispatch</h4>
+            <button
+              class="btn btn-primary btn-fill pull-right"
+              [disabled]="selectedORders.length === 0"
+              (click)="openModal()"
+            >
+              Dispatch
+            </button>
             <p class="category">A list of all items in dispatch queue</p>
           </div>
           <div class="content table-responsive table-full-width">
@@ -16,6 +23,16 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData1.dataRows">
+                  <td>
+                    <input
+                      type="checkbox"
+                      (click)="selected(row)"
+                      [checked]="row.selected"
+                      [disabled]="
+                        row[5] === 'DISPATCHED' || row[5] === 'COMPLETED'
+                      "
+                    />
+                  </td>
                   <td *ngFor="let cell of row">{{ cell }}</td>
                 </tr>
               </tbody>

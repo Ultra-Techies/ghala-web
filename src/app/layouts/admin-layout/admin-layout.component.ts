@@ -26,7 +26,7 @@ export class AdminLayoutComponent implements OnInit {
   constructor(public location: Location, private router: Router) {}
 
   ngOnInit() {
-    console.log(this.router);
+    //console.log(this.router);
     if (!Utils.userLoggedIn()) {
       this.router.navigate(['/']);
     }

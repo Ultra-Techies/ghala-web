@@ -19,7 +19,6 @@ declare interface TableData {
 })
 export class Inventory implements OnInit {
   public tableData1: TableData;
-  public tableData2: TableData;
   loading = false;
   modalRefAddUpdate: MdbModalRef<AddupdateInventoryModalComponent> | null =
     null;
@@ -51,7 +50,7 @@ export class Inventory implements OnInit {
     this.http
       .get(Utils.BASE_URL + 'allinventory', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
-        console.log(data);
+        //console.log(data);
         (this.tableData1 = {
           headerRow: [
             'ID',

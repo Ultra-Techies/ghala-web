@@ -67,7 +67,7 @@ export class DeleteModalComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
           this.close('Warehouse deleted successfully');
         },
         (err: any) => {
@@ -84,7 +84,7 @@ export class DeleteModalComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
           this.close('Inventory deleted successfully');
         },
         (err: any) => {
@@ -101,7 +101,7 @@ export class DeleteModalComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
           this.close('Order deleted successfully');
         },
         (err: any) => {

@@ -177,7 +177,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateTask(task) {
-    console.log(task);
+    //console.log(task);
     task.completed = !task.completed;
     Utils.saveTask(task.id, task);
   }

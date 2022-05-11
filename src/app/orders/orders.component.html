@@ -28,7 +28,9 @@
                       type="checkbox"
                       (click)="selected(row)"
                       [checked]="row.selected"
-                      [disabled]="row[6] === 'Pending'"
+                      [disabled]="
+                        row[6] === 'Pending' || row[6] === 'Delivered'
+                      "
                     />
                   </td>
                   <td *ngFor="let cell of row">{{ cell }}</td>
