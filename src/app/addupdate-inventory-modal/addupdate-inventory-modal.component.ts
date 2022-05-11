@@ -52,7 +52,7 @@ export class AddupdateInventoryModalComponent implements OnInit {
       .post(
         Utils.BASE_URL + 'inventory',
         {
-          warehouseId: this.warehouseId,
+          warehouseId: Utils.getAssignedWarehouse(),
           name: this.addInventoryForm.value.name.trim(),
           ppu: this.addInventoryForm.value.ppu.trim(),
           quantity: this.addInventoryForm.value.quantity.trim(),

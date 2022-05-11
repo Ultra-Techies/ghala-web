@@ -19,6 +19,7 @@ export class OtpComponent implements OnInit {
 
   isValid = true;
   otp: string;
+  newUser = true;
 
   ngOnInit(): void {
     if (Utils.userLoggedIn()) {
@@ -30,6 +31,7 @@ export class OtpComponent implements OnInit {
     this.otpForm = this.formBuilder.group({
       otp: ['', Validators.required],
     });
+    this.newUser = history.state.newUser;
   }
 
   onOtpChange(otp) {
@@ -37,9 +39,9 @@ export class OtpComponent implements OnInit {
   }
 
   verify() {
-    this.isValid = false;
     //check to see if history.state exists and contains otp
     if (history.state.newUser === false) {
+      this.isValid = true;
       this.verifyUser(history.state.phoneNumber, this.otp);
     } else if (
       history.state.newUser === true &&
@@ -51,7 +53,7 @@ export class OtpComponent implements OnInit {
         state: { phoneNumber: history.state.phoneNumber },
       });
     } else {
-      //set error message
+      this.isValid = false;
       this.otpForm.controls.otp.setErrors({
         incorrect: true,
       });
@@ -71,11 +73,13 @@ export class OtpComponent implements OnInit {
           if (data['id'] !== undefined) {
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
+            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
             this.getUserData();
-            this.router.navigate(['/dashboard'], {
-              state: { phoneNumber: phoneNumber },
-            });
-            Utils.saveUserData('data', data);
+            setTimeout(() => {
+              this.router.navigate(['/dashboard'], {
+                state: { phoneNumber: phoneNumber },
+              });
+            }, 3000);
           } else {
             this.otpForm.controls.otp.setErrors({
               incorrect: true,
