@@ -1,0 +1,45 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Dispatch</h4>
+            <button
+              class="btn btn-primary btn-fill pull-right"
+              [disabled]="selectedORders.length === 0"
+              (click)="openModal()"
+            >
+              Dispatch
+            </button>
+            <p class="category">A list of all items in dispatch queue</p>
+          </div>
+          <div class="content table-responsive table-full-width">
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr>
+                  <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of tableData1.dataRows">
+                  <td>
+                    <input
+                      type="checkbox"
+                      (click)="selected(row)"
+                      [checked]="row.selected"
+                      [disabled]="
+                        row[5] === 'DISPATCHED' || row[5] === 'COMPLETED'
+                      "
+                    />
+                  </td>
+                  <td *ngFor="let cell of row">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

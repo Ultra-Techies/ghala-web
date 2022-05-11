@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="container-example">
+    <div class="logo">
+      <img src="/assets/img/logo.png" />
+    </div>
+    <div class="number">
+      <h1>Mobile Number</h1>
+    </div>
+    <div class="otp">
+      <p>We need to send an OTP to authenticate your number</p>
+    </div>
+  </div>
+  <br />
+  <div class="example-container">
+    <form
+      class="example-form"
+      [formGroup]="registerForm"
+      (ngSubmit)="register()"
+    >
+      <div class="mat-form-field">
+        <label>Country Code</label>
+        <select
+          id="countrycode"
+          formControlName="countryCode"
+          class="form-control"
+          required
+        >
+          <option *ngFor="let country of countries" [value]="country.id">
+            {{ country.code }}
+          </option>
+        </select>
+      </div>
+
+      <br />
+      <div class="mat-form-field">
+        <label>Phone Number</label>
+        <input
+          id="phoneNumber"
+          type="email"
+          class="form-control"
+          placeholder="Phone"
+          value="7123445678"
+          formControlName="phoneNumber"
+        /><span
+          class="text-danger"
+          *ngIf="
+            registerForm.controls['phoneNumber'].dirty &&
+            registerForm.hasError('phoneNumber', 'phoneNumber')
+          "
+          >Phone is required</span
+        >
+        <!-- <span class="text-danger" *ngIf="!userExists && submitted">
+          User does not exist!</span
+        > -->
+      </div>
+      <button
+        mat-stroked-button
+        [disabled]="registerForm.invalid"
+        *ngIf="!registerForm.invalid"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+</div>
