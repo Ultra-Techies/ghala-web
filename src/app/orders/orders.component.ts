@@ -109,5 +109,9 @@ export class OrdersComponent implements OnInit {
         data: { payload: this.selectedORders },
       }
     );
+    this.modalRefCreateDN.onClose.subscribe(() => {
+      this.getOrders();
+      this.selectedORders = [];
+    });
   }
 }
