@@ -39,6 +39,15 @@ export class HomeComponent implements OnInit {
       task: ['', [Validators.minLength(9)]],
     });
 
+    //initialize order history from local storage
+    let ordersHistory = localStorage.getItem('orderData');
+    if (ordersHistory) {
+      let ordersHistoryArray = ordersHistory.split(',');
+      for (let i = 0; i < ordersHistoryArray.length; i++) {
+        this.orderData[i] = Number(ordersHistoryArray[i]);
+      }
+    }
+
     this.tasks = this.getTasks();
     this.getStats();
 
@@ -163,6 +172,7 @@ export class HomeComponent implements OnInit {
             }
           }
 
+          Utils.saveUserData('orderData', this.orderData);
           this.getInventoryvsOrders();
         },
         (error) => {
