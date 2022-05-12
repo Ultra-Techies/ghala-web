@@ -40,7 +40,7 @@ export class UserComponent implements OnInit {
   phoneNumber: any = [];
   ngOnInit(): void {
     this.loading = false;
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
     let header = new HttpHeaders();
     header.append('Content-Type', 'application/json');
     header.append('Access-Control-Allow-Origin', '*');
@@ -65,7 +65,7 @@ export class UserComponent implements OnInit {
             this.loading = false;
             this.loggedInUser = res;
             this.userID = userId;
-            console.log(res);
+            //console.log(res);
           },
           (err: any) => {
             this.loading = false;
@@ -121,7 +121,7 @@ export class UserComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //update success
-          console.log(data);
+          //console.log(data);
           window.location.reload();
         },
         (err: any) => {
