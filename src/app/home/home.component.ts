@@ -4,6 +4,7 @@ import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
 import Utils from 'app/helpers/Utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -29,70 +30,35 @@ export class HomeComponent implements OnInit {
 
   addTask = false;
   tasks = [];
+  orderData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  invetoryValue = 0;
+  inventoryorderstats = [
+    Number(localStorage.getItem('inventory%')),
+    Number(localStorage.getItem('orders%')),
+  ];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
 
   addTaskForm!: FormGroup;
   ngOnInit() {
+    this.addTaskForm = this.formBuilder.group({
+      task: ['', [Validators.minLength(9)]],
+    });
+
+    this.tasks = this.getTasks();
+    this.getStats();
+
     this.emailChartType = ChartType.Pie;
     this.emailChartData = {
-      labels: ['62%', '32%', '6%'],
-      series: [62, 32, 6],
+      labels: [
+        localStorage.getItem('inventory%') + '%',
+        localStorage.getItem('orders%') + '%',
+      ],
+      series: this.inventoryorderstats,
     };
     this.emailChartLegendItems = [
-      { title: 'Open', imageClass: 'fa fa-circle text-info' },
-      { title: 'Bounce', imageClass: 'fa fa-circle text-danger' },
-      { title: 'Unsubscribe', imageClass: 'fa fa-circle text-warning' },
-    ];
-
-    this.hoursChartType = ChartType.Line;
-    this.hoursChartData = {
-      labels: [
-        '9:00AM',
-        '12:00AM',
-        '3:00PM',
-        '6:00PM',
-        '9:00PM',
-        '12:00PM',
-        '3:00AM',
-        '6:00AM',
-      ],
-      series: [
-        [287, 385, 490, 492, 554, 586, 698, 695, 752, 788, 846, 944],
-        [67, 152, 143, 240, 287, 335, 435, 437, 539, 542, 544, 647],
-        [23, 113, 67, 108, 190, 239, 307, 308, 439, 410, 410, 509],
-      ],
-    };
-    this.hoursChartOptions = {
-      low: 0,
-      high: 800,
-      showArea: true,
-      height: '245px',
-      axisX: {
-        showGrid: false,
-      },
-      lineSmooth: Chartist.Interpolation.simple({
-        divisor: 3,
-      }),
-      showLine: false,
-      showPoint: false,
-    };
-    this.hoursChartResponsive = [
-      [
-        'screen and (max-width: 640px)',
-        {
-          axisX: {
-            labelInterpolationFnc: function (value) {
-              return value[0];
-            },
-          },
-        },
-      ],
-    ];
-    this.hoursChartLegendItems = [
-      { title: 'Open', imageClass: 'fa fa-circle text-info' },
-      { title: 'Click', imageClass: 'fa fa-circle text-danger' },
-      { title: 'Click Second Time', imageClass: 'fa fa-circle text-warning' },
+      { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
+      { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
 
     this.activityChartType = ChartType.Bar;
@@ -111,11 +77,9 @@ export class HomeComponent implements OnInit {
         'Nov',
         'Dec',
       ],
-      series: [
-        [542, 443, 320, 780, 0, 0, 0, 0, 0, 0, 0, 0],
-        [412, 243, 280, 580, 0, 0, 0, 0, 0, 0, 0, 0],
-      ],
+      series: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], this.orderData],
     };
+
     this.activityChartOptions = {
       seriesBarDistance: 10,
       axisX: {
@@ -137,15 +101,104 @@ export class HomeComponent implements OnInit {
       ],
     ];
     this.activityChartLegendItems = [
-      { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
+      // { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
       { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
+  }
 
-    this.addTaskForm = this.formBuilder.group({
-      task: ['', [Validators.minLength(9)]],
-    });
+  getStats() {
+    this.http
+      .get(
+        Utils.BASE_URL + 'stats/' + localStorage.getItem('assignedWarehouse'),
+        { headers: Utils.getHeaders() }
+      )
+      .subscribe(
+        (data) => {
+          console.log('Stats: ' + data['inventoryValue']);
+          this.invetoryValue = data['inventoryValue'];
 
-    this.tasks = this.getTasks();
+          for (let i = 0; i < data['orderValue'].length; i++) {
+            if (data['orderValue'][i]['month'] === 1) {
+              this.orderData[0] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 2) {
+              this.orderData[1] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 3) {
+              this.orderData[2] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 4) {
+              this.orderData[3] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 5) {
+              this.orderData[4] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 6) {
+              this.orderData[5] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 7) {
+              this.orderData[6] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 8) {
+              this.orderData[7] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 9) {
+              this.orderData[8] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 10) {
+              this.orderData[9] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 11) {
+              this.orderData[10] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            } else if (data['orderValue'][i]['month'] === 12) {
+              this.orderData[11] = data['orderValue'][i]['sum']
+                ? data['orderValue'][i]['sum']
+                : 0;
+            }
+          }
+
+          this.getInventoryvsOrders();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
+  getInventoryvsOrders() {
+    //calculate % of inventory vs orders. Orders should be sum of items in orderData array
+    let inventory = this.invetoryValue;
+    let orders = 0;
+    for (let i = 0; i < this.orderData.length; i++) {
+      orders += this.orderData[i];
+    }
+    let ordersvsInventory = (orders / inventory) * 100;
+    let inventoryvsOrders = 100 - ordersvsInventory;
+    this.inventoryorderstats = [
+      Utils.removeDecimalPlaces(inventoryvsOrders),
+      Utils.removeDecimalPlaces(ordersvsInventory),
+    ];
+
+    this.emailChartData.series = this.inventoryorderstats;
+    this.emailChartData.labels = [
+      this.inventoryorderstats[0] + '%',
+      this.inventoryorderstats[1] + '%',
+    ];
+
+    Utils.saveUserData('inventory%', this.inventoryorderstats[0]);
+    Utils.saveUserData('orders%', this.inventoryorderstats[1]);
   }
 
   toggleAddTasks() {
@@ -160,6 +213,7 @@ export class HomeComponent implements OnInit {
       };
       Utils.saveTask(task.id, task);
       this.addTaskForm.reset();
+      this.ngOnInit();
     }
   }
 
@@ -177,8 +231,13 @@ export class HomeComponent implements OnInit {
   }
 
   updateTask(task) {
-    //console.log(task);
+    console.log(task.completed);
     task.completed = !task.completed;
     Utils.saveTask(task.id, task);
+    this.getTasks();
+  }
+
+  deleteTask(task) {
+    Utils.deleteTask(task.id);
   }
 }
