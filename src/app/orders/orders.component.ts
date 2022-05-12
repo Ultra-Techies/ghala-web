@@ -40,7 +40,10 @@ export class OrdersComponent implements OnInit {
       dataRows: [['', '', '', '', '', '', '']],
     };
     this.getOrders();
-    //.log('Selected Order: ' + this.selectedORders);
+
+    if (localStorage.getItem('assignedWarehouse') === null) {
+      this.getUserData();
+    }
   }
   getOrders() {
     this.selectedORders = [];
@@ -81,6 +84,26 @@ export class OrdersComponent implements OnInit {
           };
       });
   }
+
+  getUserData() {
+    this.http
+      .get(Utils.BASE_URL + 'user/' + localStorage.getItem('userId'))
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+          Utils.saveUserData('userId', data['id']);
+          if (data['assignedWarehouse'] === null) {
+            console.log('No warehouse assigned');
+          } else {
+            this.getOrders();
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+
   deleteInitiate(rowData: any) {
     this.modalRefCreateDN = this.modalServiceDelete.open(DeleteModalComponent, {
       modalClass: 'modal-dialog-centered',
