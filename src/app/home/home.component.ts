@@ -12,15 +12,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public emailChartType: ChartType;
-  public emailChartData: any;
-  public emailChartLegendItems: LegendItem[];
-
-  public hoursChartType: ChartType;
-  public hoursChartData: any;
-  public hoursChartOptions: any;
-  public hoursChartResponsive: any[];
-  public hoursChartLegendItems: LegendItem[];
+  public inventoryOrderChart: ChartType;
+  public inventoryOrderChartData: any;
+  public inventoryOrderChartItems: LegendItem[];
 
   public activityChartType: ChartType;
   public activityChartData: any;
@@ -48,15 +42,15 @@ export class HomeComponent implements OnInit {
     this.tasks = this.getTasks();
     this.getStats();
 
-    this.emailChartType = ChartType.Pie;
-    this.emailChartData = {
+    this.inventoryOrderChart = ChartType.Pie;
+    this.inventoryOrderChartData = {
       labels: [
         localStorage.getItem('inventory%') + '%',
         localStorage.getItem('orders%') + '%',
       ],
       series: this.inventoryorderstats,
     };
-    this.emailChartLegendItems = [
+    this.inventoryOrderChartItems = [
       { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
       { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
@@ -114,7 +108,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log('Stats: ' + data['inventoryValue']);
+          //console.log('Stats: ' + data['inventoryValue']);
           this.invetoryValue = data['inventoryValue'];
 
           for (let i = 0; i < data['orderValue'].length; i++) {
@@ -191,8 +185,8 @@ export class HomeComponent implements OnInit {
       Utils.removeDecimalPlaces(ordersvsInventory),
     ];
 
-    this.emailChartData.series = this.inventoryorderstats;
-    this.emailChartData.labels = [
+    this.inventoryOrderChartData.series = this.inventoryorderstats;
+    this.inventoryOrderChartData.labels = [
       this.inventoryorderstats[0] + '%',
       this.inventoryorderstats[1] + '%',
     ];
@@ -231,7 +225,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateTask(task) {
-    console.log(task.completed);
+    //console.log(task.completed);
     task.completed = !task.completed;
     Utils.saveTask(task.id, task);
     this.getTasks();
