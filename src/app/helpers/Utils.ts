@@ -54,6 +54,11 @@ export default class Utils {
     localStorage.setItem('task-' + randomString, JSON.stringify(task));
   }
 
+  static deleteTask(key) {
+    localStorage.removeItem(key);
+    //console.log('Delete: ' + key);
+  }
+
   static checkUserData(phoneNumber) {
     if (localStorage.getItem('phoneNumber') === phoneNumber) {
       return true;
@@ -89,5 +94,9 @@ export default class Utils {
   //convert currency string back to number e.g. KES 8,100.00 to 8100.00
   static convertCurrencyToNumber(currency) {
     return parseInt(currency.replace(/,/g, '').replace('KES', ''));
+  }
+
+  static removeDecimalPlaces(number) {
+    return parseInt(number);
   }
 }
