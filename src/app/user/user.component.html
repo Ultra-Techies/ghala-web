@@ -1,173 +1,179 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="header">
-            <h4 class="title">Edit Profile</h4>
-          </div>
-          <div class="content">
-            <form>
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label>Company (disabled)</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      disabled
-                      placeholder="Company"
-                      value="Ghala"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Username</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Username"
-                      value="jeanjp"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Email"
-                      value="jean@ghala.app"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Company"
-                      value="Jean"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Last Name"
-                      value="Jepleting"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Address</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Home Address"
-                      value="123 Nairobi, Kenya"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>City</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="City"
-                      value="Jean"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Country</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Country"
-                      value="Jepleting"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Postal Code</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="ZIP Code"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea
-                      rows="5"
-                      class="form-control"
-                      placeholder="Here can be your description"
-                      value="Jean"
-                    >
-"strength in numbers"
-                    </textarea>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-info btn-fill pull-right">
-                Update Profile
-              </button>
-              <div class="clearfix"></div>
-            </form>
-          </div>
+      <!-- <div class="col-md-8"> -->
+      <div class="card">
+        <div class="header">
+          <h4 class="title">Edit Profile</h4>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card card-user">
-          <div class="image">
-            <img
-              src="https://media.istockphoto.com/photos/distrubution-warehouse-with-plexus-remote-control-with-mobile-app-and-picture-id1323983873?b=1&k=20&m=1323983873&s=170667a&w=0&h=GiGK82HLfSlOzABze1ne1VmCpacxEB8eVDuWi6Qk55Q="
-              alt="..."
-            />
-          </div>
-          <div class="content">
-            <div class="author">
-              <a href="#">
-                <img
-                  class="avatar border-gray"
-                  src="https://avatars.githubusercontent.com/u/44524100?v=4"
-                  alt="..."
-                />
-
-                <h4 class="title">
-                  Jean Jepleting<br />
-                  <small>jeanjp</small>
-                </h4>
-              </a>
+        <div class="content">
+          <form [formGroup]="settingsForm" (ngSubmit)="updateProfile()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Company (disabled)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    disabled
+                    placeholder="Company"
+                    value="Ghala"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Email address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="email"
+                    formControlName="email"
+                    value="{{ loggedInUser.email }}"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      settingsForm.controls['email'].dirty &&
+                      settingsForm.hasError('required', 'email')
+                    "
+                    >Email is required</span
+                  >
+                </div>
+              </div>
             </div>
-            <p class="description text-center">"strength in numbers"</p>
-          </div>
-          <hr />
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="John"
+                    formControlName="firstName"
+                    value="{{ loggedInUser.firstName }}"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      settingsForm.controls['firstName'].dirty &&
+                      settingsForm.hasError('required', 'firstName')
+                    "
+                    >First Name is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Doe"
+                    formControlName="lastName"
+                    value="{{ loggedInUser.lastName }}"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      settingsForm.controls['lastName'].dirty &&
+                      settingsForm.hasError('required', 'lastName')
+                    "
+                    >Last Name is required</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="****"
+                    formControlName="password"
+                    value="{{ loggedInUser.password }}"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      settingsForm.controls['password'].dirty &&
+                      settingsForm.hasError('required', 'password')
+                    "
+                    >Password is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="+254700000000"
+                    formControlName="phoneNumber"
+                    value="{{ loggedInUser.phoneNumber }}"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="assignedWarehouse">Assigned Warehouse</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="assignedWarehouse"
+                    formControlName="assignedWarehouse"
+                    value="{{ loggedInUser.assignedWarehouse }}"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="role">Role</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="role"
+                    value="{{ loggedInUser.role }}"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>About Me</label>
+                  <textarea
+                    rows="5"
+                    class="form-control"
+                    placeholder="Here can be your description"
+                    value="Jean"
+                  >
+"strength in numbers"
+                    </textarea
+                  >
+                </div>
+              </div>
+            </div> -->
+            <button
+              type="submit"
+              (click)="updateProfile()"
+              class="btn btn-info btn-fill pull-right"
+            >
+              Update Profile
+            </button>
+            <div class="clearfix"></div>
+          </form>
         </div>
       </div>
     </div>
