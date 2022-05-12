@@ -64,8 +64,6 @@ export class HomeComponent implements OnInit {
       { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
 
-    //wait 3 seconds before getting stats
-
     this.activityChartType = ChartType.Bar;
     this.activityChartData = {
       labels: [
