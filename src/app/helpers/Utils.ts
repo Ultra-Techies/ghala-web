@@ -3,6 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 export default class Utils {
   //declare BASE_URL
   static BASE_URL = 'http://localhost:8080/api/';
+  static LOGIN_URL = 'http://localhost:8080/';
 
   static getHeaders() {
     let headers = new HttpHeaders();

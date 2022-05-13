@@ -81,19 +81,6 @@
           >PIN is required</span
         >
       </div>
-      <div class="mat-form-field">
-        <label>Warehouse</label>
-        <select
-          id="assignedWarehouse"
-          formControlName="assignedWarehouse"
-          class="form-control"
-          required
-        >
-          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
-            {{ warehouse.name }}
-          </option>
-        </select>
-      </div>
       <button
         mat-raised-button
         (click)="createUser()"

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Utils from 'app/helpers/Utils';
+// import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-verification',
@@ -13,12 +14,13 @@ export class OtpComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient // private toastr: ToastrService
   ) {}
   otpForm!: FormGroup;
 
   isValid = true;
   otp: string;
+  phoneNumber: string;
   newUser = true;
 
   ngOnInit(): void {
@@ -62,8 +64,8 @@ export class OtpComponent implements OnInit {
 
   verifyUser(phoneNumber: string, otp: string) {
     this.http
-      .put(
-        Utils.BASE_URL + 'users',
+      .post(
+        Utils.LOGIN_URL + 'login',
         { phoneNumber: phoneNumber, password: otp },
         { headers: Utils.getHeaders() }
       )
@@ -73,7 +75,7 @@ export class OtpComponent implements OnInit {
           if (data['id'] !== undefined) {
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
-            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+            Utils.saveUserData('warehouseId', data['warehouseId']);
             this.getUserData();
             setTimeout(() => {
               this.router.navigate(['/dashboard'], {

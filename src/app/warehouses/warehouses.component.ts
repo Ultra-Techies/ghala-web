@@ -39,7 +39,7 @@ export class Warehouses implements OnInit {
 
   getWarehouses() {
     this.http
-      .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'warehouse/all', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
         //console.log(data);
         (this.tableData1 = {

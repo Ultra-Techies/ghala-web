@@ -32,7 +32,6 @@ export class AccountSetupComponent implements OnInit {
       lastName: ['', Validators.required],
       password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      assignedWarehouse: ['', Validators.required],
     });
   }
   submit() {
@@ -43,11 +42,10 @@ export class AccountSetupComponent implements OnInit {
   createUser() {
     this.http
       .post(
-        Utils.BASE_URL + 'user',
+        Utils.BASE_URL + 'users',
         {
           email: this.accountForm.value.email,
           phoneNumber: history.state.phoneNumber,
-          assignedWarehouse: this.accountForm.value.assignedWarehouse,
           firstName: this.accountForm.value.firstName,
           lastName: this.accountForm.value.lastName,
           password: this.accountForm.value.password,
@@ -71,7 +69,7 @@ export class AccountSetupComponent implements OnInit {
   //get all warehouses from api/warehouses
   getWarehouses() {
     this.http
-      .get(Utils.BASE_URL + 'warehouses', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'warehouse/all', { headers: Utils.getHeaders() })
       .subscribe(
         (data) => {
           //console.log(data);
