@@ -42,7 +42,7 @@ export class VerificationComponent implements OnInit {
 
     this.http
       .post(
-        Utils.BASE_URL + 'users',
+        Utils.BASE_URL + 'users/exists',
         { phoneNumber: phoneNumber },
         {
           headers: Utils.getHeaders(),
