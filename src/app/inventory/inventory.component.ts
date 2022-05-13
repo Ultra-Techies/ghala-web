@@ -31,6 +31,7 @@ export class Inventory implements OnInit {
     private toastr: ToastrService,
     private router: Router
   ) {}
+
   ngOnInit() {
     this.tableData1 = {
       headerRow: [
@@ -48,7 +49,7 @@ export class Inventory implements OnInit {
   }
   getInventory() {
     this.http
-      .get(Utils.BASE_URL + 'allinventory', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'inventory/all', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
         //console.log(data);
         (this.tableData1 = {

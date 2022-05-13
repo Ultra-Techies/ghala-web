@@ -44,7 +44,9 @@ export class DispatchComponent implements OnInit {
 
   getDeliveryNotes() {
     this.http
-      .get(Utils.BASE_URL + 'allnotes', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'deliverynotes/all', {
+        headers: Utils.getHeaders(),
+      })
       .subscribe(
         (data: any) => {
           //console.log(data);

@@ -47,6 +47,7 @@ export class AddupdateInventoryModalComponent implements OnInit {
   close() {
     this.modalRef.close();
   }
+
   addInventory() {
     this.http
       .post(

@@ -57,7 +57,7 @@ export class UserComponent implements OnInit {
       this.loading = true;
       //call user api to get user details and make sure user still exists
       this.http
-        .get(Utils.BASE_URL + 'user/' + userId, {
+        .get(Utils.BASE_URL + 'users/' + userId, {
           headers: header,
         })
         .subscribe(
@@ -102,7 +102,7 @@ export class UserComponent implements OnInit {
     if (this.password !== this.settingsForm.value.password) {
       payload['password'] = this.settingsForm.value.password;
     }
-    let url = Utils.BASE_URL + 'user/' + '?';
+    let url = Utils.BASE_URL + 'users/' + '?';
     for (let key in payload) {
       url += '&' + key + '=' + payload[key];
     }

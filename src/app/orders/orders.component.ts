@@ -48,12 +48,7 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     this.selectedORders = [];
     this.http
-      .get(
-        Utils.BASE_URL +
-          'warehouseorders/' +
-          localStorage.getItem('assignedWarehouse'),
-        { headers: Utils.getHeaders() }
-      )
+      .get(Utils.BASE_URL + 'order/wh/1', { headers: Utils.getHeaders() })
       .subscribe((data: any) => {
         console.log(data);
         (this.tableData1 = {
@@ -87,7 +82,7 @@ export class OrdersComponent implements OnInit {
 
   getUserData() {
     this.http
-      .get(Utils.BASE_URL + 'user/' + localStorage.getItem('userId'))
+      .get(Utils.BASE_URL + 'users/' + localStorage.getItem('userId'))
       .subscribe(
         (data) => {
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
