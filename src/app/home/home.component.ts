@@ -188,8 +188,8 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < this.orderData.length; i++) {
       orders += this.orderData[i];
     }
-    let ordersvsInventory = (orders / inventory) * 100;
-    let inventoryvsOrders = 100 - ordersvsInventory;
+    let ordersvsInventory = (orders / (inventory + orders)) * 100;
+    let inventoryvsOrders = (inventory / (orders + inventory)) * 100;
     this.inventoryorderstats = [
       Utils.removeDecimalPlaces(inventoryvsOrders),
       Utils.removeDecimalPlaces(ordersvsInventory),
