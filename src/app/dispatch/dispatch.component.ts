@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Utils from 'app/helpers/Utils';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { DispatchOrderComponent } from 'app/dispatch-order/dispatch-order.component';
+import { Router } from '@angular/router';
 
 declare interface TableData {
   headerRow: string[];
@@ -23,7 +24,8 @@ export class DispatchComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalServiceDispatch: MdbModalService
+    private modalServiceDispatch: MdbModalService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -40,13 +42,39 @@ export class DispatchComponent implements OnInit {
       dataRows: [['', '', '', '', '', '', '']],
     };
     this.getDeliveryNotes();
+
+    //get refresh token everytime page loads
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + Utils.getUserData('refresh_token')
+    );
+
+    this.http
+      .get(Utils.LOGIN_URL + 'refreshtoken', {
+        headers: headers,
+      })
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('refresh_token', data['refresh_token']);
+          Utils.saveUserData('access_token', data['access_token']);
+        },
+        (error) => {
+          console.log(error);
+          localStorage.clear();
+          this.router.navigate(['/']);
+        }
+      );
   }
 
   getDeliveryNotes() {
     this.http
-      .get(Utils.BASE_URL + 'deliverynotes/all', {
-        headers: Utils.getHeaders(),
-      })
+      .get(
+        Utils.BASE_URL + 'deliverynotes/wh/' + Utils.getAssignedWarehouse(),
+        {
+          headers: Utils.getHeaders(),
+        }
+      )
       .subscribe(
         (data: any) => {
           //console.log(data);

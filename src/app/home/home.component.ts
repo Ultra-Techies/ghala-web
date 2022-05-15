@@ -4,7 +4,8 @@ import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
 import Utils from 'app/helpers/Utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,11 @@ export class HomeComponent implements OnInit {
     Number(localStorage.getItem('orders%')),
   ];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   addTaskForm!: FormGroup;
   ngOnInit() {
@@ -107,6 +112,29 @@ export class HomeComponent implements OnInit {
       // { title: 'Inventory', imageClass: 'fa fa-circle text-info' },
       { title: 'Orders', imageClass: 'fa fa-circle text-danger' },
     ];
+
+    //get refresh token everytime page loads
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + Utils.getUserData('refresh_token')
+    );
+
+    this.http
+      .get(Utils.LOGIN_URL + 'refreshtoken', {
+        headers: headers,
+      })
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('refresh_token', data['refresh_token']);
+          Utils.saveUserData('access_token', data['access_token']);
+        },
+        (error) => {
+          console.log(error);
+          localStorage.clear();
+          this.router.navigate(['/']);
+        }
+      );
   }
 
   getStats() {

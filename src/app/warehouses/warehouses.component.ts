@@ -4,6 +4,7 @@ import Utils from 'app/helpers/Utils';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { AddUpdateWarehouseModalComponent } from 'app/addupdate-warehouse-modal/addupdate-warehouse-modal.component';
 import { DeleteModalComponent } from 'app/delete-modal/delete-modal.component';
+import { Router } from '@angular/router';
 
 declare interface TableData {
   headerRow: string[];
@@ -25,7 +26,8 @@ export class Warehouses implements OnInit {
   constructor(
     private http: HttpClient,
     private modalServiceAddUpdate: MdbModalService,
-    private modalServiceDelete: MdbModalService
+    private modalServiceDelete: MdbModalService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -34,12 +36,32 @@ export class Warehouses implements OnInit {
       dataRows: [['', '', '']],
     };
 
+    //get refresh token everytime page loads
+    this.http
+      .get(Utils.LOGIN_URL + 'refreshtoken', {
+        headers: Utils.getHeaders(),
+      })
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('refresh_token', data['refresh_token']);
+          Utils.saveUserData('access_token', data['access_token']);
+        },
+        (error) => {
+          console.log(error);
+          localStorage.clear();
+          this.router.navigate(['/']);
+        }
+      );
+
     this.getWarehouses();
   }
 
   getWarehouses() {
+    let heeaders = Utils.getHeaders();
     this.http
-      .get(Utils.BASE_URL + 'warehouse/all', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'warehouse/all', {
+        headers: heeaders,
+      })
       .subscribe((data: any) => {
         //console.log(data);
         (this.tableData1 = {

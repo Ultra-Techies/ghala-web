@@ -9,10 +9,20 @@ export default class Utils {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
-    headers.append(
-      'Access-Control-Allow-Methods',
-      'GET, POST, PUT, DELETE, OPTIONS'
+    headers.append('Access-Control-Allow-Methods', '*');
+    headers.append('Access-Control-Allow-Headers', 'Content-Type');
+    headers.append('Access-Control-Allow-Credentials', 'true');
+
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + this.getUserData('access_token')
     );
+
+    headers = headers.set(
+      'Roles',
+      'ADMIN,WH_MANAGER,SUPERVISOR,DISPATCH_ASSOCIATE,WH_ASSOCIATE,BASIC'
+    );
+
     return headers;
   }
 
@@ -47,8 +57,12 @@ export default class Utils {
     localStorage.setItem(key, data);
   }
 
+  static getUserData(key) {
+    return localStorage.getItem(key);
+  }
+
   static saveTask(keyVal, task) {
-    var randomString = Utils.getRandomString(5);
+    var randomString = this.getRandomString(5);
     if (keyVal !== null) {
       randomString = keyVal;
     }

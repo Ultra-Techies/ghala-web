@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Utils from 'app/helpers/Utils';
 import { ToastrService } from 'ngx-toastr';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dispatch-order',
@@ -15,10 +16,34 @@ export class DispatchOrderComponent implements OnInit {
   constructor(
     private http: HttpClient,
     toastr: ToastrService,
-    public modalRef: MdbModalRef<DispatchOrderComponent>
+    public modalRef: MdbModalRef<DispatchOrderComponent>,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //get refresh token everytime page loads
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + Utils.getUserData('refresh_token')
+    );
+
+    this.http
+      .get(Utils.LOGIN_URL + 'refreshtoken', {
+        headers: headers,
+      })
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('refresh_token', data['refresh_token']);
+          Utils.saveUserData('access_token', data['access_token']);
+        },
+        (error) => {
+          console.log(error);
+          localStorage.clear();
+          this.router.navigate(['/']);
+        }
+      );
+  }
 
   close() {
     this.modalRef.close();
