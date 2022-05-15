@@ -1,0 +1,29 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <!-- forbidden access page -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">403 - Forbidden Access</h4>
+            <p class="category">
+              You don't have permission to access this page.
+            </p>
+          </div>
+          <div class="content">
+            <div class="typo-line">
+              <h5><p>You don't have permission to access this page.</p></h5>
+            </div>
+            <div class="typo-line">
+              <h5><p>Please contact your administrator.</p></h5>
+            </div>
+          </div>
+        </div>
+        <!--show errorMessage -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          Server returned: {{ errorMessage }} : Try logout and login again.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

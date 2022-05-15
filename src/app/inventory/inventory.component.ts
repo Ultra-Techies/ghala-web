@@ -46,63 +46,45 @@ export class Inventory implements OnInit {
       dataRows: [['', '', '']],
     };
     this.getInventory();
-
-    //get refresh token everytime page loads
-    let headers = new HttpHeaders();
-    headers = headers.set(
-      'Authorization',
-      'Bearer ' + Utils.getUserData('refresh_token')
-    );
-
-    this.http
-      .get(Utils.LOGIN_URL + 'refreshtoken', {
-        headers: headers,
-      })
-      .subscribe(
-        (data) => {
-          Utils.saveUserData('refresh_token', data['refresh_token']);
-          Utils.saveUserData('access_token', data['access_token']);
-        },
-        (error) => {
-          console.log(error);
-          localStorage.clear();
-          this.router.navigate(['/']);
-        }
-      );
   }
   getInventory() {
     this.http
       .get(Utils.BASE_URL + 'inventory/wh/' + Utils.getAssignedWarehouse(), {
         headers: Utils.getHeaders(),
       })
-      .subscribe((data: any) => {
-        //console.log(data);
-        (this.tableData1 = {
-          headerRow: [
-            'ID',
-            'Product Name',
-            'Category',
-            'SKU',
-            'Quantity',
-            'Price',
-            'Status',
-          ],
-          dataRows: data.map((inventory) => {
-            return [
-              inventory.sku,
-              inventory.name,
-              inventory.category,
-              inventory.skuCode,
-              inventory.quantity,
-              inventory.ppu,
-              Utils.capitalizeFirstLetter(inventory.status),
-            ];
-          }),
-        }),
-          (err: any) => {
-            console.log('Error: ', err);
+      .subscribe(
+        (data: any) => {
+          //console.log(data);
+          this.tableData1 = {
+            headerRow: [
+              'ID',
+              'Product Name',
+              'Category',
+              'SKU',
+              'Quantity',
+              'Price',
+              'Status',
+            ],
+            dataRows: data.map((inventory) => {
+              return [
+                inventory.sku,
+                inventory.name,
+                inventory.category,
+                inventory.skuCode,
+                inventory.quantity,
+                inventory.ppu,
+                Utils.capitalizeFirstLetter(inventory.status),
+              ];
+            }),
           };
-      });
+        },
+        (error) => {
+          console.log('Heey: ' + error);
+          if (error.status === 403) {
+            this.router.navigate(['/forbidden']);
+          }
+        }
+      );
   }
 
   deleteInitiate(rowData: any) {

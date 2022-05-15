@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class DeliveryNoteComponent implements OnInit {
   payload: any[] = [];
   totalValue: number;
+  errorMessage: string = '';
 
   constructor(
     private toastr: ToastrService,
@@ -23,36 +24,13 @@ export class DeliveryNoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.totalValue = Utils.formatAmount(this.totalDeliveryNoteValue());
-
-    //get refresh token everytime page loads
-    let headers = new HttpHeaders();
-    headers = headers.set(
-      'Authorization',
-      'Bearer ' + Utils.getUserData('refresh_token')
-    );
-
-    this.http
-      .get(Utils.LOGIN_URL + 'refreshtoken', {
-        headers: headers,
-      })
-      .subscribe(
-        (data) => {
-          Utils.saveUserData('refresh_token', data['refresh_token']);
-          Utils.saveUserData('access_token', data['access_token']);
-        },
-        (error) => {
-          console.log(error);
-          localStorage.clear();
-          this.router.navigate(['/']);
-        }
-      );
   }
 
   createDeliveryNote() {
     if (this.payload.length > 0) {
       this.http
         .post(
-          Utils.BASE_URL + 'deliveryNote',
+          Utils.BASE_URL + 'deliverynotes',
           {
             route:
               'route-' +
@@ -72,6 +50,7 @@ export class DeliveryNoteComponent implements OnInit {
             this.payload = [];
           },
           (err: any) => {
+            this.errorMessage = err;
             this.close();
             console.log('Error: ', err);
           }
@@ -89,6 +68,6 @@ export class DeliveryNoteComponent implements OnInit {
   }
 
   close() {
-    this.modalRef.close();
+    this.modalRef.close(this.errorMessage);
   }
 }

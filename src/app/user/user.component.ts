@@ -58,37 +58,19 @@ export class UserComponent implements OnInit {
             this.loading = false;
             this.loggedInUser = res;
             this.userID = userId;
+            this.getWarehouse();
             //console.log(res);
           },
           (err: any) => {
             this.loading = false;
             this.toastr.error('Error, ' + err.error.message, 'Error');
-            //redirect to login page
-            localStorage.clear();
-            this.router.navigate(['/']);
-          }
-        );
-
-      //get refresh token everytime page loads
-      let headers = new HttpHeaders();
-      headers = headers.set(
-        'Authorization',
-        'Bearer ' + Utils.getUserData('refresh_token')
-      );
-
-      this.http
-        .get(Utils.LOGIN_URL + 'refreshtoken', {
-          headers: headers,
-        })
-        .subscribe(
-          (data) => {
-            Utils.saveUserData('refresh_token', data['refresh_token']);
-            Utils.saveUserData('access_token', data['access_token']);
-          },
-          (error) => {
-            console.log(error);
-            localStorage.clear();
-            this.router.navigate(['/']);
+            if (err.status === 403) {
+              this.router.navigate(['/forbidden']);
+            } else {
+              //redirect to login page
+              localStorage.clear();
+              this.router.navigate(['/']);
+            }
           }
         );
     }
@@ -134,12 +116,38 @@ export class UserComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //update success
-          //console.log(data);
+          console.log('User Data: ' + data);
           window.location.reload();
         },
         (err: any) => {
           //update failed
           console.log('Error: ', err);
+        }
+      );
+  }
+
+  getWarehouse() {
+    this.http
+      .get(Utils.BASE_URL + 'warehouse/get/' + Utils.getAssignedWarehouse(), {
+        headers: Utils.getHeaders(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading = false;
+          this.loggedInUser.assignedWarehouse =
+            res.name + ' in ' + res.location;
+        },
+        (err: any) => {
+          this.loading = false;
+          this.toastr.error('Error, ' + err.error.message, 'Error');
+          if (err.status === 403) {
+            this.router.navigate(['/forbidden']);
+          } else {
+            //redirect to login page
+            alert(err);
+            localStorage.clear();
+            this.router.navigate(['/']);
+          }
         }
       );
   }
