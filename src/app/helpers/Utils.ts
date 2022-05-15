@@ -18,10 +18,7 @@ export default class Utils {
       'Bearer ' + this.getUserData('access_token')
     );
 
-    headers = headers.set(
-      'Roles',
-      'ADMIN,WH_MANAGER,SUPERVISOR,DISPATCH_ASSOCIATE,WH_ASSOCIATE,BASIC'
-    );
+    headers = headers.set('Roles', this.getUserData('role'));
 
     return headers;
   }

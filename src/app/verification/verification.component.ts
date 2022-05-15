@@ -63,11 +63,7 @@ export class VerificationComponent implements OnInit {
 
   getOtp(phoneNumber: string) {
     this.http
-      .post(
-        Utils.BASE_URL + 'otp',
-        { phoneNumber: phoneNumber },
-        { headers: Utils.getHeaders() }
-      )
+      .post(Utils.BASE_URL + 'otp', { phoneNumber: phoneNumber })
       .subscribe(
         (data) => {
           //console.log(data);
@@ -77,7 +73,7 @@ export class VerificationComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          alert('Something went wrong!');
+          alert(error.error.message);
         }
       );
   }
