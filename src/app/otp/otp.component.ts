@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Utils from 'app/helpers/Utils';
 // import { ToastrService } from 'ngx-toastr';
 
@@ -63,20 +63,35 @@ export class OtpComponent implements OnInit {
   }
 
   verifyUser(phoneNumber: string, otp: string) {
+    //x-www-form-urlencoded header
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': '*',
+      }),
+    };
+
+    //pass phoneNumber and password as params
+    const params = new URLSearchParams();
+    params.append('phoneNumber', phoneNumber);
+    params.append('password', otp);
+
     this.http
-      .post(
-        Utils.LOGIN_URL + 'login',
-        { phoneNumber: phoneNumber, password: otp },
-        { headers: Utils.getHeaders() }
-      )
+      .post(Utils.LOGIN_URL + 'login', params.toString(), {
+        headers: httpOptions.headers,
+      })
       .subscribe(
         (data) => {
-          //console.log(data);
-          if (data['id'] !== undefined) {
+          if (data['access_token'] !== undefined) {
+            Utils.saveUserData('access_token', data['access_token']);
+            Utils.saveUserData('refresh_token', data['refresh_token']);
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
             Utils.saveUserData('warehouseId', data['warehouseId']);
-            this.getUserData();
+
+            this.getUserData(phoneNumber);
             setTimeout(() => {
               this.router.navigate(['/dashboard'], {
                 state: { phoneNumber: phoneNumber },
@@ -95,13 +110,26 @@ export class OtpComponent implements OnInit {
       );
   }
 
-  getUserData() {
+  getUserData(phoneNumber: string) {
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + Utils.getUserData('access_token')
+    );
     this.http
-      .get(Utils.BASE_URL + 'user/' + localStorage.getItem('userId'))
+      .post(
+        Utils.BASE_URL + 'users/fetch',
+        { phoneNumber: phoneNumber },
+        { headers: headers }
+      )
       .subscribe(
         (data) => {
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
           Utils.saveUserData('userId', data['id']);
+          Utils.saveUserData('email', data['email']);
+          Utils.saveUserData('firstName', data['firstName']);
+          Utils.saveUserData('lastName', data['lastName']);
+          Utils.saveUserData('role', data['role']);
         },
         (error) => {
           console.log(error);

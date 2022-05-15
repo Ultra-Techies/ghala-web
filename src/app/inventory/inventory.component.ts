@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddupdateInventoryModalComponent } from 'app/addupdate-inventory-modal/addupdate-inventory-modal.component';
@@ -46,10 +46,35 @@ export class Inventory implements OnInit {
       dataRows: [['', '', '']],
     };
     this.getInventory();
+
+    //get refresh token everytime page loads
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      'Authorization',
+      'Bearer ' + Utils.getUserData('refresh_token')
+    );
+
+    this.http
+      .get(Utils.LOGIN_URL + 'refreshtoken', {
+        headers: headers,
+      })
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('refresh_token', data['refresh_token']);
+          Utils.saveUserData('access_token', data['access_token']);
+        },
+        (error) => {
+          console.log(error);
+          localStorage.clear();
+          this.router.navigate(['/']);
+        }
+      );
   }
   getInventory() {
     this.http
-      .get(Utils.BASE_URL + 'inventory/all', { headers: Utils.getHeaders() })
+      .get(Utils.BASE_URL + 'inventory/wh/' + Utils.getAssignedWarehouse(), {
+        headers: Utils.getHeaders(),
+      })
       .subscribe((data: any) => {
         //console.log(data);
         (this.tableData1 = {

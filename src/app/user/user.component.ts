@@ -40,14 +40,7 @@ export class UserComponent implements OnInit {
   phoneNumber: any = [];
   ngOnInit(): void {
     this.loading = false;
-    //console.log('ngOnInit');
-    let header = new HttpHeaders();
-    header.append('Content-Type', 'application/json');
-    header.append('Access-Control-Allow-Origin', '*');
-    header.append(
-      'Access-Control-Allow-Methods',
-      'GET, POST, PUT, DELETE, OPTIONS'
-    );
+
     let userId = localStorage.getItem('userId');
 
     if (userId === null) {
@@ -57,8 +50,8 @@ export class UserComponent implements OnInit {
       this.loading = true;
       //call user api to get user details and make sure user still exists
       this.http
-        .get(Utils.BASE_URL + 'users/' + userId, {
-          headers: header,
+        .get(Utils.BASE_URL + 'users/get/' + userId, {
+          headers: Utils.getHeaders(),
         })
         .subscribe(
           (res: any) => {
@@ -71,6 +64,29 @@ export class UserComponent implements OnInit {
             this.loading = false;
             this.toastr.error('Error, ' + err.error.message, 'Error');
             //redirect to login page
+            localStorage.clear();
+            this.router.navigate(['/']);
+          }
+        );
+
+      //get refresh token everytime page loads
+      let headers = new HttpHeaders();
+      headers = headers.set(
+        'Authorization',
+        'Bearer ' + Utils.getUserData('refresh_token')
+      );
+
+      this.http
+        .get(Utils.LOGIN_URL + 'refreshtoken', {
+          headers: headers,
+        })
+        .subscribe(
+          (data) => {
+            Utils.saveUserData('refresh_token', data['refresh_token']);
+            Utils.saveUserData('access_token', data['access_token']);
+          },
+          (error) => {
+            console.log(error);
             localStorage.clear();
             this.router.navigate(['/']);
           }
@@ -102,13 +118,10 @@ export class UserComponent implements OnInit {
     if (this.password !== this.settingsForm.value.password) {
       payload['password'] = this.settingsForm.value.password;
     }
-    let url = Utils.BASE_URL + 'users/' + '?';
-    for (let key in payload) {
-      url += '&' + key + '=' + payload[key];
-    }
+
     this.http
       .put(
-        url,
+        Utils.BASE_URL + 'users',
         {
           id: localStorage.getItem('userId'),
           email: this.settingsForm.value.email,
