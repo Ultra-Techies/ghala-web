@@ -42,29 +42,6 @@ export class DispatchComponent implements OnInit {
       dataRows: [['', '', '', '', '', '', '']],
     };
     this.getDeliveryNotes();
-
-    //get refresh token everytime page loads
-    let headers = new HttpHeaders();
-    headers = headers.set(
-      'Authorization',
-      'Bearer ' + Utils.getUserData('refresh_token')
-    );
-
-    this.http
-      .get(Utils.LOGIN_URL + 'refreshtoken', {
-        headers: headers,
-      })
-      .subscribe(
-        (data) => {
-          Utils.saveUserData('refresh_token', data['refresh_token']);
-          Utils.saveUserData('access_token', data['access_token']);
-        },
-        (error) => {
-          console.log(error);
-          localStorage.clear();
-          this.router.navigate(['/']);
-        }
-      );
   }
 
   getDeliveryNotes() {
@@ -102,6 +79,9 @@ export class DispatchComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          if (error.status === 403) {
+            this.router.navigate(['/forbidden']);
+          }
         }
       );
   }

@@ -2,6 +2,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          Error: {{ errorMessage }}
+        </div>
         <div class="card">
           <div class="header">
             <h4 class="title">Orders</h4>

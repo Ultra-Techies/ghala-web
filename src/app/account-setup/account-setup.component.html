@@ -27,7 +27,7 @@
             accountForm.controls['firstName'].dirty &&
             accountForm.hasError('firstName', 'firstName')
           "
-          >Phone is required</span
+          >First Name is required</span
         >
       </div>
       <div class="mat-form-field">
@@ -51,9 +51,9 @@
         <label>Email Address</label>
         <input
           id="email"
-          type="text"
+          type="email"
           class="form-control"
-          placeholder="Last Name"
+          placeholder="Email"
           formControlName="email"
         /><span
           class="text-danger"
@@ -71,15 +71,9 @@
           type="password"
           class="form-control"
           maxlength="4"
+          minlength="4"
           formControlName="password"
-        /><span
-          class="text-danger"
-          *ngIf="
-            accountForm.controls['password'].dirty &&
-            accountForm.hasError('password', 'password')
-          "
-          >PIN is required</span
-        >
+        />
       </div>
       <button
         mat-raised-button

@@ -19,6 +19,7 @@ declare interface TableData {
 export class OrdersComponent implements OnInit {
   public tableData1: TableData;
   public selectedORders: any = [];
+  errorMessage: string = '';
 
   modalRefCreateDN: MdbModalRef<DeliveryNoteComponent> | null = null;
 
@@ -46,29 +47,6 @@ export class OrdersComponent implements OnInit {
     if (localStorage.getItem('assignedWarehouse') === null) {
       this.getUserData();
     }
-
-    //get refresh token everytime page loads
-    let headers = new HttpHeaders();
-    headers = headers.set(
-      'Authorization',
-      'Bearer ' + Utils.getUserData('refresh_token')
-    );
-
-    this.http
-      .get(Utils.LOGIN_URL + 'refreshtoken', {
-        headers: headers,
-      })
-      .subscribe(
-        (data) => {
-          Utils.saveUserData('refresh_token', data['refresh_token']);
-          Utils.saveUserData('access_token', data['access_token']);
-        },
-        (error) => {
-          console.log(error);
-          localStorage.clear();
-          this.router.navigate(['/']);
-        }
-      );
   }
   getOrders() {
     this.selectedORders = [];
@@ -76,35 +54,41 @@ export class OrdersComponent implements OnInit {
       .get(Utils.BASE_URL + 'order/wh/' + Utils.getAssignedWarehouse(), {
         headers: Utils.getHeaders(),
       })
-      .subscribe((data: any) => {
-        console.log(data);
-        (this.tableData1 = {
-          headerRow: [
-            '',
-            'ID',
-            'Delivery Date',
-            'Customer',
-            'Delivery Window',
-            'Items',
-            'Price',
-            'Status',
-          ],
-          dataRows: data.map((orders) => {
-            return [
-              orders.id,
-              Utils.formatDate(orders.due),
-              orders.customerName,
-              Utils.capitalizeFirstLetter(orders.deliveryWindow),
-              orders.items.length,
-              Utils.formatAmount(orders.value),
-              Utils.capitalizeFirstLetter(orders.status),
-            ];
-          }),
-        }),
-          (err: any) => {
-            console.log('Error: ', err);
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.tableData1 = {
+            headerRow: [
+              '',
+              'ID',
+              'Delivery Date',
+              'Customer',
+              'Delivery Window',
+              'Items',
+              'Price',
+              'Status',
+            ],
+            dataRows: data.map((orders) => {
+              return [
+                orders.id,
+                Utils.formatDate(orders.due),
+                orders.customerName,
+                Utils.capitalizeFirstLetter(orders.deliveryWindow),
+                orders.items.length,
+                Utils.formatAmount(orders.value),
+                Utils.capitalizeFirstLetter(orders.status),
+              ];
+            }),
           };
-      });
+        },
+        (error) => {
+          this.errorMessage = error['error'].error_message;
+          console.log(error);
+          if (error.status === 403) {
+            this.router.navigate(['/forbidden']);
+          }
+        }
+      );
   }
 
   getUserData() {
@@ -155,9 +139,10 @@ export class OrdersComponent implements OnInit {
       }
     );
 
-    this.modalRefCreateDN.onClose.subscribe(() => {
+    this.modalRefCreateDN.onClose.subscribe((message) => {
       this.getOrders();
       this.selectedORders = [];
+      this.errorMessage = message['error'].error_message;
     });
   }
 }

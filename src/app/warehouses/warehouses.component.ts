@@ -36,23 +36,6 @@ export class Warehouses implements OnInit {
       dataRows: [['', '', '']],
     };
 
-    //get refresh token everytime page loads
-    this.http
-      .get(Utils.LOGIN_URL + 'refreshtoken', {
-        headers: Utils.getHeaders(),
-      })
-      .subscribe(
-        (data) => {
-          Utils.saveUserData('refresh_token', data['refresh_token']);
-          Utils.saveUserData('access_token', data['access_token']);
-        },
-        (error) => {
-          console.log(error);
-          localStorage.clear();
-          this.router.navigate(['/']);
-        }
-      );
-
     this.getWarehouses();
   }
 
@@ -62,18 +45,23 @@ export class Warehouses implements OnInit {
       .get(Utils.BASE_URL + 'warehouse/all', {
         headers: heeaders,
       })
-      .subscribe((data: any) => {
-        //console.log(data);
-        (this.tableData1 = {
-          headerRow: ['ID', 'Name', 'Location'],
-          dataRows: data.map((warehouse) => {
-            return [warehouse.id, warehouse.name, warehouse.location];
-          }),
-        }),
-          (err: any) => {
-            console.log('Error: ', err);
+      .subscribe(
+        (data: any) => {
+          //console.log(data);
+          this.tableData1 = {
+            headerRow: ['ID', 'Name', 'Location'],
+            dataRows: data.map((warehouse) => {
+              return [warehouse.id, warehouse.name, warehouse.location];
+            }),
           };
-      });
+        },
+        (error) => {
+          console.log(error);
+          if (error.status === 403) {
+            this.router.navigate(['/forbidden']);
+          }
+        }
+      );
   }
 
   deleteInitiate(rowData: any) {

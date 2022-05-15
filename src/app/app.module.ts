@@ -31,6 +31,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { AddupdateInventoryModalComponent } from './addupdate-inventory-modal/addupdate-inventory-modal.component';
 import { DeliveryNoteComponent } from './delivery-note/delivery-note.component';
 import { DispatchOrderComponent } from './dispatch-order/dispatch-order.component';
+import { ForbidenAccessComponent } from './forbiden-access/forbiden-access.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { DispatchOrderComponent } from './dispatch-order/dispatch-order.componen
     AddupdateInventoryModalComponent,
     DeliveryNoteComponent,
     DispatchOrderComponent,
+    ForbidenAccessComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
