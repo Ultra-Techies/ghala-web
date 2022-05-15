@@ -30,7 +30,7 @@ export class DispatchOrderComponent implements OnInit {
     //loop through the payload and dispatch the order
     this.payload.forEach((element) => {
       this.http
-        .put(Utils.BASE_URL + 'deliveryNote/' + element[0] + '/1', {
+        .put(Utils.BASE_URL + 'deliverynotes/' + element[0] + '/1', '', {
           headers: Utils.getHeaders(),
         })
         .subscribe(
