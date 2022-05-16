@@ -117,7 +117,6 @@ export default class Utils {
     const warehouses = JSON.parse(localStorage.getItem('warehouses'));
     for (let i = 0; i < warehouses.length; i++) {
       if (warehouses[i].id === warehouseId) {
-        console.log('Warehouse Name: ' + warehouses[i].name);
         return warehouses[i].name;
       }
     }
