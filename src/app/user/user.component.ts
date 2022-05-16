@@ -72,6 +72,16 @@ export class UserComponent implements OnInit {
             this.loading = false;
             this.loggedInUser = res;
             this.userID = userId;
+
+            Utils.saveUserData('email', this.loggedInUser.email);
+            Utils.saveUserData('firstName', this.loggedInUser.firstName);
+            Utils.saveUserData('lastName', this.loggedInUser.lastName);
+            Utils.saveUserData('assignedRole', this.loggedInUser.role);
+            Utils.saveUserData(
+              'assignedWarehouse',
+              this.loggedInUser.assignedWarehouse
+            );
+
             this.getWarehouse();
           },
           (err: any) => {
