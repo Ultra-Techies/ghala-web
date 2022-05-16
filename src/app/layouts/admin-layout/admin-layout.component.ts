@@ -122,7 +122,10 @@ export class AdminLayoutComponent implements OnInit {
           Utils.saveUserData('lastName', data['lastName']);
 
           //if assignedRole is not the same as existing role in local storage then update then logout
-          if (data['assignedRole'] != localStorage.getItem('role')) {
+          if (
+            data['assignedRole'].toString().toUpperCase() !=
+            localStorage.getItem('role').toString().toUpperCase()
+          ) {
             localStorage.clear();
           }
 
