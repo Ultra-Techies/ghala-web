@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Observable } from 'rxjs';
 import Utils from 'app/helpers/Utils';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-layout',
@@ -23,13 +24,19 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
 
-  constructor(public location: Location, private router: Router) {}
+  constructor(
+    public location: Location,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     //console.log(this.router);
     if (!Utils.userLoggedIn()) {
       this.router.navigate(['/']);
     }
+    this.getUserData();
+
     const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
     if (isWindows) {
@@ -101,5 +108,35 @@ export class AdminLayoutComponent implements OnInit {
       bool = true;
     }
     return bool;
+  }
+
+  getUserData() {
+    this.http
+      .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
+      .subscribe(
+        (data) => {
+          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+          Utils.saveUserData('userId', data['id']);
+          Utils.saveUserData('email', data['email']);
+          Utils.saveUserData('firstName', data['firstName']);
+          Utils.saveUserData('lastName', data['lastName']);
+
+          //if assignedRole is not the same as existing role in local storage then update then logout
+          if (data['assignedRole'] != localStorage.getItem('role')) {
+            localStorage.clear();
+          }
+
+          //if assignedWarehouse is not the same as existing warehouse in local storage then update then logout
+          if (
+            data['assignedWarehouse'] !=
+            localStorage.getItem('assignedWarehouse')
+          ) {
+            localStorage.clear();
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }

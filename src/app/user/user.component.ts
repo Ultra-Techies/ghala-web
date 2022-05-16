@@ -44,7 +44,6 @@ export class UserComponent implements OnInit {
     let userId = localStorage.getItem('userId');
 
     if (userId === null) {
-      this.router.navigate(['/']);
       this.toastr.error('Please Login First!', 'Error');
     } else {
       this.loading = true;
@@ -116,7 +115,6 @@ export class UserComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //update success
-          console.log('User Data: ' + data);
           window.location.reload();
         },
         (err: any) => {
