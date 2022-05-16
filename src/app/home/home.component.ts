@@ -93,6 +93,9 @@ export class HomeComponent implements OnInit {
       axisX: {
         showGrid: false,
       },
+      axisY: {
+        offset: 70,
+      },
       height: '245px',
     };
     this.activityChartResponsive = [
