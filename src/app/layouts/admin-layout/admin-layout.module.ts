@@ -13,6 +13,7 @@ import { Warehouses } from '../../warehouses/warehouses.component';
 import { OrdersComponent } from 'app/orders/orders.component';
 import { Inventory } from 'app/inventory/inventory.component';
 import { DispatchComponent } from 'app/dispatch/dispatch.component';
+import { ManagerUsersComponent } from 'app/manager-users/manager-users.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { DispatchComponent } from 'app/dispatch/dispatch.component';
     OrdersComponent,
     Inventory,
     DispatchComponent,
+    ManagerUsersComponent,
   ],
 })
 export class AdminLayoutModule {}

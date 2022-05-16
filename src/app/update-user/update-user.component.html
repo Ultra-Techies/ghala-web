@@ -1,0 +1,183 @@
+<div class="modal-header">
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="close()"
+  >
+    <span aria-hidden="true">×</span>
+  </button>
+  <h5 class="modal-title" id="ModalLabel">Update User</h5>
+</div>
+<div
+  class="modal-body"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form>
+          <form [formGroup]="updateUserForm" (Submit)="close()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">First Name:</label>
+                  <input
+                    formControlName="firstName"
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    placeholder="First Name"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="firstName"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['firstName'].dirty &&
+                      updateUserForm.hasError('required', 'firstName')
+                    "
+                    >First Name is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Last Name:</label>
+                  <input
+                    formControlName="lastName"
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    placeholder="Last Name"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="lastName"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['lastName'].dirty &&
+                      updateUserForm.hasError('required', 'lastName')
+                    "
+                    >Last Name is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Email:</label>
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="email"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['email'].dirty &&
+                      updateUserForm.hasError('required', 'email')
+                    "
+                    >Email is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Phone:</label>
+                  <input
+                    formControlName="phoneNumber"
+                    type="text"
+                    class="form-control"
+                    id="phoneNumber"
+                    placeholder="Phone Number"
+                    required
+                    height="auto"
+                    maxRows="4"
+                    [(ngModel)]="phoneNumber"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['phoneNumber'].dirty &&
+                      updateUserForm.hasError('required', 'phoneNumber')
+                    "
+                    >Phone is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Assigned Warehouse:</label>
+                  <select
+                    formControlName="assignedWarehouse"
+                    class="form-control"
+                    id="assignedWarehouse"
+                    required
+                    [(ngModel)]="assignedWarehouse"
+                  >
+                    <option
+                      *ngFor="let warehouse of warehouses"
+                      [selected]="warehouse.id == assignedWarehouse"
+                      [value]="warehouse.id"
+                    >
+                      {{ warehouse.name }}
+                    </option>
+                  </select>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['assignedWarehouse'].dirty &&
+                      updateUserForm.hasError('required', 'assignedWarehouse')
+                    "
+                    >Warehouse is required</span
+                  >
+                </div>
+                <div class="form-group">
+                  <label for="">Assigned Role:</label>
+                  <select
+                    formControlName="assignedRole"
+                    class="form-control"
+                    id="assignedRole"
+                    required
+                    [(ngModel)]="assignedRole"
+                  >
+                    <option
+                      *ngFor="let role of roles"
+                      [selected]="role.id == assignedRole"
+                      [value]="role.name"
+                    >
+                      {{ role.name }}
+                    </option>
+                  </select>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      updateUserForm.controls['assignedRole'].dirty &&
+                      updateUserForm.hasError('required', 'assignedRole')
+                    "
+                    >Role is required</span
+                  >
+                </div>
+              </div>
+            </div>
+          </form>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-primary btn-fill pull-right"
+    (click)="updateUser()"
+    [disabled]="updateUserForm.invalid"
+  >
+    Update
+  </button>
+</div>

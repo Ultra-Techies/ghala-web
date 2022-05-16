@@ -18,7 +18,7 @@ export default class Utils {
       'Bearer ' + this.getUserData('access_token')
     );
 
-    headers = headers.set('Roles', this.getUserData('role'));
+    headers = headers.set('Roles', this.getUserData('assignedRole'));
 
     return headers;
   }
@@ -110,5 +110,46 @@ export default class Utils {
 
   static removeDecimalPlaces(number) {
     return parseInt(number);
+  }
+
+  //get warehouse name from localstorage by passing the warehouse id
+  static getWarehouseName(warehouseId) {
+    const warehouses = JSON.parse(localStorage.getItem('warehouses'));
+    for (let i = 0; i < warehouses.length; i++) {
+      if (warehouses[i].id === warehouseId) {
+        console.log('Warehouse Name: ' + warehouses[i].name);
+        return warehouses[i].name;
+      }
+    }
+  }
+
+  //returns an array as objects containing roles namely ADMIN,WH_MANAGER,SUPERVISOR,DISPATCH_ASSOCIATE,WH_ASSOCIATE,BASIC
+  static getRoles() {
+    return [
+      {
+        id: 1,
+        name: 'ADMIN',
+      },
+      {
+        id: 2,
+        name: 'WH_MANAGER',
+      },
+      {
+        id: 3,
+        name: 'SUPERVISOR',
+      },
+      {
+        id: 4,
+        name: 'DISPATCH_ASSOCIATE',
+      },
+      {
+        id: 5,
+        name: 'WH_ASSOCIATE',
+      },
+      {
+        id: 6,
+        name: 'BASIC',
+      },
+    ];
   }
 }
