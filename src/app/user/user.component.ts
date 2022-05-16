@@ -41,9 +41,24 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.loading = false;
 
-    let userId = localStorage.getItem('userId');
+    this.getUserData();
 
+    this.settingsForm = this.formBuilder.group({
+      userId: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.email],
+      password: ['', [Validators.required, Validators.maxLength(4)]],
+      phoneNumber: [''],
+      role: [''],
+      assignedWarehouse: [''],
+    });
+  }
+
+  getUserData() {
+    let userId = localStorage.getItem('userId');
     if (userId === null) {
+      this.router.navigate(['/']);
       this.toastr.error('Please Login First!', 'Error');
     } else {
       this.loading = true;
@@ -58,7 +73,6 @@ export class UserComponent implements OnInit {
             this.loggedInUser = res;
             this.userID = userId;
             this.getWarehouse();
-            //console.log(res);
           },
           (err: any) => {
             this.loading = false;
@@ -73,18 +87,8 @@ export class UserComponent implements OnInit {
           }
         );
     }
-
-    this.settingsForm = this.formBuilder.group({
-      userId: [''],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', [Validators.required, Validators.maxLength(4)]],
-      phoneNumber: [''],
-      role: [''],
-      assignedWarehouse: [''],
-    });
   }
+
   updateProfile() {
     let payload = {};
     if (this.firstName !== this.settingsForm.value.firstName) {
@@ -115,7 +119,7 @@ export class UserComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //update success
-          window.location.reload();
+          this.getUserData();
         },
         (err: any) => {
           //update failed

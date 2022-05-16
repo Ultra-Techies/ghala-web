@@ -67,7 +67,7 @@ export class UpdateUserComponent implements OnInit {
           email: this.updateUserForm.value.email.trim(),
           phoneNumber: this.updateUserForm.value.phoneNumber.trim(),
           assignedWarehouse: parseInt(this.assignedWarehouse),
-          assignedRole: this.updateUserForm.value.assignedRole.trim(),
+          role: this.updateUserForm.value.assignedRole.trim(),
         },
         {
           headers: Utils.getHeaders(),
