@@ -76,10 +76,7 @@ export class UpdateUserComponent implements OnInit {
       .subscribe(
         (data) => {
           Utils.saveUserData('assignedWarehouse', this.assignedWarehouse);
-          Utils.saveUserData(
-            'assignedRole',
-            this.updateUserForm.value.assignedRole
-          );
+          Utils.saveUserData('assignedRole', this.assignedRole);
           Utils.saveUserData('firstName', this.updateUserForm.value.firstName);
           Utils.saveUserData('lastName', this.updateUserForm.value.lastName);
           Utils.saveUserData('email', this.updateUserForm.value.email);
