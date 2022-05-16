@@ -41,9 +41,10 @@ export class ForbidenAccessComponent implements OnInit {
           //if error message has the text The Token has expired then clear local storage and redirect to login page
           if (error['error'].error_message.includes('The Token has expired')) {
             this.errorMessage = error['error'].error_message;
-            alert('Your session has expired. Please login again.');
+            this.errorMessage = 'Your session has expired. Please login again.';
             localStorage.clear();
-            this.router.navigate(['/']);
+          } else {
+            this.errorMessage = error['error'].error_message;
           }
         }
       );
@@ -68,7 +69,7 @@ export class ForbidenAccessComponent implements OnInit {
           Utils.saveUserData('email', data['email']);
           Utils.saveUserData('firstName', data['firstName']);
           Utils.saveUserData('lastName', data['lastName']);
-          Utils.saveUserData('role', data['role']);
+          Utils.saveUserData('assignedRole', data['role']);
         },
         (error) => {
           console.log(error);

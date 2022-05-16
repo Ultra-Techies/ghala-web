@@ -32,6 +32,7 @@ import { AddupdateInventoryModalComponent } from './addupdate-inventory-modal/ad
 import { DeliveryNoteComponent } from './delivery-note/delivery-note.component';
 import { DispatchOrderComponent } from './dispatch-order/dispatch-order.component';
 import { ForbidenAccessComponent } from './forbiden-access/forbiden-access.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { ForbidenAccessComponent } from './forbiden-access/forbiden-access.compo
     DeliveryNoteComponent,
     DispatchOrderComponent,
     ForbidenAccessComponent,
+    UpdateUserComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

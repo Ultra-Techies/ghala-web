@@ -129,7 +129,7 @@ export class OtpComponent implements OnInit {
           Utils.saveUserData('email', data['email']);
           Utils.saveUserData('firstName', data['firstName']);
           Utils.saveUserData('lastName', data['lastName']);
-          Utils.saveUserData('role', data['role']);
+          Utils.saveUserData('assignedRole', data['role']);
         },
         (error) => {
           console.log(error);

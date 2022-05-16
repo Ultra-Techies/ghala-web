@@ -79,7 +79,7 @@ export class Inventory implements OnInit {
           };
         },
         (error) => {
-          console.log('Heey: ' + error);
+          console.log(error);
           if (error.status === 403) {
             this.router.navigate(['/forbidden']);
           }

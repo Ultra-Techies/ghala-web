@@ -7,6 +7,7 @@ import { OrdersComponent } from '../../orders/orders.component';
 import { Inventory } from 'app/inventory/inventory.component';
 import { DispatchComponent } from 'app/dispatch/dispatch.component';
 import { ForbidenAccessComponent } from 'app/forbiden-access/forbiden-access.component';
+import { ManagerUsersComponent } from 'app/manager-users/manager-users.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'dashboard', component: HomeComponent },
@@ -15,5 +16,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'inventory', component: Inventory },
   { path: 'dispatch', component: DispatchComponent },
+  { path: 'users', component: ManagerUsersComponent },
   { path: 'forbidden', component: ForbidenAccessComponent },
 ];
