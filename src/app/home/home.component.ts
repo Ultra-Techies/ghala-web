@@ -233,48 +233,56 @@ export class HomeComponent implements OnInit {
   }
 
   getUserData() {
-    this.http
-      .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
-      .subscribe(
-        (data) => {
-          //if assignedRole is not the same as existing role in local storage then update then logout
+    //if localStorage.getItem('userId') does not exist or is null, redirect to login page
+    if (!localStorage.getItem('userId')) {
+      this.router.navigate(['/login']);
+    } else {
+      this.http
+        .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
+        .subscribe(
+          (data) => {
+            //if assignedRole is not the same as existing role in local storage then update then logout
 
-          if (
-            data['role'].toString().toUpperCase() !=
-            localStorage.getItem('assignedRole').toString().toUpperCase()
-          ) {
-            localStorage.clear();
-            this.router.navigate(['/']);
-            console.log(
-              'Role changed from: ' +
-                localStorage.getItem('assignedRole') +
-                ' To: ' +
-                data['role']
-            );
-          } else {
-            console.log('user role not changed');
-            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
-            Utils.saveUserData('assignedRole', data['role']);
-            Utils.saveUserData('userId', data['id']);
-            Utils.saveUserData('email', data['email']);
-            Utils.saveUserData('firstName', data['firstName']);
-            Utils.saveUserData('lastName', data['lastName']);
-          }
+            if (
+              data['role'].toString().toUpperCase() !=
+              localStorage.getItem('assignedRole').toString().toUpperCase()
+            ) {
+              localStorage.clear();
+              this.router.navigate(['/']);
+              console.log(
+                'Role changed from: ' +
+                  localStorage.getItem('assignedRole') +
+                  ' To: ' +
+                  data['role']
+              );
+            } else {
+              console.log('user role not changed');
+              Utils.saveUserData(
+                'assignedWarehouse',
+                data['assignedWarehouse']
+              );
+              Utils.saveUserData('assignedRole', data['role']);
+              Utils.saveUserData('userId', data['id']);
+              Utils.saveUserData('email', data['email']);
+              Utils.saveUserData('firstName', data['firstName']);
+              Utils.saveUserData('lastName', data['lastName']);
+            }
 
-          //if assignedWarehouse is not the same as existing warehouse in local storage then update then logout
-          if (
-            data['assignedWarehouse'] !=
-            localStorage.getItem('assignedWarehouse')
-          ) {
-            localStorage.clear();
-            this.router.navigate(['/']);
-            console.log('user warehouse changed');
+            //if assignedWarehouse is not the same as existing warehouse in local storage then update then logout
+            if (
+              data['assignedWarehouse'] !=
+              localStorage.getItem('assignedWarehouse')
+            ) {
+              localStorage.clear();
+              this.router.navigate(['/']);
+              console.log('user warehouse changed');
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        );
+    }
   }
 
   //loop through local storage and get all tasks with task.id starting with 'task-' and return them
