@@ -16,6 +16,9 @@ export class NavbarComponent implements OnInit {
   location: Location;
   private toggleButton: any;
   private sidebarVisible: boolean;
+  userName: string = 'Ghala';
+  isAdmin: boolean = false;
+  today: Date = new Date();
 
   constructor(location: Location, private element: ElementRef) {
     this.location = location;
@@ -26,6 +29,16 @@ export class NavbarComponent implements OnInit {
     this.listTitles = ROUTES.filter((listTitle) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    this.userName =
+      localStorage.getItem('firstName') +
+      ' ' +
+      localStorage.getItem('lastName');
+
+    if (localStorage.getItem('assignedRole') === 'ADMIN') {
+      this.isAdmin = true;
+    }
+
+    this.today = new Date();
   }
   sidebarOpen() {
     const toggleButton = this.toggleButton;

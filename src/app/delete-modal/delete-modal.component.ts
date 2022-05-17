@@ -68,10 +68,10 @@ export class DeleteModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close('Warehouse deleted successfully');
+          this.close('Warehouse deleted successfully!');
         },
         (err: any) => {
-          alert('Error: ' + err);
+          console.log(err);
           this.close('Error: ' + err);
         }
       );
@@ -85,10 +85,10 @@ export class DeleteModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close('Inventory deleted successfully');
+          this.close('Deleted Successfully!');
         },
         (err: any) => {
-          alert('Error: ' + err);
+          console.log(err);
           this.close('Error: ' + err);
         }
       );
@@ -102,10 +102,10 @@ export class DeleteModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close('Order deleted successfully');
+          this.close('Order deleted successfully!');
         },
         (err: any) => {
-          alert('Error: ' + err);
+          console.log(err);
           this.close('Error: ' + err);
         }
       );

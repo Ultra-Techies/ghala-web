@@ -11,9 +11,11 @@ import Utils from 'app/helpers/Utils';
 export class ForbidenAccessComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
   errorMessage: string = '';
+  assignedRole: string = '';
+  assignedWarehouse: string = '';
 
   ngOnInit(): void {
-    this.refreshToken();
+    //this.refreshToken();
     this.getUserData(Utils.getUserData('phoneNumber'));
   }
 
@@ -64,16 +66,46 @@ export class ForbidenAccessComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
-          Utils.saveUserData('userId', data['id']);
-          Utils.saveUserData('email', data['email']);
-          Utils.saveUserData('firstName', data['firstName']);
-          Utils.saveUserData('lastName', data['lastName']);
-          Utils.saveUserData('assignedRole', data['role']);
+          if (
+            data['role'].toString().toUpperCase() !=
+            localStorage.getItem('assignedRole').toString().toUpperCase()
+          ) {
+            localStorage.clear();
+            this.router.navigate(['/']);
+            console.log('User role has changed');
+          } else {
+            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+            Utils.saveUserData('userId', data['id']);
+            Utils.saveUserData('email', data['email']);
+            Utils.saveUserData('firstName', data['firstName']);
+            Utils.saveUserData('lastName', data['lastName']);
+            Utils.saveUserData('assignedRole', data['role']);
+            this.assignedRole = localStorage.getItem('assignedRole');
+            this.assignedWarehouse = Utils.getWarehouseName(
+              data['assignedWarehouse']
+            )
+              ? Utils.getWarehouseName(data['assignedWarehouse'])
+              : 'Unassigned';
+          }
         },
         (error) => {
           console.log(error);
           this.errorMessage = error['error'].error_message;
+        }
+      );
+  }
+
+  getWarehouses() {
+    this.http
+      .get(Utils.BASE_URL + 'warehouse/all', {
+        headers: Utils.getHeaders(),
+      })
+      .subscribe(
+        (data: any) => {
+          localStorage.setItem('warehouses', JSON.stringify(data));
+        },
+        (error) => {
+          console.log(error);
         }
       );
   }

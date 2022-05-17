@@ -2,6 +2,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
         <div class="card">
           <div class="header">
             <h4 class="title">Inventory</h4>
@@ -14,6 +20,10 @@
             </button>
           </div>
           <div class="content table-responsive table-full-width">
+            <!-- empty state -->
+            <div *ngIf="!loading && !foundInventory">
+              <h4 class="text-center">No Inventory Items found</h4>
+            </div>
             <table class="table table-hover table-striped">
               <thead>
                 <tr>
@@ -21,6 +31,17 @@
                 </tr>
               </thead>
               <tbody>
+                <i
+                  class="fa fa-spinner fa-spin"
+                  style="
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin: 10px;
+                  "
+                  *ngIf="loading"
+                >
+                </i>
                 <tr *ngFor="let row of tableData1.dataRows">
                   <td
                     *ngFor="let cell of row"
@@ -29,7 +50,7 @@
                     {{ cell }}
                   </td>
                   <td>
-                    <a (click)="deleteInitiate(row)">
+                    <a *ngIf="deleteInventory" (click)="deleteInitiate(row)">
                       <i class="pe-7s-trash"></i>
                     </a>
                   </td>

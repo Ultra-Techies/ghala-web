@@ -115,18 +115,23 @@ export class AdminLayoutComponent implements OnInit {
       .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
       .subscribe(
         (data) => {
-          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
-          Utils.saveUserData('userId', data['id']);
-          Utils.saveUserData('email', data['email']);
-          Utils.saveUserData('firstName', data['firstName']);
-          Utils.saveUserData('lastName', data['lastName']);
-
           //if assignedRole is not the same as existing role in local storage then update then logout
+
           if (
-            data['assignedRole'].toString().toUpperCase() !=
-            localStorage.getItem('role').toString().toUpperCase()
+            data['role'].toString().toUpperCase() !=
+            localStorage.getItem('assignedRole').toString().toUpperCase()
           ) {
             localStorage.clear();
+            this.router.navigate(['/']);
+            console.log('User role has changed');
+          } else {
+            console.log('user role not changed');
+            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+            Utils.saveUserData('assignedRole', data['role']);
+            Utils.saveUserData('userId', data['id']);
+            Utils.saveUserData('email', data['email']);
+            Utils.saveUserData('firstName', data['firstName']);
+            Utils.saveUserData('lastName', data['lastName']);
           }
 
           //if assignedWarehouse is not the same as existing warehouse in local storage then update then logout
@@ -135,6 +140,8 @@ export class AdminLayoutComponent implements OnInit {
             localStorage.getItem('assignedWarehouse')
           ) {
             localStorage.clear();
+            this.router.navigate(['/']);
+            console.log('user warehouse changed');
           }
         },
         (error) => {

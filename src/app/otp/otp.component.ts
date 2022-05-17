@@ -93,7 +93,7 @@ export class OtpComponent implements OnInit {
             Utils.saveUserData('refresh_token', data['refresh_token']);
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
-            Utils.saveUserData('warehouseId', data['warehouseId']);
+            Utils.saveUserData('assignedWarehouse', data['warehouseId']);
 
             this.getUserData(phoneNumber);
             setTimeout(() => {
