@@ -17,7 +17,7 @@ export class OtpComponent implements OnInit {
     private http: HttpClient // private toastr: ToastrService
   ) {}
   otpForm!: FormGroup;
-
+  loading = false;
   isValid = true;
   otp: string;
   phoneNumber: string;
@@ -34,6 +34,7 @@ export class OtpComponent implements OnInit {
       otp: ['', Validators.required],
     });
     this.newUser = history.state.newUser;
+    this.loading = false;
   }
 
   onOtpChange(otp) {
@@ -41,6 +42,7 @@ export class OtpComponent implements OnInit {
   }
 
   verify() {
+    this.loading = true;
     //check to see if history.state exists and contains otp
     if (history.state.newUser === false) {
       this.isValid = true;
@@ -59,11 +61,13 @@ export class OtpComponent implements OnInit {
       this.otpForm.controls.otp.setErrors({
         incorrect: true,
       });
+      this.loading = false;
     }
   }
 
   verifyUser(phoneNumber: string, otp: string) {
     //x-www-form-urlencoded header
+    this.loading = true;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -89,7 +93,7 @@ export class OtpComponent implements OnInit {
             Utils.saveUserData('refresh_token', data['refresh_token']);
             Utils.saveUserData('phoneNumber', phoneNumber);
             Utils.saveUserData('userId', data['id']);
-            Utils.saveUserData('warehouseId', data['warehouseId']);
+            Utils.saveUserData('assignedWarehouse', data['warehouseId']);
 
             this.getUserData(phoneNumber);
             setTimeout(() => {
@@ -106,6 +110,7 @@ export class OtpComponent implements OnInit {
         (error) => {
           console.log(error);
           alert('Something went wrong!');
+          this.loading = false;
         }
       );
   }

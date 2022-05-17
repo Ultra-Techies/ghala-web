@@ -19,6 +19,11 @@ declare interface TableData {
 export class OrdersComponent implements OnInit {
   public tableData1: TableData;
   public selectedORders: any = [];
+  editAllowed: boolean = false;
+  createDeliverNote: boolean = false;
+  loading: boolean = false;
+  foundOrders: boolean = false;
+  successMessage: string = '';
   errorMessage: string = '';
 
   modalRefCreateDN: MdbModalRef<DeliveryNoteComponent> | null = null;
@@ -31,6 +36,7 @@ export class OrdersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true;
     this.tableData1 = {
       headerRow: [
         'ID',
@@ -40,13 +46,11 @@ export class OrdersComponent implements OnInit {
         'Price',
         'Status',
       ],
-      dataRows: [['', '', '', '', '', '', '']],
+      dataRows: [],
     };
     this.getOrders();
 
-    if (localStorage.getItem('assignedWarehouse') === null) {
-      this.getUserData();
-    }
+    this.getUserData();
   }
   getOrders() {
     this.selectedORders = [];
@@ -56,6 +60,7 @@ export class OrdersComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
+          this.loading = false;
           this.tableData1 = {
             headerRow: [
               '',
@@ -79,9 +84,10 @@ export class OrdersComponent implements OnInit {
               ];
             }),
           };
+          this.foundOrders = data.length > 0 ? true : false;
         },
         (error) => {
-          this.errorMessage = error['error'].error_message;
+          this.loading = false;
           console.log(error);
           if (error.status === 403) {
             this.router.navigate(['/forbidden']);
@@ -102,6 +108,24 @@ export class OrdersComponent implements OnInit {
           } else {
             this.getOrders();
           }
+
+          //if res['role'] is not ADMIN then set editAllowed to false else set it to true
+          if (data['role'] !== 'ADMIN') {
+            this.editAllowed = false;
+          } else {
+            this.editAllowed = true;
+          }
+
+          //if role belongs to any of the following then they should be able to creat delivery note: "ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE"
+
+          if (
+            data['role'] === 'ADMIN' ||
+            data['role'] === 'DISPATCH_ASSOCIATE' ||
+            data['role'] === 'WH_ASSOCIATE' ||
+            data['role'] === 'WH_MANAGER'
+          ) {
+            this.createDeliverNote = true;
+          }
         },
         (error) => {
           console.log(error);
@@ -114,8 +138,22 @@ export class OrdersComponent implements OnInit {
       modalClass: 'modal-dialog-centered',
       data: { payload: rowData, typeofPayload: 'order' },
     });
-    this.modalRefCreateDN.onClose.subscribe(() => {
-      this.getOrders();
+    this.modalRefCreateDN.onClose.subscribe((message) => {
+      //set successMessage if it's Deleted Successfully!
+      if (message === 'Order deleted successfully!') {
+        this.successMessage = message;
+        this.errorMessage = '';
+      } else {
+        this.successMessage = '';
+        this.errorMessage = message;
+      }
+
+      //wait 3 seconds and then call getOrders()
+      setTimeout(() => {
+        this.successMessage = '';
+        this.errorMessage = '';
+        this.getOrders();
+      }, 3000);
     });
   }
 
@@ -139,9 +177,23 @@ export class OrdersComponent implements OnInit {
     );
 
     this.modalRefCreateDN.onClose.subscribe((message) => {
-      this.getOrders();
       this.selectedORders = [];
-      this.errorMessage = message['error'].error_message;
+
+      //set successMessage if it's Created Successfully!
+      if (message === 'Created Successfully!') {
+        this.successMessage = message;
+        this.errorMessage = '';
+      } else {
+        this.successMessage = '';
+        this.errorMessage = message;
+      }
+
+      //wait 3 seconds and then call getOrders()
+      setTimeout(() => {
+        this.successMessage = '';
+        this.errorMessage = '';
+        this.getOrders();
+      }, 3000);
     });
   }
 }

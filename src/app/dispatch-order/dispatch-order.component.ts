@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Utils from 'app/helpers/Utils';
-import { ToastrService } from 'ngx-toastr';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
 
@@ -15,15 +14,14 @@ export class DispatchOrderComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    toastr: ToastrService,
     public modalRef: MdbModalRef<DispatchOrderComponent>,
     private router: Router
   ) {}
 
   ngOnInit(): void {}
 
-  close() {
-    this.modalRef.close();
+  close(message) {
+    this.modalRef.close(message);
   }
 
   dispatchOrder() {
@@ -35,12 +33,12 @@ export class DispatchOrderComponent implements OnInit {
         })
         .subscribe(
           (data) => {
-            this.modalRef.close();
+            this.close('Dispatched Successfully!');
             console.log(data);
           },
           (err) => {
             console.log('Error: ', err);
-            this.modalRef.close();
+            this.close('Error: ' + err);
           }
         );
     });

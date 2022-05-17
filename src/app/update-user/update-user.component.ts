@@ -52,8 +52,8 @@ export class UpdateUserComponent implements OnInit {
     });
   }
 
-  close() {
-    this.modalRef.close();
+  close(message) {
+    this.modalRef.close(message);
   }
 
   updateUser() {
@@ -75,22 +75,11 @@ export class UpdateUserComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          Utils.saveUserData('assignedWarehouse', this.assignedWarehouse);
-          Utils.saveUserData('assignedRole', this.assignedRole);
-          Utils.saveUserData('firstName', this.updateUserForm.value.firstName);
-          Utils.saveUserData('lastName', this.updateUserForm.value.lastName);
-          Utils.saveUserData('email', this.updateUserForm.value.email);
-          Utils.saveUserData(
-            'phoneNumber',
-            this.updateUserForm.value.phoneNumber
-          );
-
-          this.toastr.success('User updated successfully');
-          this.modalRef.close();
+          this.close('User Updated Successfully!');
         },
         (err) => {
           console.log('Error: ', err);
-          this.toastr.error('Error updating user');
+          this.close('Error: ' + err);
         }
       );
   }

@@ -28,6 +28,7 @@
     <br />
     <span class="text-danger" *ngIf="!isValid">Invalid OTP Code</span>
     <button mat-stroked-button (click)="verify()" class="btn-block">
+      <i class="fa fa-spinner fa-spin" *ngIf="loading"> </i>
       Verify
     </button>
   </div>

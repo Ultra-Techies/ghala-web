@@ -58,6 +58,7 @@
         [disabled]="registerForm.invalid"
         *ngIf="!registerForm.invalid"
       >
+        <i class="fa fa-spinner fa-spin" *ngIf="loading"> </i>
         Login
       </button>
     </form>

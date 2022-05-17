@@ -11,6 +11,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./addupdate-inventory-modal.component.css'],
 })
 export class AddupdateInventoryModalComponent implements OnInit {
+  categories = [
+    { categoryName: 'Dry Cereals' },
+    { categoryName: ' Flour' },
+    { categoryName: ' Cooking Oil' },
+    { categoryName: 'Sugar' },
+    { categoryName: 'Soap & Detergent' },
+  ];
   public addInventoryForm!: FormGroup;
   payload: string | null = null;
   warehouseId: any | null = null;
@@ -44,8 +51,8 @@ export class AddupdateInventoryModalComponent implements OnInit {
       quantity: ['', Validators.required],
     });
   }
-  close() {
-    this.modalRef.close();
+  close(message) {
+    this.modalRef.close(message);
   }
 
   addInventory() {
@@ -64,12 +71,11 @@ export class AddupdateInventoryModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close();
-          this.toastr.success('Added Successfully!');
+          this.close('Added Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
-          this.toastr.error('Something went wrong!');
+          this.close('Error: ' + err);
         }
       );
   }
@@ -91,12 +97,12 @@ export class AddupdateInventoryModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close();
+          this.close('Updated Successfully!');
           this.toastr.success('Updated Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
-          this.toastr.error('Something went wrong!');
+          this.close('Error: ' + err);
         }
       );
   }

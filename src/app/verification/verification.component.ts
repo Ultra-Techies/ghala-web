@@ -18,7 +18,7 @@ export class VerificationComponent implements OnInit {
 
   submitted = false;
   userExists = false;
-
+  loading = false;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -33,6 +33,7 @@ export class VerificationComponent implements OnInit {
       countryCode: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.minLength(9)]],
     });
+    this.loading = false;
   }
 
   register() {
@@ -41,13 +42,7 @@ export class VerificationComponent implements OnInit {
       Utils.formatPhoneNumber(this.registerForm.value.phoneNumber);
 
     this.http
-      .post(
-        Utils.BASE_URL + 'users/exists',
-        { phoneNumber: phoneNumber },
-        {
-          headers: Utils.getHeaders(),
-        }
-      )
+      .post(Utils.BASE_URL + 'users/exists', { phoneNumber: phoneNumber })
       .subscribe(
         (data) => {
           this.submitted = true;
@@ -68,6 +63,7 @@ export class VerificationComponent implements OnInit {
   }
 
   getOtp(phoneNumber: string) {
+    this.loading = true;
     this.http
       .post(Utils.BASE_URL + 'otp', { phoneNumber: phoneNumber })
       .subscribe(
@@ -80,6 +76,7 @@ export class VerificationComponent implements OnInit {
         (error) => {
           console.log(error);
           alert(error.error.message);
+          this.loading = false;
         }
       );
   }

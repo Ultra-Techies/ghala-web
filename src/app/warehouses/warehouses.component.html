@@ -2,10 +2,20 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        <!-- show success or failure messages above card. red for failure green for success -->
+        <div>
+          <div class="alert alert-success" *ngIf="successMessage">
+            {{ successMessage }}
+          </div>
+          <div class="alert alert-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+        </div>
         <div class="card">
           <div class="header">
             <h4 class="title">Warehouses</h4>
             <button
+              *ngIf="editAllowed"
               class="btn btn-primary btn-fill pull-right"
               (click)="openModal('add')"
             >
@@ -14,6 +24,10 @@
             <p class="category">A list of all warehouses</p>
           </div>
           <div class="content table-responsive table-full-width">
+            <!-- empty state -->
+            <div *ngIf="!loading && !foundWarehouses">
+              <h4 class="text-center">No warehouses found</h4>
+            </div>
             <table class="table table-hover table-striped">
               <thead>
                 <tr>
@@ -21,6 +35,18 @@
                 </tr>
               </thead>
               <tbody>
+                <i
+                  class="fa fa-spinner fa-spin"
+                  style="
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin: 10px;
+                  "
+                  *ngIf="loading"
+                >
+                </i>
+
                 <tr *ngFor="let row of tableData1.dataRows">
                   <td
                     *ngFor="let cell of row"
@@ -29,7 +55,7 @@
                     {{ cell }}
                   </td>
                   <td>
-                    <a (click)="deleteInitiate(row)">
+                    <a *ngIf="editAllowed" (click)="deleteInitiate(row)">
                       <i class="pe-7s-trash"></i>
                     </a>
                   </td>

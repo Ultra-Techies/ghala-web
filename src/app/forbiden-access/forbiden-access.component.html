@@ -11,17 +11,38 @@
             </p>
           </div>
           <div class="content">
-            <div class="typo-line">
-              <h5><p>You don't have permission to access this page.</p></h5>
+            <div>
+              <p>
+                Please contact your Administrator or Manager to get access to
+                this page or:
+              </p>
+              <p>Try the following:</p>
+              <ul>
+                <li>
+                  Make sure you have the right access priviledges. Your current
+                  role is: <b>{{ assignedRole }}</b>
+                </li>
+                <li>
+                  Make sure you're assigned to a Warehouse. Current assigned
+                  Warehouse is: <b>{{ assignedWarehouse }}</b>
+                </li>
+                <li>
+                  Logout and login again if you have the correct access role.
+                </li>
+              </ul>
             </div>
-            <div class="typo-line">
-              <h5><p>Please contact your administrator.</p></h5>
+            <div class="footer">
+              <hr />
+              <div class="stats">
+                <i class="fa fa-clock-o"></i>
+                <a href="#"> Please contact the Administrator </a>
+              </div>
+            </div>
+            <!--show errorMessage -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              Server returned: {{ errorMessage }} : Try logout and login again.
             </div>
           </div>
-        </div>
-        <!--show errorMessage -->
-        <div *ngIf="errorMessage" class="alert alert-danger">
-          Server returned: {{ errorMessage }} : Try logout and login again.
         </div>
       </div>
     </div>

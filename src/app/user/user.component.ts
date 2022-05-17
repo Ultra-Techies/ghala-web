@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Utils from 'app/helpers/Utils';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -26,7 +25,6 @@ export class UserComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
     private router: Router
   ) {}
 
@@ -59,7 +57,6 @@ export class UserComponent implements OnInit {
     let userId = localStorage.getItem('userId');
     if (userId === null) {
       this.router.navigate(['/']);
-      this.toastr.error('Please Login First!', 'Error');
     } else {
       this.loading = true;
       //call user api to get user details and make sure user still exists
@@ -73,20 +70,10 @@ export class UserComponent implements OnInit {
             this.loggedInUser = res;
             this.userID = userId;
 
-            Utils.saveUserData('email', this.loggedInUser.email);
-            Utils.saveUserData('firstName', this.loggedInUser.firstName);
-            Utils.saveUserData('lastName', this.loggedInUser.lastName);
-            Utils.saveUserData('assignedRole', this.loggedInUser.role);
-            Utils.saveUserData(
-              'assignedWarehouse',
-              this.loggedInUser.assignedWarehouse
-            );
-
             this.getWarehouse();
           },
           (err: any) => {
             this.loading = false;
-            this.toastr.error('Error, ' + err.error.message, 'Error');
             if (err.status === 403) {
               this.router.navigate(['/forbidden']);
             } else {
@@ -151,14 +138,10 @@ export class UserComponent implements OnInit {
         },
         (err: any) => {
           this.loading = false;
-          this.toastr.error('Error, ' + err.error.message, 'Error');
           if (err.status === 403) {
             this.router.navigate(['/forbidden']);
           } else {
-            //redirect to login page
-            alert(err);
-            localStorage.clear();
-            this.router.navigate(['/']);
+            console.log('Error: ', err);
           }
         }
       );

@@ -20,7 +20,16 @@ export class DispatchComponent implements OnInit {
 
   public selectedORders: any = [];
 
+  allowedDispatch: boolean = false;
+
+  loading: boolean = false;
+
+  foundDispatch: boolean = false;
+
   modalRefDispatch: MdbModalRef<DispatchOrderComponent> | null = null;
+
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private http: HttpClient,
@@ -29,6 +38,7 @@ export class DispatchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true;
     this.tableData1 = {
       headerRow: [
         '',
@@ -39,9 +49,10 @@ export class DispatchComponent implements OnInit {
         'Reference',
         'Status',
       ],
-      dataRows: [['', '', '', '', '', '', '']],
+      dataRows: [],
     };
     this.getDeliveryNotes();
+    this.getUserData();
   }
 
   getDeliveryNotes() {
@@ -54,6 +65,7 @@ export class DispatchComponent implements OnInit {
       )
       .subscribe(
         (data: any) => {
+          this.loading = false;
           //console.log(data);
           this.tableData1 = {
             headerRow: [
@@ -76,8 +88,11 @@ export class DispatchComponent implements OnInit {
               ];
             }),
           };
+
+          this.foundDispatch = data.length > 0 ? true : false;
         },
         (error) => {
+          this.loading = false;
           console.log(error);
           if (error.status === 403) {
             this.router.navigate(['/forbidden']);
@@ -95,9 +110,23 @@ export class DispatchComponent implements OnInit {
       }
     );
 
-    this.modalRefDispatch.onClose.subscribe(() => {
-      this.getDeliveryNotes();
-      this.selectedORders = [];
+    this.modalRefDispatch.onClose.subscribe((message) => {
+      //set successMessage if it's Dispatched Successfully!!
+      if (message === 'Dispatched Successfully!') {
+        this.successMessage = message;
+        this.errorMessage = '';
+      } else {
+        this.successMessage = '';
+        this.errorMessage = message;
+      }
+
+      //wait 3 seconds and then call getDeliveryNotes()
+      setTimeout(() => {
+        this.successMessage = '';
+        this.errorMessage = '';
+        this.getDeliveryNotes();
+        this.selectedORders = [];
+      }, 3000);
     });
   }
 
@@ -110,5 +139,25 @@ export class DispatchComponent implements OnInit {
       this.selectedORders.push(row);
     }
     //console.log('Selected Order: ' + this.selectedORders);
+  }
+
+  getUserData() {
+    this.http
+      .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
+      .subscribe(
+        (data) => {
+          //if res['role'] is //"ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE" then they can dispatch
+          if (
+            data['role'] === 'ADMIN' ||
+            data['role'] === 'DISPATCH_ASSOCIATE' ||
+            data['role'] === 'WH_ASSOCIATE'
+          ) {
+            this.allowedDispatch = true;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }

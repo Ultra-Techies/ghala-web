@@ -81,6 +81,7 @@
         [disabled]="accountForm.invalid"
         *ngIf="!accountForm.invalid"
       >
+        <i class="fa fa-spinner fa-spin" *ngIf="loading"> </i>
         SUBMIT
       </button>
     </form>
