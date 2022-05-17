@@ -115,9 +115,13 @@ export default class Utils {
   //get warehouse name from localstorage by passing the warehouse id
   static getWarehouseName(warehouseId) {
     const warehouses = JSON.parse(localStorage.getItem('warehouses'));
-    for (let i = 0; i < warehouses.length; i++) {
-      if (warehouses[i].id === warehouseId) {
-        return warehouses[i].name;
+    if (warehouses !== null && warehouses.length > 0) {
+      for (let i = 0; i < warehouses.length; i++) {
+        if (warehouses[i].id === warehouseId) {
+          return warehouses[i].name;
+        } else {
+          return 'Warehouse not found';
+        }
       }
     }
   }

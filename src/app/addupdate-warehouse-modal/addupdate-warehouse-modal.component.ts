@@ -35,8 +35,8 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
     });
   }
 
-  close() {
-    this.modalRef.close();
+  close(message?: string) {
+    this.modalRef.close(message);
   }
 
   addWarehouse() {
@@ -52,12 +52,12 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close();
+          this.close('Added Successfully!');
           this.toastr.success('Added Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
-          this.toastr.error('Something went wrong!');
+          this.close('Error: ' + err);
         }
       );
   }
@@ -76,11 +76,12 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //console.log(data);
-          this.close();
+          this.close('Updated Successfully!');
           this.toastr.success('Updated Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
+          this.close('Error: ' + err);
           this.toastr.error('Something went wrong!');
         }
       );

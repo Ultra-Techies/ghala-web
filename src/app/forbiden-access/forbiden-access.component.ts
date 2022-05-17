@@ -11,9 +11,11 @@ import Utils from 'app/helpers/Utils';
 export class ForbidenAccessComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
   errorMessage: string = '';
+  assignedRole: string = '';
+  assignedWarehouse: string = '';
 
   ngOnInit(): void {
-    this.refreshToken();
+    //this.refreshToken();
     this.getUserData(Utils.getUserData('phoneNumber'));
   }
 
@@ -70,10 +72,31 @@ export class ForbidenAccessComponent implements OnInit {
           Utils.saveUserData('firstName', data['firstName']);
           Utils.saveUserData('lastName', data['lastName']);
           Utils.saveUserData('assignedRole', data['role']);
+          this.assignedRole = localStorage.getItem('assignedRole');
+          this.assignedWarehouse = Utils.getWarehouseName(
+            data['assignedWarehouse']
+          )
+            ? Utils.getWarehouseName(data['assignedWarehouse'])
+            : 'Unassigned';
         },
         (error) => {
           console.log(error);
           this.errorMessage = error['error'].error_message;
+        }
+      );
+  }
+
+  getWarehouses() {
+    this.http
+      .get(Utils.BASE_URL + 'warehouse/all', {
+        headers: Utils.getHeaders(),
+      })
+      .subscribe(
+        (data: any) => {
+          localStorage.setItem('warehouses', JSON.stringify(data));
+        },
+        (error) => {
+          console.log(error);
         }
       );
   }

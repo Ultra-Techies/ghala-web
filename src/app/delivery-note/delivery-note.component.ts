@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 export class DeliveryNoteComponent implements OnInit {
   payload: any[] = [];
   totalValue: number;
-  errorMessage: string = '';
 
   constructor(
     private toastr: ToastrService,
@@ -46,12 +45,11 @@ export class DeliveryNoteComponent implements OnInit {
         .subscribe(
           (data: any) => {
             //console.log(data);
-            this.close();
+            this.close('Created Successfully!');
             this.payload = [];
           },
           (err: any) => {
-            this.errorMessage = err;
-            this.close();
+            this.close('Error: ' + err);
             console.log('Error: ', err);
           }
         );
@@ -67,7 +65,7 @@ export class DeliveryNoteComponent implements OnInit {
     return total;
   }
 
-  close() {
-    this.modalRef.close(this.errorMessage);
+  close(message) {
+    this.modalRef.close(message);
   }
 }

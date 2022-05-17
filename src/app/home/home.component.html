@@ -13,7 +13,8 @@
           [legendItems]="activityChartLegendItems"
           [withHr]="true"
           [footerIconClass]="'fa fa-check'"
-          [footerText]="'Data information certified'"
+          [footerText]="'Data information certified | Click to refresh'"
+          [routerLink]="'/'"
         >
         </lbd-chart>
       </div>
@@ -28,6 +29,7 @@
           [withHr]="true"
           [footerIconClass]="'fa fa-clock-o'"
           [footerText]="'Updated in realtime'"
+          [routerLink]="'/'"
         >
         </lbd-chart>
       </div>

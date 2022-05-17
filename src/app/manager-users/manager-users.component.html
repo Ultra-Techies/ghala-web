@@ -3,6 +3,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
         <div class="card">
           <div class="header">
             <h4 class="title">Users</h4>
@@ -16,6 +22,17 @@
                 </tr>
               </thead>
               <tbody>
+                <i
+                  class="fa fa-spinner fa-spin"
+                  style="
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin: 10px;
+                  "
+                  *ngIf="loading"
+                >
+                </i>
                 <tr *ngFor="let row of tableData1.dataRows">
                   <td *ngFor="let cell of row" (click)="openModal(row)">
                     {{ cell }}

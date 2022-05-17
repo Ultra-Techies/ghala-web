@@ -52,8 +52,8 @@ export class UpdateUserComponent implements OnInit {
     });
   }
 
-  close() {
-    this.modalRef.close();
+  close(message) {
+    this.modalRef.close(message);
   }
 
   updateUser() {
@@ -85,12 +85,11 @@ export class UpdateUserComponent implements OnInit {
             this.updateUserForm.value.phoneNumber
           );
 
-          this.toastr.success('User updated successfully');
-          this.modalRef.close();
+          this.close('User Updated Successfully!');
         },
         (err) => {
           console.log('Error: ', err);
-          this.toastr.error('Error updating user');
+          this.close('Error: ' + err);
         }
       );
   }

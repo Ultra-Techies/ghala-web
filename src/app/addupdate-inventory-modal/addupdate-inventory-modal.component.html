@@ -3,7 +3,7 @@
     type="button"
     class="close pull-right"
     aria-label="Close"
-    (click)="close()"
+    (click)="close('')"
   >
     <span aria-hidden="true">×</span>
   </button>
@@ -22,7 +22,10 @@
     <div class="row">
       <div class="col-md-12">
         <form>
-          <form [formGroup]="addInventoryForm" (Submit)="close()">
+          <form
+            [formGroup]="addInventoryForm"
+            (Submit)="payload ? updateInventory() : addInventory()"
+          >
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -75,7 +78,7 @@
                   <label for="">Price Per Unit:</label>
                   <input
                     formControlName="ppu"
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="sku"
                     placeholder="Product PPU"
@@ -97,7 +100,7 @@
                   <label for="">Quantity:</label>
                   <input
                     formControlName="quantity"
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="quantity"
                     placeholder="Quantity"
