@@ -50,8 +50,8 @@ export class AccountSetupComponent implements OnInit {
         (data) => {
           //console.log(data);
           if (data['id']) {
-            Utils.saveUserData('userId', data['id']);
-            this.router.navigate(['/dashboard']);
+            localStorage.clear();
+            this.router.navigate(['/']);
           }
         },
         (err) => {
