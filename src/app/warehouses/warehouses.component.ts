@@ -57,9 +57,6 @@ export class Warehouses implements OnInit {
         },
         (error) => {
           console.log(error);
-          if (error.status === 403) {
-            this.router.navigate(['/forbidden']);
-          }
         }
       );
   }
