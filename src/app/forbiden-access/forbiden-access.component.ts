@@ -66,18 +66,27 @@ export class ForbidenAccessComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
-          Utils.saveUserData('userId', data['id']);
-          Utils.saveUserData('email', data['email']);
-          Utils.saveUserData('firstName', data['firstName']);
-          Utils.saveUserData('lastName', data['lastName']);
-          Utils.saveUserData('assignedRole', data['role']);
-          this.assignedRole = localStorage.getItem('assignedRole');
-          this.assignedWarehouse = Utils.getWarehouseName(
-            data['assignedWarehouse']
-          )
-            ? Utils.getWarehouseName(data['assignedWarehouse'])
-            : 'Unassigned';
+          if (
+            data['role'].toString().toUpperCase() !=
+            localStorage.getItem('assignedRole').toString().toUpperCase()
+          ) {
+            localStorage.clear();
+            this.router.navigate(['/']);
+            console.log('User role has changed');
+          } else {
+            Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
+            Utils.saveUserData('userId', data['id']);
+            Utils.saveUserData('email', data['email']);
+            Utils.saveUserData('firstName', data['firstName']);
+            Utils.saveUserData('lastName', data['lastName']);
+            Utils.saveUserData('assignedRole', data['role']);
+            this.assignedRole = localStorage.getItem('assignedRole');
+            this.assignedWarehouse = Utils.getWarehouseName(
+              data['assignedWarehouse']
+            )
+              ? Utils.getWarehouseName(data['assignedWarehouse'])
+              : 'Unassigned';
+          }
         },
         (error) => {
           console.log(error);

@@ -61,7 +61,6 @@ export class ManagerUsersComponent implements OnInit {
           this.loading = false;
           //get assignedRole from local storage. if it's not ADMIN, WH_MANAGER or SUPERVISOR the navigate to /forbidden else continue
           //this.assignedRole = localStorage.getItem('assignedRole');
-          console.log('My Role => ' + this.assignedRole);
           if (
             this.assignedRole === 'ADMIN' ||
             this.assignedRole === 'WH_MANAGER' ||

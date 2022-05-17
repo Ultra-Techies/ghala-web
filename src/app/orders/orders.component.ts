@@ -117,7 +117,7 @@ export class OrdersComponent implements OnInit {
           }
 
           //if role belongs to any of the following then they should be able to creat delivery note: "ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE"
-          console.log('My Role: ' + data['role']);
+
           if (
             data['role'] === 'ADMIN' ||
             data['role'] === 'DISPATCH_ASSOCIATE' ||
