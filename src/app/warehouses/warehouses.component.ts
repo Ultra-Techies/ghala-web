@@ -33,7 +33,7 @@ export class Warehouses implements OnInit {
   ngOnInit() {
     this.tableData1 = {
       headerRow: ['ID', 'Name', 'Location'],
-      dataRows: [['', '', '']],
+      dataRows: [],
     };
 
     this.getWarehouses();

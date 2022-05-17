@@ -39,7 +39,7 @@ export class DispatchComponent implements OnInit {
         'Reference',
         'Status',
       ],
-      dataRows: [['', '', '', '', '', '', '']],
+      dataRows: [],
     };
     this.getDeliveryNotes();
   }

@@ -40,7 +40,7 @@ export class OrdersComponent implements OnInit {
         'Price',
         'Status',
       ],
-      dataRows: [['', '', '', '', '', '', '']],
+      dataRows: [],
     };
     this.getOrders();
 
