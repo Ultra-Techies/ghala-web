@@ -123,7 +123,12 @@ export class AdminLayoutComponent implements OnInit {
           ) {
             localStorage.clear();
             this.router.navigate(['/']);
-            console.log('User role has changed');
+            console.log(
+              'Role changed from: ' +
+                localStorage.getItem('assignedRole') +
+                ' To: ' +
+                data['role']
+            );
           } else {
             console.log('user role not changed');
             Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);

@@ -111,7 +111,6 @@ export class ManagerUsersComponent implements OnInit {
           Utils.saveUserData('userId', data['id']);
           Utils.saveUserData('assignedRole', data['role']);
           this.assignedRole = data['role'];
-          console.log('Updated Role => ' + this.assignedRole);
 
           this.getUsers(); //now fetch users
 
