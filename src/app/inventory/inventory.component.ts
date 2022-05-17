@@ -43,7 +43,7 @@ export class Inventory implements OnInit {
         'Price',
         'Status',
       ],
-      dataRows: [['', '', '']],
+      dataRows: [],
     };
     this.getInventory();
   }

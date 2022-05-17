@@ -36,7 +36,7 @@ export class ManagerUsersComponent implements OnInit {
         'Assigned Warehouse',
         'Role',
       ],
-      dataRows: [['', '', '', '', '', '', '']],
+      dataRows: [],
     };
 
     this.getWarehouses();
