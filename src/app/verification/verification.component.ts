@@ -42,13 +42,7 @@ export class VerificationComponent implements OnInit {
       Utils.formatPhoneNumber(this.registerForm.value.phoneNumber);
 
     this.http
-      .post(
-        Utils.BASE_URL + 'users/exists',
-        { phoneNumber: phoneNumber },
-        {
-          headers: Utils.getHeaders(),
-        }
-      )
+      .post(Utils.BASE_URL + 'users/exists', { phoneNumber: phoneNumber })
       .subscribe(
         (data) => {
           this.submitted = true;
