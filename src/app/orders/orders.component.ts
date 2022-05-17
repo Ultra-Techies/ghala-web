@@ -56,7 +56,6 @@ export class OrdersComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.tableData1 = {
             headerRow: [
               '',
@@ -93,7 +92,7 @@ export class OrdersComponent implements OnInit {
 
   getUserData() {
     this.http
-      .get(Utils.BASE_URL + 'users/' + localStorage.getItem('userId'))
+      .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
       .subscribe(
         (data) => {
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);

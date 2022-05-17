@@ -51,8 +51,6 @@ export class ManagerUsersComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log(data);
-
           for (let i = 0; i < data.length; i++) {
             this.tableData1.dataRows[i] = [
               data[i].id,
@@ -109,7 +107,6 @@ export class ManagerUsersComponent implements OnInit {
       })
       .subscribe(
         (data: any) => {
-          console.log('Warehouses: ' + data[0].name);
           localStorage.setItem('warehouses', JSON.stringify(data));
         },
         (error) => {

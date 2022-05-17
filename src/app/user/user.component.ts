@@ -41,8 +41,22 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.loading = false;
 
-    let userId = localStorage.getItem('userId');
+    this.getUserData();
 
+    this.settingsForm = this.formBuilder.group({
+      userId: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.email],
+      password: ['', [Validators.required, Validators.maxLength(4)]],
+      phoneNumber: [''],
+      role: [''],
+      assignedWarehouse: [''],
+    });
+  }
+
+  getUserData() {
+    let userId = localStorage.getItem('userId');
     if (userId === null) {
       this.router.navigate(['/']);
       this.toastr.error('Please Login First!', 'Error');
@@ -58,8 +72,17 @@ export class UserComponent implements OnInit {
             this.loading = false;
             this.loggedInUser = res;
             this.userID = userId;
+
+            Utils.saveUserData('email', this.loggedInUser.email);
+            Utils.saveUserData('firstName', this.loggedInUser.firstName);
+            Utils.saveUserData('lastName', this.loggedInUser.lastName);
+            Utils.saveUserData('assignedRole', this.loggedInUser.role);
+            Utils.saveUserData(
+              'assignedWarehouse',
+              this.loggedInUser.assignedWarehouse
+            );
+
             this.getWarehouse();
-            //console.log(res);
           },
           (err: any) => {
             this.loading = false;
@@ -74,18 +97,8 @@ export class UserComponent implements OnInit {
           }
         );
     }
-
-    this.settingsForm = this.formBuilder.group({
-      userId: [''],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', [Validators.required, Validators.maxLength(4)]],
-      phoneNumber: [''],
-      role: [''],
-      assignedWarehouse: [''],
-    });
   }
+
   updateProfile() {
     let payload = {};
     if (this.firstName !== this.settingsForm.value.firstName) {
@@ -116,8 +129,7 @@ export class UserComponent implements OnInit {
       .subscribe(
         (data: any) => {
           //update success
-          console.log('User Data: ' + data);
-          window.location.reload();
+          this.getUserData();
         },
         (err: any) => {
           //update failed
