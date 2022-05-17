@@ -11,6 +11,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./addupdate-inventory-modal.component.css'],
 })
 export class AddupdateInventoryModalComponent implements OnInit {
+  categories = [
+    { categoryName: 'Dry Cereals' },
+    { categoryName: ' Flour' },
+    { categoryName: ' Cooking Oil' },
+    { categoryName: 'Sugar' },
+    { categoryName: 'Soap & Detergent' },
+  ];
   public addInventoryForm!: FormGroup;
   payload: string | null = null;
   warehouseId: any | null = null;

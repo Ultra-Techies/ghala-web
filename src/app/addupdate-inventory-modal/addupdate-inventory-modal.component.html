@@ -49,17 +49,19 @@
                 </div>
                 <div class="form-group">
                   <label for="">Product Category:</label>
-                  <input
+                  <select
+                    id="category"
                     formControlName="category"
-                    type="text"
                     class="form-control"
-                    id="productCategory"
-                    placeholder="Product Category"
                     required
-                    height="auto"
-                    maxRows="4"
-                    [(ngModel)]="category"
-                  />
+                  >
+                    <option
+                      *ngFor="let category of categories"
+                      [value]="category.categoryName"
+                    >
+                      {{ category.categoryName }}
+                    </option>
+                  </select>
                   <span
                     class="text-danger"
                     *ngIf="

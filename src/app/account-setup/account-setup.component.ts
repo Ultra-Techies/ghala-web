@@ -12,6 +12,7 @@ import Utils from 'app/helpers/Utils';
 })
 export class AccountSetupComponent implements OnInit {
   accountForm!: FormGroup;
+  loading = false;
   constructor(
     public dialog: MatDialog,
     public router: Router,
@@ -32,9 +33,11 @@ export class AccountSetupComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(4)]],
       email: [null, [Validators.required, Validators.email]],
     });
+    this.loading = false;
   }
 
   createUser() {
+    this.loading = true;
     this.http
       .post(Utils.BASE_URL + 'users', {
         email: this.accountForm.value.email,
@@ -53,6 +56,7 @@ export class AccountSetupComponent implements OnInit {
         },
         (err) => {
           console.log(err);
+          this.loading = false;
         }
       );
   }
