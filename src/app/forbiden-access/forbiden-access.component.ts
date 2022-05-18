@@ -67,8 +67,8 @@ export class ForbidenAccessComponent implements OnInit {
       .subscribe(
         (data) => {
           if (
-            data['role'].toString().toUpperCase() !=
-            localStorage.getItem('assignedRole').toString().toUpperCase()
+            data['role'].toUpperCase() !=
+            localStorage.getItem('assignedRole').toUpperCase()
           ) {
             localStorage.clear();
             this.router.navigate(['/']);

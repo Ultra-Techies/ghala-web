@@ -28,6 +28,8 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     if (Utils.userLoggedIn()) {
       this.router.navigate(['/dashboard']);
+    } else {
+      localStorage.clear();
     }
     this.registerForm = this.formBuilder.group({
       countryCode: ['', Validators.required],
