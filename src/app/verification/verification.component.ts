@@ -39,6 +39,7 @@ export class VerificationComponent implements OnInit {
   }
 
   register() {
+    this.loading = true;
     let phoneNumber =
       this.countries[this.registerForm.value.countryCode - 1].countryCode +
       Utils.formatPhoneNumber(this.registerForm.value.phoneNumber);
@@ -47,6 +48,7 @@ export class VerificationComponent implements OnInit {
       .post(Utils.BASE_URL + 'users/exists', { phoneNumber: phoneNumber })
       .subscribe(
         (data) => {
+          this.loading = false;
           this.submitted = true;
           if (data['exists']) {
             this.userExists = true;
@@ -59,6 +61,8 @@ export class VerificationComponent implements OnInit {
           }
         },
         (error) => {
+          alert('Something went wrong. ' + error.error.message);
+          this.loading = false;
           console.log(error);
         }
       );
@@ -70,6 +74,7 @@ export class VerificationComponent implements OnInit {
       .post(Utils.BASE_URL + 'otp', { phoneNumber: phoneNumber })
       .subscribe(
         (data) => {
+          this.loading = false;
           //console.log(data);
           this.router.navigate(['/otp'], {
             state: { phoneNumber: phoneNumber, data: data, newUser: true },
