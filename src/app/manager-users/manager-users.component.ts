@@ -116,7 +116,10 @@ export class ManagerUsersComponent implements OnInit {
           this.getUsers(); //now fetch users
 
           //if assignedRole is not ADMIN then editUsersAllowed is false else true
-          if (this.assignedRole === 'ADMIN') {
+          if (
+            this.assignedRole === 'ADMIN' ||
+            this.assignedRole === 'WH_MANAGER'
+          ) {
             this.editUsersAllowed = true;
           } else {
             this.editUsersAllowed = false;
