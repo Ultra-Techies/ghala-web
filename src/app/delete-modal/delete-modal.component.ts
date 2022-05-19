@@ -72,7 +72,7 @@ export class DeleteModalComponent implements OnInit {
         },
         (err: any) => {
           console.log(err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }
@@ -89,7 +89,7 @@ export class DeleteModalComponent implements OnInit {
         },
         (err: any) => {
           console.log(err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }
@@ -106,7 +106,7 @@ export class DeleteModalComponent implements OnInit {
         },
         (err: any) => {
           console.log(err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }

@@ -38,7 +38,7 @@ export class DispatchOrderComponent implements OnInit {
           },
           (err) => {
             console.log('Error: ', err);
-            this.close('Error: ' + err);
+            this.close('Error: ' + err.error.message);
           }
         );
     });

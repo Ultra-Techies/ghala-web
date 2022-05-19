@@ -49,7 +49,7 @@ export class DeliveryNoteComponent implements OnInit {
             this.payload = [];
           },
           (err: any) => {
-            this.close('Error: ' + err);
+            this.close('Error: ' + err.error.message);
             console.log('Error: ', err);
           }
         );

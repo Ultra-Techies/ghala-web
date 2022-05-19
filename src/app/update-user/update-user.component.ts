@@ -34,12 +34,10 @@ export class UpdateUserComponent implements OnInit {
     this.lastName = this.user ? this.user[2] : null;
     this.email = this.user ? this.user[3] : null;
     this.phoneNumber = this.user ? this.user[4] : null;
-    this.assignedWarehouse = Utils.getAssignedWarehouse()
-      ? Utils.getAssignedWarehouse()
-      : this.user[5];
-    this.assignedRole = Utils.getUserData('assignedRole')
-      ? Utils.getUserData('assignedRole')
-      : this.user[6];
+    this.assignedWarehouse = Utils.getWarehouseId(this.user[5]);
+    this.assignedRole = this.user[6];
+
+    console.log('Assigned Warehouse: ' + this.assignedWarehouse);
 
     this.updateUserForm = this.formBuilder.group({
       id: [this.user[0], Validators.required],
@@ -79,7 +77,7 @@ export class UpdateUserComponent implements OnInit {
         },
         (err) => {
           console.log('Error: ', err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }

@@ -148,12 +148,12 @@ export class OrdersComponent implements OnInit {
         this.errorMessage = message;
       }
 
-      //wait 3 seconds and then call getOrders()
+      //wait 2 seconds and then call getOrders()
       setTimeout(() => {
         this.successMessage = '';
         this.errorMessage = '';
         this.getOrders();
-      }, 3000);
+      }, 2000);
     });
   }
 
@@ -188,12 +188,12 @@ export class OrdersComponent implements OnInit {
         this.errorMessage = message;
       }
 
-      //wait 3 seconds and then call getOrders()
+      //wait 2 seconds and then call getOrders()
       setTimeout(() => {
         this.successMessage = '';
         this.errorMessage = '';
         this.getOrders();
-      }, 3000);
+      }, 2000);
     });
   }
 }
