@@ -62,9 +62,9 @@ export class AddupdateInventoryModalComponent implements OnInit {
         {
           warehouseId: Utils.getAssignedWarehouse(),
           name: this.addInventoryForm.value.name.trim(),
-          ppu: this.addInventoryForm.value.ppu.trim(),
-          quantity: this.addInventoryForm.value.quantity.trim(),
-          category: this.addInventoryForm.value.category.trim(),
+          ppu: this.addInventoryForm.value.ppu,
+          quantity: this.addInventoryForm.value.quantity,
+          category: this.addInventoryForm.value.category,
         },
         { headers: Utils.getHeaders() }
       )
@@ -75,7 +75,7 @@ export class AddupdateInventoryModalComponent implements OnInit {
         },
         (err: any) => {
           console.log('Error: ', err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }

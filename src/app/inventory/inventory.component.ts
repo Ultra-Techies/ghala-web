@@ -128,12 +128,12 @@ export class Inventory implements OnInit {
           this.errorMessage = message;
         }
 
-        //wait 3 seconds and then call getInventory()
+        //wait 2 seconds and then call getInventory()
         setTimeout(() => {
           this.successMessage = '';
           this.errorMessage = '';
           this.getInventory();
-        }, 3000);
+        }, 2000);
       });
     } else if (message === 'delete') {
       this.modalRefDelete = this.modalServiceDelete.open(DeleteModalComponent, {
@@ -150,12 +150,12 @@ export class Inventory implements OnInit {
           this.errorMessage = message;
         }
 
-        //wait 3 seconds and then call getInventory()
+        //wait 2 seconds and then call getInventory()
         setTimeout(() => {
           this.successMessage = '';
           this.errorMessage = '';
           this.getInventory();
-        }, 3000);
+        }, 2000);
       });
     } else if (message === 'update') {
       this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
@@ -175,12 +175,12 @@ export class Inventory implements OnInit {
           this.errorMessage = message;
         }
 
-        //wait 3 seconds and then call getInventory()
+        //wait 2 seconds and then call getInventory()
         setTimeout(() => {
           this.successMessage = '';
           this.errorMessage = '';
           this.getInventory();
-        }, 3000);
+        }, 2000);
       });
     } else {
       console.log('Something went wrong');

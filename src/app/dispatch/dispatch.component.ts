@@ -120,13 +120,13 @@ export class DispatchComponent implements OnInit {
         this.errorMessage = message;
       }
 
-      //wait 3 seconds and then call getDeliveryNotes()
+      //wait 2 seconds and then call getDeliveryNotes()
       setTimeout(() => {
         this.successMessage = '';
         this.errorMessage = '';
         this.getDeliveryNotes();
         this.selectedORders = [];
-      }, 3000);
+      }, 2000);
     });
   }
 

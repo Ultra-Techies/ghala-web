@@ -57,6 +57,7 @@
                     formControlName="category"
                     class="form-control"
                     required
+                    [(ngModel)]="category"
                   >
                     <option
                       *ngFor="let category of categories"
