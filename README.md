@@ -1,5 +1,7 @@
 # Ghala
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae199cbeda784792919df506620c6b99)](https://app.codacy.com/gh/Ultra-Techies/ghala-web?utm_source=github.com&utm_medium=referral&utm_content=Ultra-Techies/ghala-web&utm_campaign=Badge_Grade_Settings)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
 ## Development server
