@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/260d881f43174879862372424a1673df)](https://www.codacy.com/gh/Ultra-Techies/ghala-web/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ultra-Techies/ghala-web&amp;utm_campaign=Badge_Grade)
 # Ghala
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
