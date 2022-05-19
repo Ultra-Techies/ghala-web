@@ -44,7 +44,6 @@ export class ForbidenAccessComponent implements OnInit {
           if (error['error'].error_message.includes('The Token has expired')) {
             this.errorMessage = error['error'].error_message;
             this.errorMessage = 'Your session has expired. Please login again.';
-            localStorage.clear();
           } else {
             this.errorMessage = error['error'].error_message;
           }
@@ -70,8 +69,7 @@ export class ForbidenAccessComponent implements OnInit {
             data['role'].toUpperCase() !=
             localStorage.getItem('assignedRole').toUpperCase()
           ) {
-            localStorage.clear();
-            this.router.navigate(['/']);
+            alert('Your role has been changed. Please login again.');
             console.log('User role has changed');
           } else {
             Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);

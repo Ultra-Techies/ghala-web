@@ -120,9 +120,27 @@ export default class Utils {
         if (warehouses[i].id === warehouseId) {
           return warehouses[i].name;
         } else {
-          return 'Warehouse not found';
+          return warehouseId;
         }
       }
+    } else {
+      return warehouseId;
+    }
+  }
+
+  //get the warehouse id from localstorage by passing the warehouse name
+  static getWarehouseId(warehouseName) {
+    const warehouses = JSON.parse(localStorage.getItem('warehouses'));
+    if (warehouses !== null && warehouses.length > 0) {
+      for (let i = 0; i < warehouses.length; i++) {
+        if (warehouses[i].name === warehouseName) {
+          return warehouses[i].id;
+        } else {
+          return warehouseName;
+        }
+      }
+    } else {
+      return warehouseName;
     }
   }
 

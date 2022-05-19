@@ -53,11 +53,10 @@ export class AddUpdateWarehouseModalComponent implements OnInit {
         (data: any) => {
           //console.log(data);
           this.close('Added Successfully!');
-          this.toastr.success('Added Successfully!');
         },
         (err: any) => {
           console.log('Error: ', err);
-          this.close('Error: ' + err);
+          this.close('Error: ' + err.error.message);
         }
       );
   }

@@ -125,12 +125,12 @@ export class Warehouses implements OnInit {
             this.errorMessage = message;
           }
 
-          //wait 3 seconds and then call getWarehouses()
+          //wait 2 seconds and then call getWarehouses()
           setTimeout(() => {
             this.successMessage = '';
             this.errorMessage = '';
             this.getWarehouses();
-          }, 3000);
+          }, 2000);
         });
       } else if (message === 'delete') {
         this.modalRefDelete = this.modalServiceDelete.open(
@@ -150,12 +150,12 @@ export class Warehouses implements OnInit {
             this.errorMessage = message;
           }
 
-          //wait 3 seconds and then call getWarehouses()
+          //wait 2 seconds and then call getWarehouses()
           setTimeout(() => {
             this.successMessage = '';
             this.errorMessage = '';
             this.getWarehouses();
-          }, 3000);
+          }, 2000);
         });
       } else if (message === 'update') {
         this.modalRefAddUpdate = this.modalServiceAddUpdate.open(
@@ -175,12 +175,12 @@ export class Warehouses implements OnInit {
             this.errorMessage = message;
           }
 
-          //wait 3 seconds and then call getWarehouses()
+          //wait 2 seconds and then call getWarehouses()
           setTimeout(() => {
             this.successMessage = '';
             this.errorMessage = '';
             this.getWarehouses();
-          }, 3000);
+          }, 2000);
         });
       } else {
         console.log('Something went wrong');

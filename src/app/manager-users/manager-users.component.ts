@@ -61,22 +61,7 @@ export class ManagerUsersComponent implements OnInit {
           this.loading = false;
           //get assignedRole from local storage. if it's not ADMIN, WH_MANAGER or SUPERVISOR the navigate to /forbidden else continue
           //this.assignedRole = localStorage.getItem('assignedRole');
-          if (
-            this.assignedRole === 'ADMIN' ||
-            this.assignedRole === 'WH_MANAGER' ||
-            this.assignedRole === 'SUPERVISOR'
-          ) {
-            for (let i = 0; i < data.length; i++) {
-              this.tableData1.dataRows[i] = [
-                data[i].id,
-                data[i].firstName,
-                data[i].lastName,
-                data[i].email,
-                data[i].phoneNumber,
-                data[i].assignedWarehouse,
-                data[i].role,
-              ];
-            }
+          if (this.assignedRole === 'ADMIN') {
             for (let i = 0; i < data.length; i++) {
               this.tableData1.dataRows[i] = [
                 data[i].id,
@@ -88,6 +73,33 @@ export class ManagerUsersComponent implements OnInit {
                 data[i].role,
               ];
             }
+          } else if (
+            this.assignedRole === 'WH_MANAGER' ||
+            this.assignedRole === 'SUPERVISOR'
+          ) {
+            //create new empty array and loop through data, filter to show only users assigned to localStorage.getItem('assignedWarehouse')
+            let users = [];
+            data.forEach((user) => {
+              let sameWarehouse =
+                parseInt(user.assignedWarehouse) ===
+                parseInt(Utils.getAssignedWarehouse());
+
+              if (sameWarehouse) {
+                users.push(user);
+              }
+
+              for (let i = 0; i < users.length; i++) {
+                this.tableData1.dataRows[i] = [
+                  users[i].id,
+                  users[i].firstName,
+                  users[i].lastName,
+                  users[i].email,
+                  users[i].phoneNumber,
+                  Utils.getWarehouseName(users[i].assignedWarehouse),
+                  users[i].role,
+                ];
+              }
+            });
           } else {
             this.router.navigate(['/forbidden']);
           }
@@ -107,6 +119,7 @@ export class ManagerUsersComponent implements OnInit {
       .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
       .subscribe(
         (data) => {
+          this.loading = false;
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
           Utils.saveUserData('userId', data['id']);
           Utils.saveUserData('assignedRole', data['role']);
@@ -122,6 +135,8 @@ export class ManagerUsersComponent implements OnInit {
           }
         },
         (error) => {
+          this.loading = false;
+          this.router.navigate(['/forbidden']);
           console.log(error);
         }
       );
@@ -149,12 +164,12 @@ export class ManagerUsersComponent implements OnInit {
           this.errorMessage = message;
         }
 
-        //wait 3 seconds and then call getUsers()
+        //wait 2 seconds and then call getUsers()
         setTimeout(() => {
           this.successMessage = '';
           this.errorMessage = '';
           this.getUsers();
-        }, 3000);
+        }, 2000);
       });
     }
   }
