@@ -107,6 +107,7 @@ export class ManagerUsersComponent implements OnInit {
       .get(Utils.BASE_URL + 'users/get/' + localStorage.getItem('userId'))
       .subscribe(
         (data) => {
+          this.loading = false;
           Utils.saveUserData('assignedWarehouse', data['assignedWarehouse']);
           Utils.saveUserData('userId', data['id']);
           Utils.saveUserData('assignedRole', data['role']);
@@ -122,6 +123,8 @@ export class ManagerUsersComponent implements OnInit {
           }
         },
         (error) => {
+          this.loading = false;
+          this.router.navigate(['/forbidden']);
           console.log(error);
         }
       );

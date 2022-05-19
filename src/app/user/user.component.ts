@@ -56,7 +56,7 @@ export class UserComponent implements OnInit {
   getUserData() {
     let userId = localStorage.getItem('userId');
     if (userId === null) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/forbidden']);
     } else {
       this.loading = true;
       //call user api to get user details and make sure user still exists
@@ -74,13 +74,7 @@ export class UserComponent implements OnInit {
           },
           (err: any) => {
             this.loading = false;
-            if (err.status === 403) {
-              this.router.navigate(['/forbidden']);
-            } else {
-              //redirect to login page
-              localStorage.clear();
-              this.router.navigate(['/']);
-            }
+            this.router.navigate(['/forbidden']);
           }
         );
     }

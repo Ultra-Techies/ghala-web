@@ -121,8 +121,7 @@ export class AdminLayoutComponent implements OnInit {
             data['role'].toString().toUpperCase() !=
             localStorage.getItem('assignedRole').toString().toUpperCase()
           ) {
-            localStorage.clear();
-            this.router.navigate(['/']);
+            this.router.navigate(['/forbidden']);
             console.log(
               'Role changed from: ' +
                 localStorage.getItem('assignedRole') +
@@ -144,8 +143,7 @@ export class AdminLayoutComponent implements OnInit {
             data['assignedWarehouse'] !=
             localStorage.getItem('assignedWarehouse')
           ) {
-            localStorage.clear();
-            this.router.navigate(['/']);
+            this.router.navigate(['/forbidden']);
             console.log('user warehouse changed');
           }
         },
