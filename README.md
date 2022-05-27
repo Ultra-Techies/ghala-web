@@ -12,6 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 5. Then: `npm install` if you experience issues with this try `npm install --force`
 6. And: `ng serve`
 7. Navigate to `http://localhost:4200/`
+8. Make sure to setup the [Ghala Backend](https://github.com/Ultra-Techies/ghala-backend)
 
 ## Code scaffolding
 
